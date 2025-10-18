@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit a Pet - Paws & Hearts</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <i class="fas fa-paw"></i>
+            <h1>Paws & Hearts Adoption Center</h1>
+          </div>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="adoption-process.html">Adoption Process</a></li>
+              <li><a href="submit-pet.html" class="active">Submit a Pet</a></li>
+              <li><a href="fantasy-pets.html">Fantasy Pets</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Page Header -->
+      <section class="page-header">
+        <h1>Submit a Pet for Adoption</h1>
+        <p>
+          If you need to rehome a pet or have found a stray animal, we're here
+          to help. Please fill out the form below with as much detail as
+          possible.
+        </p>
+      </section>
+
+      <!-- Submission Form -->
+      <section class="form-container">
+        <form id="pet-submission-form">
+          <div class="form-section">
+            <h2>Pet Information</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pet-name">Pet's Name</label>
+                <input type="text" id="pet-name" name="pet-name" required />
+              </div>
+              <div class="form-group">
+                <label for="pet-type">Type of Animal</label>
+                <select id="pet-type" name="pet-type" required>
+                  <option value="">Select an option</option>
+                  <option value="dog">Dog</option>
+                  <option value="cat">Cat</option>
+                  <option value="small-animal">
+                    Small Animal (Rabbit, Guinea Pig, etc.)
+                  </option>
+                  <option value="bird">Bird</option>
+                  <option value="reptile">Reptile</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pet-breed">Breed</label>
+                <input
+                  type="text"
+                  id="pet-breed"
+                  name="pet-breed"
+                  placeholder="e.g., Labrador Mix, Siamese"
+                />
+              </div>
+              <div class="form-group">
+                <label for="pet-age">Approximate Age</label>
+                <select id="pet-age" name="pet-age" required>
+                  <option value="">Select an option</option>
+                  <option value="under-1">Under 1 year</option>
+                  <option value="1-3">1-3 years</option>
+                  <option value="4-7">4-7 years</option>
+                  <option value="8-10">8-10 years</option>
+                  <option value="over-10">Over 10 years</option>
+                  <option value="unknown">Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pet-gender">Gender</label>
+                <select id="pet-gender" name="pet-gender" required>
+                  <option value="">Select an option</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="unknown">Unknown</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="pet-size">Size</label>
+                <select id="pet-size" name="pet-size">
+                  <option value="">Select an option</option>
+                  <option value="small">Small (under 20 lbs)</option>
+                  <option value="medium">Medium (20-50 lbs)</option>
+                  <option value="large">Large (50-80 lbs)</option>
+                  <option value="x-large">Extra Large (over 80 lbs)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="pet-description">Pet Description</label>
+              <textarea
+                id="pet-description"
+                name="pet-description"
+                rows="4"
+                placeholder="Describe the pet's appearance, personality, and any distinctive features"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Health & Behavior</h2>
+
+            <div class="form-group">
+              <label>Vaccination Status</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="vaccination"
+                    value="current"
+                    required
+                  />
+                  <span>Current on all vaccinations</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="vaccination" value="some" />
+                  <span>Some vaccinations, but not all</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="vaccination" value="none" />
+                  <span>No vaccinations</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="vaccination" value="unknown" />
+                  <span>Unknown</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Spayed/Neutered</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="spayed" value="yes" required />
+                  <span>Yes</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="spayed" value="no" />
+                  <span>No</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="spayed" value="unknown" />
+                  <span>Unknown</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="pet-behavior">Behavior & Temperament</label>
+              <textarea
+                id="pet-behavior"
+                name="pet-behavior"
+                rows="4"
+                placeholder="Describe the pet's behavior with people, other animals, and any known issues"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="special-needs"
+                >Special Needs or Medical Conditions</label
+              >
+              <textarea
+                id="special-needs"
+                name="special-needs"
+                rows="3"
+                placeholder="List any special needs, medical conditions, or medications"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>Your Information</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="your-name">Your Name</label>
+                <input type="text" id="your-name" name="your-name" required />
+              </div>
+              <div class="form-group">
+                <label for="your-email">Email</label>
+                <input
+                  type="email"
+                  id="your-email"
+                  name="your-email"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="your-phone">Phone</label>
+                <input type="tel" id="your-phone" name="your-phone" required />
+              </div>
+              <div class="form-group">
+                <label for="your-relationship">Your Relationship to Pet</label>
+                <select
+                  id="your-relationship"
+                  name="your-relationship"
+                  required
+                >
+                  <option value="">Select an option</option>
+                  <option value="owner">Current Owner</option>
+                  <option value="foster">Foster Caregiver</option>
+                  <option value="finder">Found the Animal</option>
+                  <option value="relative">Relative of Owner</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reason-rehoming">Reason for Rehoming</label>
+              <textarea
+                id="reason-rehoming"
+                name="reason-rehoming"
+                rows="3"
+                placeholder="Please explain why the pet needs to be rehomed"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label class="checkbox-option">
+              <input type="checkbox" id="agreement" name="agreement" required />
+              <span
+                >I understand that submitting this form does not guarantee
+                acceptance into the adoption program, and I agree to the terms
+                of service.</span
+              >
+            </label>
+          </div>
+
+          <button type="submit" class="btn primary">
+            Submit Pet for Consideration
+          </button>
+        </form>
+      </section>
+
+      <!-- Additional Resources -->
+      <section class="resources">
+        <h2 class="section-title">Additional Resources</h2>
+        <div class="resources-grid">
+          <div class="resource-card">
+            <i class="fas fa-question-circle"></i>
+            <h3>Considering Rehoming?</h3>
+            <p>
+              Before deciding to rehome your pet, explore our resources that
+              might help you keep your companion.
+            </p>
+            <a href="#" class="btn secondary">Learn More</a>
+          </div>
+          <div class="resource-card">
+            <i class="fas fa-stethoscope"></i>
+            <h3>Low-Cost Veterinary Care</h3>
+            <p>
+              Find affordable veterinary services in your area to help with your
+              pet's medical needs.
+            </p>
+            <a href="#" class="btn secondary">Find Resources</a>
+          </div>
+          <div class="resource-card">
+            <i class="fas fa-paw"></i>
+            <h3>Behavioral Help</h3>
+            <p>
+              Many behavior issues can be resolved with proper training and
+              guidance.
+            </p>
+            <a href="#" class="btn secondary">Get Help</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Paws & Hearts Adoption Center</h3>
+            <p>Finding loving homes for pets in need since 2018.</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="adoption-process.html">Adoption Process</a></li>
+              <li><a href="submit-pet.html">Submit a Pet</a></li>
+              <li><a href="fantasy-pets.html">Fantasy Pets</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> 123 Pet Lane, Animal City,
+              AC 12345
+            </p>
+            <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> info@pawsandhearts.org</p>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2023 Paws & Hearts Adoption Center. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
