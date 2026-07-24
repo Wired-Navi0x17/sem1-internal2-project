@@ -81,5 +81,5 @@ Assignment2/
 
 ## ✒️ Credits & Authors
 
-Created by **Bhuvi & Harshul**  
+Created by **Bhuvi Singhal & Navi...**  
 *Diagon Alley, London &bull; Opposite Gringotts Wizarding Bank*
