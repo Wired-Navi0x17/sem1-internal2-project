@@ -11,19 +11,28 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <!-- Hanging Castle Pull Cord Mechanism in Upper Right Corner -->
+    <!-- Detailed Hanging Castle Pull Cord Mechanism in Upper Right Corner -->
     <div class="pullCordContainer" id="pullCordContainer" title="Pull Cord to Reveal Assignment Scroll">
+      <div class="ceilingMount"></div>
       <div class="ropeLine" id="ropeLine"></div>
       <div class="brassRing" id="brassRing"></div>
       <div class="ropeCord" id="ropeCord">
+        <div class="runeRingSmall">ᚠ ✦ ☽</div>
         <div class="crystalGem" id="crystalGem"></div>
         <div class="tasselHead"></div>
         <div class="tasselSkirt"></div>
       </div>
     </div>
 
-    <!-- Authentic Dense Marauder's Map Information Scroll Overlay -->
+    <!-- Authentic Dense Hanging Marauder's Map Information Scroll Overlay -->
     <div id="assignmentScrollOverlay" class="assignmentScrollOverlay">
+      <!-- Scroll Roller Container -->
+      <div class="scrollRollerTop" id="scrollRollerTop">
+        <div class="rollerCapLeft"></div>
+        <div class="rollerBody"></div>
+        <div class="rollerCapRight"></div>
+      </div>
+
       <div class="marauderScrollCard" id="marauderCard">
         <button class="scrollCloseBtn" id="scrollCloseBtn">&times;</button>
         <div class="waxSealBadge">RV</div>
@@ -59,24 +68,24 @@
           </g>
         </svg>
 
-        <!-- Animated Footprints -->
+        <!-- Animated Alternating Left & Right Footprints -->
         <div id="footprintContainer">
-          <svg class="walkingFootprint" id="step1" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-          <svg class="walkingFootprint" id="step2" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-          <svg class="walkingFootprint" id="step3" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
+          <svg class="walkingFootprint leftFoot" id="step1" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
+          <svg class="walkingFootprint rightFoot" id="step2" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
+          <svg class="walkingFootprint leftFoot" id="step3" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
         </div>
 
         <div class="scrollHeader">
-          <h2 class="scrollHeaderTitle">THE WIZARDING ASSIGNMENT SCROLL</h2>
-          <p class="scrollHeaderSub">Enchanted Decree of Academic Distinction &bull; Ministry Assessment</p>
+          <h2 class="scrollHeaderTitle" id="revealTitle">THE WIZARDING ASSIGNMENT SCROLL</h2>
+          <p class="scrollHeaderSub" id="revealSub">Enchanted Decree of Academic Distinction &bull; Ministry Assessment</p>
         </div>
 
-        <div class="decreeQuote">
+        <div class="decreeQuote" id="revealDecree">
           "The Ministry of Magical Education hereby records that the apprentices named below have successfully completed the Second Internal Assignment of the First Semester.<br/><br/>
           The challenge bestowed upon these young enchanters was the construction of a fully static magical storefront using only the ancient disciplines of HTML, CSS, and JavaScript, without invoking backend enchantments or external magical services. May this humble emporium stand as a testament to their craftsmanship, creativity, and dedication."
         </div>
 
-        <!-- Organic Asymmetric Map Landmarks (UI Card Boxes Removed) -->
+        <!-- Organic Asymmetric Map Landmarks (Sequential Footprint Destinations) -->
         <div class="mapLandmarksGrid">
           <div class="mapLandmarkCard" id="landmark1">
             <div class="mapLandmarkTitle">🪶 Created By</div>
@@ -99,6 +108,17 @@
             <div class="mapLandmarkValue">Internal Assessment II</div>
           </div>
         </div>
+
+        <!-- Official Ministry Approval Seal Stamp -->
+        <div class="ministryApprovalSeal" id="revealSeal">
+          <span>APPROVED BY MINISTRY OF MAGICAL EDUCATION</span>
+        </div>
+      </div>
+
+      <div class="scrollRollerBottom" id="scrollRollerBottom">
+        <div class="rollerCapLeft"></div>
+        <div class="rollerBody"></div>
+        <div class="rollerCapRight"></div>
       </div>
     </div>
 

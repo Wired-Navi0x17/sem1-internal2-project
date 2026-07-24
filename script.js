@@ -1,4 +1,4 @@
-// The Wizarding Emporium - Diagon Alley Interactive E-Commerce & Cinematic GSAP/Anime.js Entrance Logic
+// The Wizarding Emporium - Diagon Alley Interactive E-Commerce & Signature Hanging Marauder's Map Engine
 
 document.addEventListener('DOMContentLoaded', () => {
   initAlohomoraEntrance();
@@ -25,8 +25,8 @@ function getAudioContext() {
   return audioCtx;
 }
 
-// Idle Magical Ambient Atmosphere
-function playAmbientAtmosphere() {
+// Hover Crystal Shimmer
+function playHoverShimmer() {
   const ctx = getAudioContext();
   if (!ctx) return;
   const now = ctx.currentTime;
@@ -34,29 +34,229 @@ function playAmbientAtmosphere() {
   try {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    const filter = ctx.createBiquadFilter();
 
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(65, now);
-    osc.frequency.linearRampToValueAtTime(75, now + 4);
+    osc.frequency.setValueAtTime(1567.98, now);
+    osc.frequency.exponentialRampToValueAtTime(2093.00, now + 0.2);
 
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(300, now);
+    gain.gain.setValueAtTime(0.04, now);
+    gain.gain.linearRampToValueAtTime(0.08, now + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
-    gain.gain.setValueAtTime(0.01, now);
-    gain.gain.linearRampToValueAtTime(0.04, now + 1.5);
-    gain.gain.linearRampToValueAtTime(0.001, now + 4.5);
-
-    osc.connect(filter);
-    filter.connect(gain);
+    osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(now);
-    osc.stop(now + 4.6);
+    osc.stop(now + 0.3);
   } catch (e) {}
 }
 
-// Phase 1: Soft Leather Creak & Dormant Hover Hum
+// Rope Pull & Fabric Tension
+function playRopeTensionSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(120, now);
+    osc.frequency.linearRampToValueAtTime(280, now + 0.3);
+
+    gain.gain.setValueAtTime(0.06, now);
+    gain.gain.linearRampToValueAtTime(0.12, now + 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.38);
+  } catch (e) {}
+}
+
+// Brass Ceiling Mechanism Click
+function playCeilingUnlockSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(440, now);
+    osc.frequency.exponentialRampToValueAtTime(110, now + 0.12);
+
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.18);
+  } catch (e) {}
+}
+
+// Scroll Unrolling & Parchment Unfurling
+function playScrollUnrollSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(320, now);
+    osc.frequency.exponentialRampToValueAtTime(680, now + 0.5);
+
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.linearRampToValueAtTime(0.14, now + 0.25);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.6);
+  } catch (e) {}
+}
+
+// Quill Scratching & Sparkles
+function playQuillInkSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    [1760, 2349, 2793].forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+      gain.gain.setValueAtTime(0.05, now + idx * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3 + idx * 0.08);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + idx * 0.08);
+      osc.stop(now + 0.35 + idx * 0.08);
+    });
+  } catch (e) {}
+}
+
+// Soft Footstep Sound
+function playFootstepSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.exponentialRampToValueAtTime(90, now + 0.08);
+
+    gain.gain.setValueAtTime(0.06, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.12);
+  } catch (e) {}
+}
+
+// Final Warm Swell & Resonance
+function playFinalSwellSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+
+      gain.gain.setValueAtTime(0.02, now);
+      gain.gain.linearRampToValueAtTime(0.08, now + 0.4);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 1.25);
+    });
+  } catch (e) {}
+}
+
+// Scroll Retraction Sound
+function playRetractSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(650, now);
+    osc.frequency.exponentialRampToValueAtTime(220, now + 0.5);
+
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.6);
+  } catch (e) {}
+}
+
+// Wand Trail & Charging Sounds
+function playSpellChargingSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(550, now + 0.6);
+
+    gain.gain.setValueAtTime(0.02, now);
+    gain.gain.linearRampToValueAtTime(0.15, now + 0.3);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.8);
+  } catch (e) {}
+}
+
 function playHoverHumSound() {
   const ctx = getAudioContext();
   if (!ctx) return;
@@ -68,99 +268,20 @@ function playHoverHumSound() {
 
     osc.type = 'sine';
     osc.frequency.setValueAtTime(180, now);
-    osc.frequency.exponentialRampToValueAtTime(320, now + 0.25);
+    osc.frequency.exponentialRampToValueAtTime(320, now + 0.2);
 
     gain.gain.setValueAtTime(0.01, now);
-    gain.gain.linearRampToValueAtTime(0.06, now + 0.1);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+    gain.gain.linearRampToValueAtTime(0.05, now + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(now);
-    osc.stop(now + 0.35);
+    osc.stop(now + 0.3);
   } catch (e) {}
 }
 
-// Pull Cord Crystal Chime
-function playCordPullChime() {
-  const ctx = getAudioContext();
-  if (!ctx) return;
-  const now = ctx.currentTime;
-
-  try {
-    [1567.98, 2093.00, 2793.83].forEach((freq, idx) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.05);
-
-      gain.gain.setValueAtTime(0.12, now + idx * 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45 + idx * 0.05);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(now + idx * 0.05);
-      osc.stop(now + 0.5);
-    });
-  } catch (e) {}
-}
-
-// Phase 2: Spell Charging (Low Drone + Air Whoosh)
-function playSpellChargingSound() {
-  const ctx = getAudioContext();
-  if (!ctx) return;
-  const now = ctx.currentTime;
-
-  // Low Choir Drone
-  try {
-    const osc1 = ctx.createOscillator();
-    const gain1 = ctx.createGain();
-    const filter1 = ctx.createBiquadFilter();
-
-    osc1.type = 'triangle';
-    osc1.frequency.setValueAtTime(110, now);
-    osc1.frequency.exponentialRampToValueAtTime(220, now + 0.8);
-
-    filter1.type = 'lowpass';
-    filter1.frequency.setValueAtTime(500, now);
-
-    gain1.gain.setValueAtTime(0.01, now);
-    gain1.gain.linearRampToValueAtTime(0.2, now + 0.4);
-    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
-
-    osc1.connect(filter1);
-    filter1.connect(gain1);
-    gain1.connect(ctx.destination);
-
-    osc1.start(now);
-    osc1.stop(now + 0.95);
-  } catch (e) {}
-
-  // Air Whoosh Sweep
-  try {
-    const osc2 = ctx.createOscillator();
-    const gain2 = ctx.createGain();
-
-    osc2.type = 'sine';
-    osc2.frequency.setValueAtTime(140, now + 0.1);
-    osc2.frequency.exponentialRampToValueAtTime(650, now + 0.6);
-
-    gain2.gain.setValueAtTime(0.01, now + 0.1);
-    gain2.gain.linearRampToValueAtTime(0.18, now + 0.35);
-    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
-
-    osc2.connect(gain2);
-    gain2.connect(ctx.destination);
-
-    osc2.start(now + 0.1);
-    osc2.stop(now + 0.75);
-  } catch (e) {}
-}
-
-// Phase 3: Runes Activate (Crystal Chimes & Bell Harmonics)
 function playRuneChimesSound() {
   const ctx = getAudioContext();
   if (!ctx) return;
@@ -174,64 +295,42 @@ function playRuneChimesSound() {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, now + idx * 0.08);
 
-      gain.gain.setValueAtTime(0.12, now + idx * 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.7 + idx * 0.08);
+      gain.gain.setValueAtTime(0.1, now + idx * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6 + idx * 0.08);
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
       osc.start(now + idx * 0.08);
-      osc.stop(now + 0.8);
+      osc.stop(now + 0.7);
     });
   } catch (e) {}
 }
 
-// Phase 4: Lock Resistance & Heavy Metal Click
 function playLockResistanceAndClickSound() {
   const ctx = getAudioContext();
   if (!ctx) return;
   const now = ctx.currentTime;
 
-  // Metal Tension Groan
-  try {
-    const oscTension = ctx.createOscillator();
-    const gainTension = ctx.createGain();
-
-    oscTension.type = 'sawtooth';
-    oscTension.frequency.setValueAtTime(90, now);
-    oscTension.frequency.exponentialRampToValueAtTime(160, now + 0.2);
-
-    gainTension.gain.setValueAtTime(0.08, now);
-    gainTension.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-
-    oscTension.connect(gainTension);
-    gainTension.connect(ctx.destination);
-
-    oscTension.start(now);
-    oscTension.stop(now + 0.25);
-  } catch (e) {}
-
-  // Heavy Latch Release Click
   try {
     const oscClick = ctx.createOscillator();
     const gainClick = ctx.createGain();
 
     oscClick.type = 'square';
-    oscClick.frequency.setValueAtTime(360, now + 0.22);
-    oscClick.frequency.exponentialRampToValueAtTime(70, now + 0.32);
+    oscClick.frequency.setValueAtTime(360, now);
+    oscClick.frequency.exponentialRampToValueAtTime(70, now + 0.15);
 
-    gainClick.gain.setValueAtTime(0.28, now + 0.22);
-    gainClick.gain.exponentialRampToValueAtTime(0.001, now + 0.34);
+    gainClick.gain.setValueAtTime(0.25, now);
+    gainClick.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
 
     oscClick.connect(gainClick);
     gainClick.connect(ctx.destination);
 
-    oscClick.start(now + 0.22);
-    oscClick.stop(now + 0.35);
+    oscClick.start(now);
+    oscClick.stop(now + 0.22);
   } catch (e) {}
 }
 
-// Phase 5: Paper Flutter & Magical Burst
 function playPaperAndBurstSound() {
   const ctx = getAudioContext();
   if (!ctx) return;
@@ -245,18 +344,17 @@ function playPaperAndBurstSound() {
     osc.frequency.setValueAtTime(2349.32, now);
     osc.frequency.exponentialRampToValueAtTime(3135.96, now + 0.3);
 
-    gain.gain.setValueAtTime(0.1, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(now);
-    osc.stop(now + 0.65);
+    osc.stop(now + 0.55);
   } catch (e) {}
 }
 
-// Inward Swirling Sparks Generator
 function createInwardSparks() {
   const sparkContainer = document.getElementById('sparkContainer');
   if (!sparkContainer) return;
@@ -280,7 +378,6 @@ function createInwardSparks() {
   }
 }
 
-// Wand Trail Curved Particle Cast Effect
 function createWandCastTrail(e) {
   const overlay = document.getElementById('spellbookOverlay');
   if (!overlay) return;
@@ -331,7 +428,6 @@ function initAlohomoraEntrance() {
     return;
   }
 
-  // Display spellbook overlay on every page load/refresh of index.html!
   if (mainContainer) mainContainer.style.opacity = '0';
 
   const alohomoraBtn = document.getElementById('alohomoraBtn');
@@ -350,7 +446,6 @@ function initAlohomoraEntrance() {
           );
         }
       }
-      playAmbientAtmosphere();
     }, 500);
   };
 
@@ -363,7 +458,6 @@ function initAlohomoraEntrance() {
 
   if (!alohomoraBtn) return;
 
-  // Dormant Book Hover Interaction
   let hoveredOnce = false;
   alohomoraBtn.addEventListener('mouseenter', () => {
     if (hoveredOnce) return;
@@ -373,7 +467,6 @@ function initAlohomoraEntrance() {
     if (typeof gsap !== 'undefined') {
       gsap.to('#spellbook3D', { x: 2, y: -2, duration: 0.25, yoyo: true, repeat: 1 });
       gsap.to('#spellbookLock', { boxShadow: '0 0 45px rgba(212, 175, 55, 0.95), 0 0 70px rgba(245, 234, 175, 0.8)', duration: 0.4 });
-      gsap.to('.engravedSymbolsSVG path', { opacity: 0.35, duration: 0.4, yoyo: true, repeat: 1 });
     }
   });
 
@@ -384,7 +477,6 @@ function initAlohomoraEntrance() {
     if (animationStarted) return;
     animationStarted = true;
 
-    // Phase 1: Intent & Wand Trail
     createWandCastTrail(e);
     playSpellChargingSound();
 
@@ -393,13 +485,10 @@ function initAlohomoraEntrance() {
       return;
     }
 
-    // GSAP Orchestrated Spell Timeline
     const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
 
-    // Step 1: Room Darkens & Button Depresses (350ms Anticipation)
     tl.to('#spellbookOverlay', { backgroundColor: '#030007', duration: 0.35 })
     .to('#alohomoraBtn', { scale: 0.92, duration: 0.15 }, '<')
-    // Step 2: Inward Energy Sparks & Rune Drawing
     .add(() => {
       createInwardSparks();
       playRuneChimesSound();
@@ -416,55 +505,47 @@ function initAlohomoraEntrance() {
         duration: 900,
         easing: 'easeOutQuad'
       });
-      anime({
-        targets: '.inwardSpark',
-        opacity: [0, 1, 0],
-        scale: [1, 0.2],
-        translateX: (el, i) => [0, -parseInt(el.style.left) + window.innerWidth / 2],
-        translateY: (el, i) => [0, -parseInt(el.style.top) + window.innerHeight / 2],
-        duration: 800,
-        delay: anime.stagger(40),
-        easing: 'easeInCubic'
-      });
     }, '+=0.1')
     .to('.magicCircleSVG', { opacity: 1, duration: 0.4 }, '<')
-    // Step 3: Lock Resistance (Vibration & Tension Sound)
     .to('#spellbook3D', { x: -6, duration: 0.08, yoyo: true, repeat: 4, onStart: () => playLockResistanceAndClickSound() }, '+=0.4')
-    .to('#spellbookLock', { boxShadow: '0 0 60px rgba(212, 175, 55, 1), 0 0 90px rgba(245, 234, 175, 0.9)', duration: 0.3 }, '<')
-    // Step 4: Lock Unlocks & Drops with Realistic Physics Bounce
     .to('#spellbookLock', { rotate: 45, duration: 0.18 })
     .to('#spellbookLock', { y: 160, opacity: 0, duration: 0.65, ease: 'bounce.out' })
-    // Step 5: Golden Light Burst, 3D Book Cover Lift & Pages Flutter
     .to('#spellbookFrontCover', { rotateY: -115, duration: 0.95, ease: 'power2.inOut', onStart: () => playPaperAndBurstSound() }, '-=0.3')
-    .to('.spellbookPagesLayer::after', { opacity: 1, duration: 0.5 }, '-=0.6')
-    // Step 6: Camera Drifts into Pages & Homepage Fades In
     .to('#spellbook3D', { scale: 3.5, opacity: 0, duration: 0.8, ease: 'power2.in', onComplete: revealHomepage }, '-=0.2');
   });
 }
 
-// ==================== Interactive Hanging Castle Pull Cord Mechanism ====================
+// ==================== Interactive Hanging Castle Pull Cord Mechanism & State Guard ====================
+let isMapAnimating = false; // Strict guard preventing duplicate animations or navigation triggers!
+
 function initPullCordMechanism() {
   const pullCord = document.getElementById('pullCordContainer');
   const ropeLine = document.getElementById('ropeLine');
   const ropeCord = document.getElementById('ropeCord');
   if (!pullCord || !ropeLine || !ropeCord) return;
 
+  // Hover Shimmer Event
+  pullCord.addEventListener('mouseenter', () => {
+    if (!isMapAnimating) playHoverShimmer();
+  });
+
   let isDragging = false;
   let startY = 0;
   let currentY = 0;
 
   pullCord.addEventListener('mousedown', (e) => {
+    if (isMapAnimating) return;
     isDragging = true;
     startY = e.clientY;
-    playCordPullChime();
+    playRopeTensionSound();
   });
 
   window.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isMapAnimating) return;
     const deltaY = Math.max(0, Math.min(80, e.clientY - startY));
     currentY = deltaY;
 
-    ropeLine.style.height = `${130 + deltaY}px`;
+    ropeLine.style.height = `${125 + deltaY}px`;
     ropeCord.style.transform = `translateY(${deltaY}px)`;
   });
 
@@ -472,34 +553,35 @@ function initPullCordMechanism() {
     if (!isDragging) return;
     isDragging = false;
 
-    // Release Spring Bounce Physics
     if (typeof gsap !== 'undefined') {
-      gsap.to(ropeLine, { height: 130, duration: 0.5, ease: 'bounce.out' });
-      gsap.to(ropeCord, { y: 0, duration: 0.5, ease: 'bounce.out' });
+      gsap.to(ropeLine, { height: 125, duration: 0.4, ease: 'bounce.out' });
+      gsap.to(ropeCord, { y: 0, duration: 0.4, ease: 'bounce.out' });
     } else {
-      ropeLine.style.height = '130px';
+      ropeLine.style.height = '125px';
       ropeCord.style.transform = 'translateY(0)';
     }
 
-    if (currentY > 25) {
-      triggerAssignmentScroll(true);
+    if (currentY > 25 && !isMapAnimating) {
+      playCeilingUnlockSound();
+      triggerAssignmentScroll();
     }
     currentY = 0;
   });
 
-  // Touch device support
+  // Touch support
   pullCord.addEventListener('touchstart', (e) => {
+    if (isMapAnimating) return;
     isDragging = true;
     startY = e.touches[0].clientY;
-    playCordPullChime();
+    playRopeTensionSound();
   });
 
   window.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isMapAnimating) return;
     const deltaY = Math.max(0, Math.min(80, e.touches[0].clientY - startY));
     currentY = deltaY;
 
-    ropeLine.style.height = `${130 + deltaY}px`;
+    ropeLine.style.height = `${125 + deltaY}px`;
     ropeCord.style.transform = `translateY(${deltaY}px)`;
   });
 
@@ -508,22 +590,23 @@ function initPullCordMechanism() {
     isDragging = false;
 
     if (typeof gsap !== 'undefined') {
-      gsap.to(ropeLine, { height: 130, duration: 0.5, ease: 'bounce.out' });
-      gsap.to(ropeCord, { y: 0, duration: 0.5, ease: 'bounce.out' });
+      gsap.to(ropeLine, { height: 125, duration: 0.4, ease: 'bounce.out' });
+      gsap.to(ropeCord, { y: 0, duration: 0.4, ease: 'bounce.out' });
     } else {
-      ropeLine.style.height = '130px';
+      ropeLine.style.height = '125px';
       ropeCord.style.transform = 'translateY(0)';
     }
 
-    if (currentY > 25) {
-      triggerAssignmentScroll(true);
+    if (currentY > 25 && !isMapAnimating) {
+      playCeilingUnlockSound();
+      triggerAssignmentScroll();
     }
     currentY = 0;
   });
 }
 
-// ==================== Authentic Marauder's Map Information Scroll Modal ====================
-let scrollTimer = null;
+// ==================== Authentic Marauder's Map Information Scroll Engine ====================
+let scrollAutoTimer = null;
 
 function initAssignmentScrollEvents() {
   const scrollOverlay = document.getElementById('assignmentScrollOverlay');
@@ -544,95 +627,120 @@ function initAssignmentScrollEvents() {
   }
 }
 
-function triggerAssignmentScroll(isAutoClose = true) {
+function triggerAssignmentScroll() {
+  if (isMapAnimating) return; // Ignore duplicate calls
+  isMapAnimating = true;
+
   const scrollOverlay = document.getElementById('assignmentScrollOverlay');
   const marauderCard = document.getElementById('marauderCard');
-  if (!scrollOverlay || !marauderCard) return;
+  const rollerTop = document.getElementById('scrollRollerTop');
+  const rollerBottom = document.getElementById('scrollRollerBottom');
 
-  if (scrollTimer) clearTimeout(scrollTimer);
+  if (!scrollOverlay || !marauderCard) {
+    isMapAnimating = false;
+    return;
+  }
 
-  marauderCard.style.transform = 'scale(1)';
+  if (scrollAutoTimer) clearTimeout(scrollAutoTimer);
+
   scrollOverlay.classList.add('active');
+
+  // Reset section opacities for sequential reveal
+  const sectionIds = ['#revealTitle', '#revealSub', '#revealDecree', '#landmark1', '#landmark2', '#landmark3', '#landmark4', '#landmark5', '#revealSeal'];
+  sectionIds.forEach(id => {
+    const el = document.querySelector(id);
+    if (el) el.style.opacity = '0.2';
+  });
+
+  playScrollUnrollSound();
 
   if (typeof anime !== 'undefined') {
     const mapTimeline = anime.timeline({
       easing: 'easeInOutCubic'
     });
 
-    // Step 1: Unroll Parchment & Swing Gently
+    // Step 1: Lower Rollers & Parchment Tube from Ceiling
     mapTimeline.add({
-      targets: marauderCard,
+      targets: [rollerTop, marauderCard, rollerBottom],
       translateY: ['-100vh', 0],
-      rotateZ: [-6, 0],
-      rotateX: [15, 0],
-      opacity: [0, 1],
-      duration: 900,
+      rotateZ: [-5, 0],
+      duration: 1000,
       easing: 'easeOutBack'
     })
-    // Step 2: Compass & Hand-Drawn SVG Pathways Inking
+    // Step 2: SVG Pathways & Quill Ink Drawing
     .add({
       targets: '#mapPath1, #mapPath2, #mapPath3',
       strokeDashoffset: [anime.setDashoffset, 0],
-      duration: 1100,
-      easing: 'easeInOutQuad'
+      duration: 1200,
+      easing: 'easeInOutQuad',
+      changeBegin: () => playQuillInkSound()
     }, '-=300')
-    // Step 3: Footprints Walking Sequential Journey
+    // Step 3: Sequential Footprint Walk & Destination Illuminations
     .add({
       targets: '.walkingFootprint',
-      opacity: [0, 0.9, 0],
-      translateX: (el, i) => [i * 60, (i + 1) * 140],
-      translateY: (el, i) => [i * 20, (i + 1) * 45],
-      duration: 1200,
-      delay: anime.stagger(180),
-      easing: 'easeInOutQuad'
-    }, '-=700')
-    // Step 4: Landmarks Sequential Illumination
+      opacity: [0, 1, 0],
+      translateX: (el, i) => [i * 50, (i + 1) * 130],
+      translateY: (el, i) => [i * 15, (i + 1) * 35],
+      duration: 1400,
+      delay: anime.stagger(220),
+      easing: 'easeInOutQuad',
+      changeBegin: () => playFootstepSound()
+    }, '-=800')
+    // Step 4: Synchronized Section Reveals (Title -> Decree -> Created By -> Academy -> Course -> Semester -> Assessment -> Approval)
     .add({
-      targets: '.mapLandmarkCard',
-      opacity: [0.3, 1],
-      scale: [0.95, 1.05, 1],
-      delay: anime.stagger(140),
-      duration: 700,
-      changeBegin: () => {
-        const landmarks = document.querySelectorAll('.mapLandmarkCard');
-        landmarks.forEach(lm => lm.classList.add('activeLandmark'));
+      targets: sectionIds,
+      opacity: [0.2, 1],
+      scale: [0.96, 1.04, 1],
+      delay: anime.stagger(280),
+      duration: 800,
+      complete: () => {
+        playFinalSwellSound();
       }
-    }, '-=800');
+    }, '-=1000');
   } else {
     marauderCard.style.opacity = '1';
+    sectionIds.forEach(id => {
+      const el = document.querySelector(id);
+      if (el) el.style.opacity = '1';
+    });
   }
 
-  if (isAutoClose) {
-    scrollTimer = setTimeout(() => {
-      dismissAssignmentScroll();
-    }, 6000);
-  }
+  // Auto-Retraction after 5 Seconds
+  scrollAutoTimer = setTimeout(() => {
+    dismissAssignmentScroll();
+  }, 5000);
 }
 
 function dismissAssignmentScroll() {
   const scrollOverlay = document.getElementById('assignmentScrollOverlay');
   const marauderCard = document.getElementById('marauderCard');
-  if (!scrollOverlay || !marauderCard) return;
+  const rollerTop = document.getElementById('scrollRollerTop');
+  const rollerBottom = document.getElementById('scrollRollerBottom');
 
-  if (scrollTimer) clearTimeout(scrollTimer);
+  if (!scrollOverlay || !marauderCard) {
+    isMapAnimating = false;
+    return;
+  }
+
+  if (scrollAutoTimer) clearTimeout(scrollAutoTimer);
+  playRetractSound();
 
   if (typeof anime !== 'undefined') {
     anime({
-      targets: marauderCard,
+      targets: [rollerTop, marauderCard, rollerBottom],
       translateY: [0, '-100vh'],
-      rotateZ: [0, 8],
-      scale: [1, 0.8],
+      rotateZ: [0, 6],
       opacity: [1, 0],
       duration: 800,
       easing: 'easeInBack',
       complete: () => {
         scrollOverlay.classList.remove('active');
-        const landmarks = document.querySelectorAll('.mapLandmarkCard');
-        landmarks.forEach(lm => lm.classList.remove('activeLandmark'));
+        isMapAnimating = false; // Reset state guard cleanly!
       }
     });
   } else {
     scrollOverlay.classList.remove('active');
+    isMapAnimating = false;
   }
 }
 
