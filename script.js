@@ -1,11 +1,35 @@
 // The Wizarding Emporium - Diagon Alley Interactive E-Commerce Logic
 
 document.addEventListener('DOMContentLoaded', () => {
+  initAmbientSparkles();
   initCauldronCart();
   initContactForm();
   initMobileMenu();
   initProductModals();
 });
+
+// Ambient Golden Sparkle Dust Particles
+function initAmbientSparkles() {
+  const sparklesContainer = document.createElement('div');
+  sparklesContainer.className = 'ambientSparkles';
+  document.body.appendChild(sparklesContainer);
+
+  const particleCount = 18;
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'sparkleParticle';
+    
+    const size = Math.random() * 4 + 2;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${Math.random() * 100}vw`;
+    particle.style.top = `${Math.random() * 100}vh`;
+    particle.style.animationDuration = `${Math.random() * 6 + 6}s`;
+    particle.style.animationDelay = `${Math.random() * 5}s`;
+    
+    sparklesContainer.appendChild(particle);
+  }
+}
 
 // Cauldron Cart State Management
 let cartState = {
@@ -25,7 +49,6 @@ function initCauldronCart() {
   }
   updateCauldronBadge();
 
-  // Attach event listeners to all Add to Cauldron buttons
   const buyButtons = document.querySelectorAll('.buyButton');
   buyButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -37,7 +60,6 @@ function initCauldronCart() {
       const productTitle = productCard.querySelector('.productTitle')?.textContent || 'Magical Item';
       const priceText = productCard.querySelector('.productPrice')?.textContent || '0 Galleons';
       
-      // Parse numeric galleons
       const priceMatch = priceText.match(/([\d,]+)/);
       const galleons = priceMatch ? parseInt(priceMatch[1].replace(/,/g, ''), 10) : 0;
 
@@ -82,7 +104,7 @@ function showToast(message) {
   const toast = document.createElement('div');
   toast.className = 'toastNotification';
   toast.innerHTML = `
-    <svg class="toastIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+    <svg class="toastIcon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
       <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
     </svg>
     <span>${message}</span>

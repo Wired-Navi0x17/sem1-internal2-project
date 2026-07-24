@@ -1,18 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-  <!-- Base background dark violet tile -->
-  <rect width="40" height="40" fill="#160826"/>
-  <!-- Smaller micro-square grid pattern -->
-  <rect x="1" y="1" width="18" height="18" fill="#200a33" rx="2"/>
-  <rect x="21" y="1" width="18" height="18" fill="#260c3b" rx="2"/>
-  <rect x="1" y="21" width="18" height="18" fill="#260c3b" rx="2"/>
-  <rect x="21" y="21" width="18" height="18" fill="#200a33" rx="2"/>
-  <!-- Inner micro accents -->
-  <rect x="5" y="5" width="10" height="10" fill="#1b082b" rx="1"/>
-  <rect x="25" y="5" width="10" height="10" fill="#1f0930" rx="1"/>
-  <rect x="5" y="25" width="10" height="10" fill="#1f0930" rx="1"/>
-  <rect x="25" y="25" width="10" height="10" fill="#1b082b" rx="1"/>
-  <!-- Subtle 4-point magical gold star sparkle accents -->
-  <path d="M20 16 L21 19 L24 20 L21 21 L20 24 L19 21 L16 20 L19 19 Z" fill="#d4af37" opacity="0.18"/>
-  <path d="M0 0 L0.5 1.5 L2 2 L0.5 2.5 L0 4 L-0.5 2.5 L-2 2 L-0.5 1.5 Z" fill="#d4af37" opacity="0.12"/>
-  <path d="M40 40 L40.5 41.5 L42 42 L40.5 42.5 L40 44 L39.5 42.5 L38 42 L39.5 41.5 Z" fill="#d4af37" opacity="0.12"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <defs>
+    <!-- Filter for old paper / parchment noise grain -->
+    <filter id="parchmentNoise" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise"/>
+      <feColorMatrix type="matrix" values="
+        0.15 0 0 0 0.08 
+        0 0.1 0 0 0.04 
+        0 0 0.2 0 0.12 
+        0 0 0 0.22 0" in="noise" result="coloredNoise"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+    
+    <!-- Gold shimmer gradient -->
+    <linearGradient id="goldGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.15"/>
+      <stop offset="50%" stop-color="#8b6508" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#12061f" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep violet dark stone base -->
+  <rect width="300" height="300" fill="#12061f"/>
+
+  <!-- Aged stone texture patches -->
+  <path d="M0 0 C 80 40, 150 10, 300 0 L 300 300 L 0 300 Z" fill="#180928" opacity="0.7"/>
+  <path d="M50 0 C 120 90, 200 40, 300 120 L 300 300 L 0 300 Z" fill="#0d0417" opacity="0.5"/>
+
+  <!-- Faded parchment stains -->
+  <ellipse cx="70" cy="80" rx="55" ry="35" fill="#250d3a" opacity="0.4" filter="blur(10px)"/>
+  <ellipse cx="230" cy="210" rx="75" ry="50" fill="#200b33" opacity="0.4" filter="blur(15px)"/>
+  <circle cx="150" cy="150" r="90" fill="#2d1045" opacity="0.25" filter="blur(20px)"/>
+
+  <!-- Subtle ancient diamond lattice lines (very low opacity) -->
+  <path d="M0 150 L150 0 L300 150 L150 300 Z" fill="none" stroke="#d4af37" stroke-width="0.7" opacity="0.06"/>
+  <path d="M75 150 L150 75 L225 150 L150 225 Z" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.04"/>
+
+  <!-- Micro stars & spark points -->
+  <circle cx="45" cy="55" r="1" fill="#d4af37" opacity="0.3"/>
+  <circle cx="260" cy="40" r="1.5" fill="#d4af37" opacity="0.4"/>
+  <circle cx="190" cy="270" r="1" fill="#d4af37" opacity="0.35"/>
+  <circle cx="110" cy="190" r="1.2" fill="#f3e5ab" opacity="0.3"/>
+  
+  <!-- Tiny 4-point star rune motif -->
+  <path d="M260 40 L261 43 L264 44 L261 45 L260 48 L259 45 L256 44 L259 43 Z" fill="#d4af37" opacity="0.2"/>
+  <path d="M45 230 L46 232 L48 233 L46 234 L45 236 L44 234 L42 233 L44 232 Z" fill="#d4af37" opacity="0.18"/>
 </svg>
