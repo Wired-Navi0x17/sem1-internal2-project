@@ -168,10 +168,9 @@ function initAlohomoraEntrance() {
   const mainContainer = document.getElementById('mainPageContainer');
   if (!overlay) return;
 
-  const isAlreadyOpened = sessionStorage.getItem('spellbookOpened') === 'true';
   const isSubPage = !window.location.pathname.endsWith('index.html') && window.location.pathname.endsWith('.html');
 
-  if (isAlreadyOpened || isSubPage) {
+  if (isSubPage) {
     overlay.style.display = 'none';
     if (mainContainer) mainContainer.style.opacity = '1';
     return;
@@ -182,8 +181,7 @@ function initAlohomoraEntrance() {
   const alohomoraBtn = document.getElementById('alohomoraBtn');
   const skipBtn = document.getElementById('skipEntrance');
 
-  const revealHomepage = (shouldShowAssignmentScroll = true) => {
-    sessionStorage.setItem('spellbookOpened', 'true');
+  const revealHomepage = () => {
     overlay.style.opacity = '0';
     setTimeout(() => {
       overlay.style.display = 'none';
@@ -200,8 +198,13 @@ function initAlohomoraEntrance() {
           });
         }
       }
-      if (shouldShowAssignmentScroll) {
-        setTimeout(() => triggerAssignmentScroll(true), 400);
+      
+      // Auto-trigger Marauder Assignment Scroll ONLY ONCE PER DAY
+      const todayStr = new Date().toDateString();
+      const lastShownDate = localStorage.getItem('marauderScrollLastShownDate');
+      if (lastShownDate !== todayStr) {
+        localStorage.setItem('marauderScrollLastShownDate', todayStr);
+        setTimeout(() => triggerAssignmentScroll(true), 500);
       }
     }, 500);
   };
@@ -209,7 +212,7 @@ function initAlohomoraEntrance() {
   if (skipBtn) {
     skipBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      revealHomepage(true);
+      revealHomepage();
     });
   }
 
@@ -227,7 +230,7 @@ function initAlohomoraEntrance() {
     createInwardSparks();
 
     if (typeof anime === 'undefined') {
-      revealHomepage(true);
+      revealHomepage();
       return;
     }
 
@@ -316,13 +319,13 @@ function initAlohomoraEntrance() {
       duration: 800,
       easing: 'easeInCubic',
       complete: () => {
-        revealHomepage(true);
+        revealHomepage();
       }
     }, '-=200');
   });
 }
 
-// ==================== Animated Marauder Assignment Scroll Modal ====================
+// ==================== Authentic Marauder's Map Information Scroll Modal ====================
 let scrollTimer = null;
 
 function initAssignmentScrollEvents() {
@@ -347,7 +350,7 @@ function initAssignmentScrollEvents() {
   if (footerBtn) {
     footerBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      triggerAssignmentScroll(false);
+      triggerAssignmentScroll(false); // Manual footer replay always runs!
     });
   }
 }
@@ -362,7 +365,12 @@ function triggerAssignmentScroll(isAutoClose = true) {
   scrollOverlay.classList.add('active');
 
   if (typeof anime !== 'undefined') {
-    anime({
+    const mapTimeline = anime.timeline({
+      easing: 'easeInOutCubic'
+    });
+
+    // Fly in & unfold map
+    mapTimeline.add({
       targets: marauderCard,
       translateY: ['-100vh', 0],
       rotateZ: [-12, 0],
@@ -370,7 +378,32 @@ function triggerAssignmentScroll(isAutoClose = true) {
       opacity: [0, 1],
       duration: 950,
       easing: 'easeOutBack'
-    });
+    })
+    // Draw SVG Pathways
+    .add({
+      targets: '#mapPath1, #mapPath2, #mapPath3',
+      strokeDashoffset: [anime.setDashoffset, 0],
+      duration: 1200,
+      easing: 'easeInOutCubic'
+    }, '-=400')
+    // Footprints Walk Across Map
+    .add({
+      targets: '.walkingFootprint',
+      opacity: [0, 0.8, 0],
+      translateX: (el, i) => [i * 80, (i + 1) * 160],
+      translateY: (el, i) => [i * 30, (i + 1) * 60],
+      duration: 1400,
+      delay: anime.stagger(150),
+      easing: 'easeInOutQuad'
+    }, '-=800')
+    // Illuminate Map Landmarks Grid
+    .add({
+      targets: '.mapLandmarkCard',
+      opacity: [0.3, 1],
+      scale: [0.95, 1],
+      delay: anime.stagger(100),
+      duration: 600
+    }, '-=600');
   } else {
     marauderCard.style.opacity = '1';
   }
@@ -378,7 +411,7 @@ function triggerAssignmentScroll(isAutoClose = true) {
   if (isAutoClose) {
     scrollTimer = setTimeout(() => {
       dismissAssignmentScroll();
-    }, 5000);
+    }, 6000);
   }
 }
 
