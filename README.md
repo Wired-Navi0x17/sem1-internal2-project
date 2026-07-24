@@ -1,7 +1,7 @@
 # 🧹 The Wizarding Emporium - Diagon Alley Magical Supplies
 
 > **Diagon Alley's Premier Magical Supplier Since 1298**  
-> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Anime.js "Cast Alohomora" 3D Spellbook Entrance**, aged parchment aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
+> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Anime.js 12-Step Alohomora Entrance Spell**, an **Animated Marauder-Style Assignment Scroll** (RV University, B.Tech CSE AIML), aged parchment aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
 
 ---
 
@@ -15,28 +15,36 @@
 
 ## ✨ Key Features & Technical Highlights
 
-### 🪄 1. Anime.js "Cast Alohomora" 3D Spellbook Entrance
-- **Full Viewport Dark Screen**: Completely obscures the storefront upon initial visit until the spell sequence completes.
-- **3D Book Architecture**: Layered 3D book cover, metal lock, leather texture, gold corner plates, and embossed gold typography.
-- **SVG Path & Dash Animation**: SVG magic circle paths animated via Anime.js `strokeDashoffset` (`Outer Circle` $\rightarrow$ `Inner Circle` $\rightarrow$ `Runes`).
-- **Anticipation Delays & Lock Physics**: 200ms spell casting pause, lock vibration, gold glow pulse, and realistic bounce drop (`easing: 'easeOutBounce'`).
-- **3D Cover Flip & Page Transformation**: 3D front cover flips open (`rotateY: -115deg`), emitting a golden light burst while pages expand to reveal the storefront.
-- **SessionStorage Memory & Skip Link**: Includes `sessionStorage.setItem('spellbookOpened', 'true')` so returning to Home during the same browsing session skips the entrance, plus a discrete `"Skip Animation"` button.
-- **Staggered Homepage Entrance**: Upon opening, storefront elements (header, hero title, product cards) stagger into place using Anime.js (`anime.stagger(100)`).
+### 🪄 1. Cinematic 12-Step Alohomora Entrance Spell
+- **12-Step Anime.js Choreography**:
+  1. Environment darkens slightly, ambient magical particles become visible.
+  2. Glowing golden magic circle drawn via SVG `strokeDashoffset` animation.
+  3. Ancient runes (`○ ✧ ᚠ ☽ ✦`) rotate smoothly around circle.
+  4. Golden sparks swirl inward toward lock from surrounding coordinates.
+  5. Spellbook vibrates as magical energy builds.
+  6. Lock glows with warm golden aura.
+  7. Multi-layered synthesized Web Audio API sound plays (whoosh sweep, E-major bell chimes, low resonance sub-tone, high sparkling chimes).
+  8. Lock unlocks with click sound, rotates open, falls with realistic bounce physics (`easing: 'easeOutBounce'`).
+  9. Warm golden light escapes from inside book cover.
+  10. 3D front cover flips open (`rotateY: -115deg`).
+  11. Pages illuminate and expand smoothly into storefront background.
+  12. Storefront elements stagger into view using Anime.js (`anime.stagger(100)`).
 
-### 🎶 2. Multi-Layer Web Audio API Sound Synthesizer
-- Generates 100% self-contained sound effects with **zero external audio dependencies**:
-  - **Spell Sweep**: Filtered noise oscillator frequency ramp.
-  - **Magical Chimes**: Layered E-major high sine wave bells.
-  - **Lock Release**: Square wave impulse click sound.
+### 📜 2. Animated Marauder-Style Assignment Scroll
+- **Enchanted Presentation**: Immediately after homepage reveal (and replayable via footer), an enchanted parchment scroll flies into screen with 3D rotation, settles in center, and unfolds.
+- **Academic Credentials & Wizarding Text**:
+  - *Title*: The Wizarding Assignment Scroll
+  - *Body*: "This enchanted catalogue was carefully crafted as the Second Internal Assignment for Semester One. Our objective was to create a fully static magical storefront using only the fundamental arts of HTML, CSS, and JavaScript, without relying upon backend enchantments."
+  - **Created By**: Bhuvi Singhal & Navi...
+  - **Academy**: RV University
+  - **Course**: B.Tech (Hons) CSE AIML
+  - **Semester**: Semester I
+  - **Assessment**: Internal II
+- **Auto-Exit & Fold**: Automatically folds, rotates, lifts upward, shrinks, and dissolves after 5 seconds, or closes instantly via the close button.
 
-### 📜 3. Uniform Border System (Left Yellow Border Removed)
-- Removed asymmetric 5px yellow left borders on card components ([style.css](style.css)), replacing them with a uniform `1px solid var(--border-gold)` border with subtle corner radii.
-
-### 📖 4. Old Novel Typography & Ornaments
-- Headings: **Cinzel** & **Cormorant Garamond** (magical serif display typography).
-- Body Text: **EB Garamond** & **Crimson Text** (styled to resemble an old novel).
-- Section Dividers: Golden decorative glyph dividers (`✧ ☽ ✧`).
+### 📜 3. Footer Integration & Replay Ability
+- Includes a `"📜 View Assignment Scroll"` button in the Diagon Alley notice board footer on all pages.
+- Clicking it replays the exact Marauder Map scroll animation timeline dynamically without page reload.
 
 ---
 
@@ -44,11 +52,11 @@
 
 ```
 Assignment2/
-├── index.html        # Storefront page with Anime.js 3D Alohomora spellbook overlay
+├── index.html        # Storefront page with Anime.js 3D Alohomora spellbook overlay & Assignment Scroll
 ├── contact.html      # Diagon Alley location details & Owl Post message dispatch form
 ├── deliv.html        # Delivery options (Owl Post, Floo Network, Apparition Direct)
-├── style.css         # CSS 3D perspective rules, typography, border fixes, & responsive styles
-├── script.js        # Anime.js entrance timeline, Web Audio synth, Cauldron cart & modals
+├── style.css         # CSS 3D perspective rules, typography, border fixes, & scroll styling
+├── script.js        # Anime.js entrance timeline, Web Audio synth, Marauder Scroll & cart logic
 ├── background.svg    # Custom aged parchment & dark stone SVG texture
 └── images/           # Magical item photography and webp backgrounds
 ```
@@ -75,4 +83,4 @@ Assignment2/
 ## ✒️ Credits & Authors
 
 Created by **Bhuvi Singhal & Navi...**  
-*Diagon Alley, London &bull; Opposite Gringotts Wizarding Bank*
+*RV University &bull; B.Tech (Hons) CSE AIML &bull; Semester I, Internal II*

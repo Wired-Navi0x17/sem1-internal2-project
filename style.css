@@ -315,7 +315,8 @@ body::before {
 a.ctaButton,
 button.ctaButton,
 .buyButton,
-.submitBtn {
+.submitBtn,
+.scrollReplayBtn {
   display: inline-block;
   background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8c6910 100%);
   color: #0f051a;
@@ -336,7 +337,8 @@ button.ctaButton,
 a.ctaButton:hover,
 button.ctaButton:hover,
 .buyButton:hover,
-.submitBtn:hover {
+.submitBtn:hover,
+.scrollReplayBtn:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 8px 24px rgba(212, 175, 55, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.7);
   background: linear-gradient(135deg, #f5eaaf 0%, #d4af37 50%, #b8941f 100%);
@@ -750,6 +752,12 @@ button.ctaButton:hover,
   font-size: 0.98em;
 }
 
+.footerActionRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
 /* ==================== 3D Alohomora Spellbook Entrance Overlay ==================== */
 #spellbookOverlay {
   position: fixed;
@@ -757,7 +765,7 @@ button.ctaButton:hover,
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #080210;
+  background: #06010c;
   z-index: 2000;
   display: flex;
   justify-content: center;
@@ -778,7 +786,7 @@ button.ctaButton:hover,
   font-size: 0.95em;
   cursor: pointer;
   text-decoration: underline;
-  opacity: 0.7;
+  opacity: 0.75;
   transition: opacity 0.3s ease;
   z-index: 2010;
 }
@@ -820,7 +828,7 @@ button.ctaButton:hover,
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(255, 235, 170, 0.9) 0%, rgba(212, 175, 55, 0.4) 60%, transparent 100%);
+  background: radial-gradient(circle at center, rgba(255, 235, 170, 0.95) 0%, rgba(212, 175, 55, 0.5) 60%, transparent 100%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease;
@@ -944,6 +952,138 @@ button.ctaButton:hover,
   font-family: var(--font-serif);
   font-size: 14px;
   opacity: 0;
+}
+
+/* Inward Swirling Sparks */
+.inwardSpark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #fff 0%, #d4af37 70%, transparent 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2006;
+  opacity: 0;
+}
+
+/* ==================== Animated Marauder Style Assignment Scroll ==================== */
+.assignmentScrollOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(8, 2, 14, 0.82);
+  backdrop-filter: blur(8px);
+  z-index: 2100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.assignmentScrollOverlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.marauderScrollCard {
+  background: #f4ebd0 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect fill="%23f4ebd0" width="200" height="200"/><circle fill="%238c6910" opacity="0.04" cx="50" cy="50" r="40"/><circle fill="%238c6910" opacity="0.04" cx="150" cy="150" r="50"/></svg>');
+  color: #2b1805;
+  border: 3px double #8c6910;
+  border-radius: 12px;
+  max-width: 650px;
+  width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.3);
+  position: relative;
+  font-family: var(--font-body);
+  transform-style: preserve-3d;
+}
+
+.waxSealBadge {
+  position: absolute;
+  top: -24px;
+  right: 35px;
+  width: 55px;
+  height: 55px;
+  background: radial-gradient(circle, #a81c1c 0%, #6e0c0c 80%);
+  border-radius: 50%;
+  border: 2px solid #d4af37;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f3e5ab;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.1em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.scrollHeaderTitle {
+  color: #5c1800;
+  font-family: var(--font-serif);
+  font-size: 2.1em;
+  margin: 0 0 8px 0;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.scrollHeaderSub {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: #8c4a00;
+  font-size: 1.15em;
+  margin-bottom: 24px;
+}
+
+.scrollBodyText {
+  font-size: 1.08em;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  color: #2b1805;
+  text-align: center;
+}
+
+.scrollMetaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  background: rgba(140, 105, 16, 0.08);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(140, 105, 16, 0.3);
+}
+
+.scrollMetaItem {
+  font-size: 0.98em;
+}
+
+.scrollMetaItem strong {
+  color: #5c1800;
+  font-family: var(--font-serif);
+  display: block;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scrollCloseBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: #5c1800;
+  font-size: 1.5em;
+  cursor: pointer;
+  line-height: 1;
 }
 
 /* Modal Quick View */
@@ -1132,5 +1272,9 @@ button.ctaButton:hover,
   .magicCircleSVG {
     width: 360px;
     height: 360px;
+  }
+
+  .marauderScrollCard {
+    padding: 25px;
   }
 }
