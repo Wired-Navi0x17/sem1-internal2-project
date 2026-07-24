@@ -96,6 +96,18 @@ body::before {
   }
 }
 
+/* Wand Trail Spark Animation */
+.wandTrailSpark {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #ffffff 0%, #f5eaaf 50%, #d4af37 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 15px #f5eaaf, 0 0 30px #d4af37;
+  pointer-events: none;
+  z-index: 2020;
+}
+
 /* ==================== Header & Navigation ==================== */
 .mainHeader {
   background: linear-gradient(180deg, rgba(20, 6, 32, 0.95) 0%, rgba(14, 4, 23, 0.92) 100%);
@@ -546,6 +558,7 @@ button.ctaButton:hover,
   flex-direction: column;
   overflow: hidden;
   perspective: 1400px;
+  transition: background-color 0.5s ease;
 }
 
 .skipEntranceLink {
