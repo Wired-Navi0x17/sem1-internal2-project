@@ -414,27 +414,33 @@ function createWandCastTrail(e) {
   }
 }
 
-// ==================== GSAP & Anime.js Alohomora Entrance Sequence ====================
+// ==================== GSAP & Anime.js Alohomora Entrance Sequence (24-Hour Persistence) ====================
 function initAlohomoraEntrance() {
   const overlay = document.getElementById('spellbookOverlay');
   const mainContainer = document.getElementById('mainPageContainer');
   if (!overlay) return;
 
   const isSubPage = !window.location.pathname.endsWith('index.html') && window.location.pathname.endsWith('.html');
+  
+  // 24-Hour Persistence Logic
+  const LAST_PLAYED_KEY = 'alohomora_last_played_time';
+  const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+  const lastPlayed = localStorage.getItem(LAST_PLAYED_KEY);
+  const now = Date.now();
 
-  if (isSubPage) {
+  if (isSubPage || (lastPlayed && (now - parseInt(lastPlayed, 10)) < TWENTY_FOUR_HOURS)) {
     overlay.style.display = 'none';
     if (mainContainer) mainContainer.style.opacity = '1';
     return;
   }
 
-  // Display spellbook entrance on EVERY page load / refresh of index.html!
   if (mainContainer) mainContainer.style.opacity = '0';
 
   const alohomoraBtn = document.getElementById('alohomoraBtn');
   const skipBtn = document.getElementById('skipEntrance');
 
   const revealHomepage = () => {
+    localStorage.setItem(LAST_PLAYED_KEY, Date.now().toString());
     overlay.style.opacity = '0';
     setTimeout(() => {
       overlay.style.display = 'none';
@@ -607,14 +613,13 @@ function initPullCordMechanism() {
 }
 
 // ==================== Authentic Marauder's Map Information Scroll Engine ====================
-let scrollAutoTimer = null;
-
 function initAssignmentScrollEvents() {
   const scrollOverlay = document.getElementById('assignmentScrollOverlay');
   const closeBtn = document.getElementById('scrollCloseBtn');
 
   if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       dismissAssignmentScroll();
     });
   }
@@ -641,8 +646,6 @@ function triggerAssignmentScroll() {
     isMapAnimating = false;
     return;
   }
-
-  if (scrollAutoTimer) clearTimeout(scrollAutoTimer);
 
   scrollOverlay.classList.add('active');
 
@@ -753,10 +756,8 @@ function triggerAssignmentScroll() {
     });
   }
 
-  // Auto Close after 5 seconds of full reveal
-  scrollAutoTimer = setTimeout(() => {
-    dismissAssignmentScroll();
-  }, 5000);
+  // NOTE: Auto-close timer has been completely removed per User Request.
+  // Map remains open indefinitely until dismissed via Close Button or Overlay Click!
 }
 
 function dismissAssignmentScroll() {
@@ -770,7 +771,6 @@ function dismissAssignmentScroll() {
     return;
   }
 
-  if (scrollAutoTimer) clearTimeout(scrollAutoTimer);
   playRetractSound();
 
   if (typeof anime !== 'undefined') {
