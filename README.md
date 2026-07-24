@@ -1,7 +1,7 @@
 # 🧹 The Wizarding Emporium - Diagon Alley Magical Supplies
 
 > **Diagon Alley's Premier Magical Supplier Since 1298**  
-> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Anime.js Alohomora Entrance Spell** (runs on every page load/refresh), an **Enchanted Marauder's Map Information Scroll** (once-a-day auto-trigger & footer replay), aged parchment aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
+> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Anime.js Alohomora Entrance Spell** (runs on every page load/refresh), an authentic **Dense Marauder's Map Information Scroll** with animated footprints & hand-drawn SVG pathways, aged parchment aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
 
 ---
 
@@ -31,22 +31,26 @@
   11. Pages illuminate and expand smoothly into storefront background.
   12. Storefront elements stagger into view using Anime.js (`anime.stagger(100)`).
 
-### 📜 2. Authentic Marauder's Map Information Scroll (Once Per Day & Footer Replay)
-- **Once-a-Day Auto-Trigger**: Uses `localStorage.getItem('marauderScrollLastShownDate')` to automatically display the Marauder Map scroll once per day after the entrance spell.
+### 📜 2. Authentic Dense Marauder's Map Information Scroll
+- **Zoom & Scale Fix**: Optimized scroll scaling (`max-width: 820px`, `width: 92%`) ensuring comfortable, unzoomed viewing when summoned.
+- **Dense Map Background (8% Opacity)**: Features castle floor plans, corridors, room outlines, hidden passage sketches, and Astronomy tower staircases.
+- **25% Enlarged Compass Rose**: Positioned beneath pathways, softly glowing on hover.
 - **Hand-Drawn SVG Pathways & Animated Footprints**:
-  - Animated SVG path drawing (`strokeDashoffset`).
-  - Animated footprints (`walkingFootprint`) walking along pathways between academic landmarks.
-- **Wizarding Academic Decree Text**:
+  - Anime.js `strokeDashoffset` path inking.
+  - Footprints (`.walkingFootprint`) step across pathways sequentially, pausing at each landmark to illuminate it.
+- **Wizarding Academic Decree Text & Map Landmarks**:
   - *"The Ministry of Magical Education hereby records that the apprentices named below have successfully completed the Second Internal Assignment of the First Semester..."*
-  - **Created By**: Bhuvi Singhal & Navi...
-  - **Academy**: RV University
-  - **Course**: B.Tech (Hons) CSE AIML
-  - **Semester**: Semester I
-  - **Internal Assessment**: Internal II
-- **Exit Animation**: Footprints walk off, ink slowly fades, map folds back together, lifts, and dissolves into golden particles.
+  - 🪶 **Created By**: Bhuvi Singhal & Navi...
+  - 🏰 **Academy**: RV University
+  - 📖 **Course**: B.Tech (Hons) CSE AIML
+  - ⌛ **Semester**: Semester I
+  - 🏆 **Assessment**: Internal Assessment II
+- **Tilted Wax Seal**: Tilted by -8 degrees over the paper border with realistic drop shadow.
+- **Faint Fold Lines & Burnt Edges**: Includes vertical/horizontal parchment crease lines and dark burnt vignette edges.
 
-### 📜 3. Footer Integration
-- Includes a `"📜 View Assignment Scroll"` button in the Diagon Alley notice board footer across all pages. Clicking it replays the full Marauder Map scroll animation at any time.
+### 📜 3. Frequency Rules & Footer Integration
+- Marauder Map Scroll auto-triggers **once per day** on initial entry via `localStorage.getItem('marauderScrollLastShownDate')`.
+- Includes a `"📜 View Assignment Scroll"` button in the Diagon Alley notice board footer on all pages for manual replay at any time.
 
 ---
 

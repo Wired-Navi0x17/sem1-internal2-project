@@ -362,6 +362,8 @@ function triggerAssignmentScroll(isAutoClose = true) {
 
   if (scrollTimer) clearTimeout(scrollTimer);
 
+  // Reset zoom & scale styling
+  marauderCard.style.transform = 'scale(1)';
   scrollOverlay.classList.add('active');
 
   if (typeof anime !== 'undefined') {
@@ -369,41 +371,45 @@ function triggerAssignmentScroll(isAutoClose = true) {
       easing: 'easeInOutCubic'
     });
 
-    // Fly in & unfold map
+    // Step 1: Unfold Parchment
     mapTimeline.add({
       targets: marauderCard,
-      translateY: ['-100vh', 0],
-      rotateZ: [-12, 0],
-      rotateX: [25, 0],
+      scale: [0.85, 1],
+      rotateZ: [-6, 0],
+      rotateX: [15, 0],
       opacity: [0, 1],
-      duration: 950,
+      duration: 850,
       easing: 'easeOutBack'
     })
-    // Draw SVG Pathways
+    // Step 2: Compass & Hand-Drawn SVG Pathways Inking
     .add({
       targets: '#mapPath1, #mapPath2, #mapPath3',
       strokeDashoffset: [anime.setDashoffset, 0],
-      duration: 1200,
-      easing: 'easeInOutCubic'
-    }, '-=400')
-    // Footprints Walk Across Map
+      duration: 1100,
+      easing: 'easeInOutQuad'
+    }, '-=300')
+    // Step 3: Footprints Walking Sequential Journey
     .add({
       targets: '.walkingFootprint',
-      opacity: [0, 0.8, 0],
-      translateX: (el, i) => [i * 80, (i + 1) * 160],
-      translateY: (el, i) => [i * 30, (i + 1) * 60],
-      duration: 1400,
-      delay: anime.stagger(150),
+      opacity: [0, 0.9, 0],
+      translateX: (el, i) => [i * 60, (i + 1) * 140],
+      translateY: (el, i) => [i * 20, (i + 1) * 45],
+      duration: 1200,
+      delay: anime.stagger(180),
       easing: 'easeInOutQuad'
-    }, '-=800')
-    // Illuminate Map Landmarks Grid
+    }, '-=700')
+    // Step 4: Landmarks Sequential Illumination
     .add({
       targets: '.mapLandmarkCard',
       opacity: [0.3, 1],
-      scale: [0.95, 1],
-      delay: anime.stagger(100),
-      duration: 600
-    }, '-=600');
+      scale: [0.95, 1.05, 1],
+      delay: anime.stagger(140),
+      duration: 700,
+      changeBegin: () => {
+        const landmarks = document.querySelectorAll('.mapLandmarkCard');
+        landmarks.forEach(lm => lm.classList.add('activeLandmark'));
+      }
+    }, '-=800');
   } else {
     marauderCard.style.opacity = '1';
   }
@@ -411,7 +417,7 @@ function triggerAssignmentScroll(isAutoClose = true) {
   if (isAutoClose) {
     scrollTimer = setTimeout(() => {
       dismissAssignmentScroll();
-    }, 6000);
+    }, 6500);
   }
 }
 
@@ -425,14 +431,16 @@ function dismissAssignmentScroll() {
   if (typeof anime !== 'undefined') {
     anime({
       targets: marauderCard,
-      translateY: [0, '-80vh'],
-      rotateZ: [0, 12],
-      scale: [1, 0.7],
+      translateY: [0, '-70vh'],
+      rotateZ: [0, 10],
+      scale: [1, 0.75],
       opacity: [1, 0],
       duration: 750,
       easing: 'easeInBack',
       complete: () => {
         scrollOverlay.classList.remove('active');
+        const landmarks = document.querySelectorAll('.mapLandmarkCard');
+        landmarks.forEach(lm => lm.classList.remove('activeLandmark'));
       }
     });
   } else {
