@@ -428,6 +428,7 @@ function initAlohomoraEntrance() {
     return;
   }
 
+  // Display spellbook entrance on EVERY page load / refresh of index.html!
   if (mainContainer) mainContainer.style.opacity = '0';
 
   const alohomoraBtn = document.getElementById('alohomoraBtn');
@@ -628,7 +629,7 @@ function initAssignmentScrollEvents() {
 }
 
 function triggerAssignmentScroll() {
-  if (isMapAnimating) return; // Ignore duplicate calls
+  if (isMapAnimating) return; // Strict state guard: ignore duplicate calls!
   isMapAnimating = true;
 
   const scrollOverlay = document.getElementById('assignmentScrollOverlay');
@@ -645,11 +646,21 @@ function triggerAssignmentScroll() {
 
   scrollOverlay.classList.add('active');
 
-  // Reset section opacities for sequential reveal
-  const sectionIds = ['#revealTitle', '#revealSub', '#revealDecree', '#landmark1', '#landmark2', '#landmark3', '#landmark4', '#landmark5', '#revealSeal'];
+  // Reset opacity of all reveal sections for footprint arrival
+  const sectionIds = [
+    '#revealTitle',
+    '#revealSub',
+    '#revealDecree',
+    '#landmark1',
+    '#landmark2',
+    '#landmark3',
+    '#landmark4',
+    '#landmark5',
+    '#revealSeal'
+  ];
   sectionIds.forEach(id => {
     const el = document.querySelector(id);
-    if (el) el.style.opacity = '0.2';
+    if (el) el.style.opacity = '0.05';
   });
 
   playScrollUnrollSound();
@@ -659,15 +670,15 @@ function triggerAssignmentScroll() {
       easing: 'easeInOutCubic'
     });
 
-    // Step 1: Lower Rollers & Parchment Tube from Ceiling
+    // 1. Parchment Tube Descends from Ceiling & Sways Slightly
     mapTimeline.add({
       targets: [rollerTop, marauderCard, rollerBottom],
       translateY: ['-100vh', 0],
-      rotateZ: [-5, 0],
-      duration: 1000,
+      rotateZ: [-5, 2, 0],
+      duration: 1100,
       easing: 'easeOutBack'
     })
-    // Step 2: SVG Pathways & Quill Ink Drawing
+    // 2. SVG Pathways & Borders Draw Themselves (Quill Ink)
     .add({
       targets: '#mapPath1, #mapPath2, #mapPath3',
       strokeDashoffset: [anime.setDashoffset, 0],
@@ -675,37 +686,74 @@ function triggerAssignmentScroll() {
       easing: 'easeInOutQuad',
       changeBegin: () => playQuillInkSound()
     }, '-=300')
-    // Step 3: Sequential Footprint Walk & Destination Illuminations
+    // 3. Footprint Guided Sequential Section Reveals
     .add({
-      targets: '.walkingFootprint',
-      opacity: [0, 1, 0],
-      translateX: (el, i) => [i * 50, (i + 1) * 130],
-      translateY: (el, i) => [i * 15, (i + 1) * 35],
-      duration: 1400,
-      delay: anime.stagger(220),
-      easing: 'easeInOutQuad',
+      targets: '#revealTitle, #revealSub',
+      opacity: [0.05, 1],
+      translateY: [10, 0],
+      duration: 600,
       changeBegin: () => playFootstepSound()
-    }, '-=800')
-    // Step 4: Synchronized Section Reveals (Title -> Decree -> Created By -> Academy -> Course -> Semester -> Assessment -> Approval)
+    })
     .add({
-      targets: sectionIds,
-      opacity: [0.2, 1],
-      scale: [0.96, 1.04, 1],
-      delay: anime.stagger(280),
-      duration: 800,
-      complete: () => {
+      targets: '#revealDecree',
+      opacity: [0.05, 1],
+      translateY: [10, 0],
+      duration: 700,
+      changeBegin: () => playFootstepSound()
+    }, '+=150')
+    .add({
+      targets: '#landmark1',
+      opacity: [0.05, 1],
+      scale: [0.9, 1.05, 1],
+      duration: 600,
+      changeBegin: () => playFootstepSound()
+    }, '+=150')
+    .add({
+      targets: '#landmark2',
+      opacity: [0.05, 1],
+      scale: [0.9, 1.05, 1],
+      duration: 600,
+      changeBegin: () => playFootstepSound()
+    }, '+=150')
+    .add({
+      targets: '#landmark3',
+      opacity: [0.05, 1],
+      scale: [0.9, 1.05, 1],
+      duration: 600,
+      changeBegin: () => playFootstepSound()
+    }, '+=150')
+    .add({
+      targets: '#landmark4',
+      opacity: [0.05, 1],
+      scale: [0.9, 1.05, 1],
+      duration: 600,
+      changeBegin: () => playFootstepSound()
+    }, '+=150')
+    .add({
+      targets: '#landmark5',
+      opacity: [0.05, 1],
+      scale: [0.9, 1.05, 1],
+      duration: 600,
+      changeBegin: () => playFootstepSound()
+    }, '+=150')
+    .add({
+      targets: '#revealSeal',
+      opacity: [0.05, 1],
+      scale: [0.8, 1.1, 1],
+      duration: 700,
+      changeBegin: () => {
+        playFootstepSound();
         playFinalSwellSound();
       }
-    }, '-=1000');
+    }, '+=150');
   } else {
-    marauderCard.style.opacity = '1';
     sectionIds.forEach(id => {
       const el = document.querySelector(id);
       if (el) el.style.opacity = '1';
     });
   }
 
-  // Auto-Retraction after 5 Seconds
+  // Auto Close after 5 seconds of full reveal
   scrollAutoTimer = setTimeout(() => {
     dismissAssignmentScroll();
   }, 5000);
@@ -731,7 +779,7 @@ function dismissAssignmentScroll() {
       translateY: [0, '-100vh'],
       rotateZ: [0, 6],
       opacity: [1, 0],
-      duration: 800,
+      duration: 850,
       easing: 'easeInBack',
       complete: () => {
         scrollOverlay.classList.remove('active');

@@ -1,7 +1,7 @@
 # 🧹 The Wizarding Emporium - Diagon Alley Magical Supplies
 
 > **Diagon Alley's Premier Magical Supplier Since 1298**  
-> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Cinematic GSAP/Anime.js Alohomora Entrance Spell** (runs on every page load and refresh), a **Signature Hanging Marauder's Map** with physical pull-cord mechanics, multi-layered Web Audio sound design, animated alternating footprints, and an official Ministry Decree of Academic Distinction.
+> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Cinematic GSAP/Anime.js Alohomora Entrance Spell** (runs on every page load and refresh), a **Signature Hanging Marauder's Map System** with physical pull-cord mechanics, multi-layered Web Audio sound design, sequential footprint reveals, and an official Ministry Decree of Academic Distinction.
 
 ---
 
@@ -25,19 +25,22 @@
   5. **Phase 5 (Golden Burst & Pages Flutter)**: Warm golden light escapes, 3D leather cover opens, pages flutter open with paper sound.
   6. **Phase 6 (Camera Drift & Lingering Magic)**: Floating camera enters pages into storefront, leaving residual golden dust particles that fade after entry.
 
-### 📜 2. Signature Hanging Marauder's Map (Strict Bug Fixed)
+### 📜 2. Signature Hanging Marauder's Map System (Strict 11-Point Polish)
 - **Strict Navigation Guard (`isMapAnimating`)**: Clicking `"Home"`, `"Contact"`, `"Delivery"`, product cards, or any other UI elements will **NEVER** trigger the map animation. The map ONLY activates when the upper-right hanging cord is physically pulled!
-- **Hanging Mechanism Aesthetics**:
+- **Physical Pull Cord Mechanism**:
   - Engraved brass ceiling mount (`.ceilingMount`)
   - Braided golden rope with woven texture (`.ropeLine`)
   - Small rune ring (`.runeRingSmall`)
   - Suspended glowing crystal gem (`.crystalGem`) with soft golden aura
   - Layered fabric tassel (`.tasselHead`, `.tasselSkirt`)
   - Idle side-to-side swinging (`@keyframes cordSwayIdle`)
-- **Pull Interaction & Audio Timeline**:
+- **Ceiling Scroll Tube & Rollers**:
+  - Lowering parchment tube from ceiling (`scrollRollerTop`, `scrollRollerBottom`) attached to upper mechanism.
+  - Rollers rotate open, paper unfolds, fold lines and curled corners settle into view.
+- **Layered Web Audio API Sound Timeline**:
   - **Hover**: Crystal shimmer (`playHoverShimmer()`)
-  - **Press & Drag**: Rope stretches downward, tension builds (`playRopeTensionSound()`)
-  - **Release**: Spring bounce elasticity $\rightarrow$ ceiling mechanism unlocks with brass click (`playCeilingUnlockSound()`)
+  - **Press & Drag**: Rope movement & fabric tension (`playRopeTensionSound()`)
+  - **Release**: Elastic spring bounce $\rightarrow$ ceiling mechanism unlocks with brass click (`playCeilingUnlockSound()`)
   - **Lowering**: Wood creak & parchment unfurling (`playScrollUnrollSound()`)
   - **Ink Drawing**: Quill scratching & sparkles (`playQuillInkSound()`)
   - **Footprints**: Soft alternating footsteps (`playFootstepSound()`)
@@ -52,7 +55,7 @@
   6. ⌛ Semester: Semester I
   7. 🏆 Assessment: Internal Assessment II
   8. Official Ministry Approval Seal Stamp
-- **Clean Auto Retraction**: Retracts back up into the ceiling after 5 seconds with no visible countdown timers, resetting the hanging cord cleanly for the next pull.
+- **Clean Auto Retraction**: Retracts back up into the ceiling mechanism after 5 seconds of being fully revealed with no visible countdown timers, resetting the hanging cord cleanly for the next pull.
 
 ---
 
