@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <!-- Base background dark violet tile -->
+  <rect width="40" height="40" fill="#160826"/>
+  <!-- Smaller micro-square grid pattern -->
+  <rect x="1" y="1" width="18" height="18" fill="#200a33" rx="2"/>
+  <rect x="21" y="1" width="18" height="18" fill="#260c3b" rx="2"/>
+  <rect x="1" y="21" width="18" height="18" fill="#260c3b" rx="2"/>
+  <rect x="21" y="21" width="18" height="18" fill="#200a33" rx="2"/>
+  <!-- Inner micro accents -->
+  <rect x="5" y="5" width="10" height="10" fill="#1b082b" rx="1"/>
+  <rect x="25" y="5" width="10" height="10" fill="#1f0930" rx="1"/>
+  <rect x="5" y="25" width="10" height="10" fill="#1f0930" rx="1"/>
+  <rect x="25" y="25" width="10" height="10" fill="#1b082b" rx="1"/>
+  <!-- Subtle 4-point magical gold star sparkle accents -->
+  <path d="M20 16 L21 19 L24 20 L21 21 L20 24 L19 21 L16 20 L19 19 Z" fill="#d4af37" opacity="0.18"/>
+  <path d="M0 0 L0.5 1.5 L2 2 L0.5 2.5 L0 4 L-0.5 2.5 L-2 2 L-0.5 1.5 Z" fill="#d4af37" opacity="0.12"/>
+  <path d="M40 40 L40.5 41.5 L42 42 L40.5 42.5 L40 44 L39.5 42.5 L38 42 L39.5 41.5 Z" fill="#d4af37" opacity="0.12"/>
+</svg>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - The Wizarding Emporium</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="pageContainer">
+      <header class="mainHeader">
+        <div class="headerContent">
+          <h1 class="shopTitle">The Wizarding Emporium</h1>
+          <p class="shopTagline">
+            Diagon Alley's Premier Magical Supplier Since 1298
+          </p>
+        </div>
+        <nav class="mainNav">
+          <a href="index.html" class="navLink">Home</a>
+          <a href="contact.html" class="navLink active">Contact</a>
+          <a href="deliv.html" class="navLink">Delivery</a>
+          <div class="cauldronBadge">
+            <svg class="cauldronIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"/>
+              <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8"/>
+            </svg>
+            <span class="cauldronCount">0</span>
+          </div>
+        </nav>
+      </header>
+
+      <main class="mainContent">
+        <section class="welcomeSection">
+          <h2 class="sectionTitle">Contact The Wizarding Emporium</h2>
+          <p class="sectionIntro">
+            Have questions about our magical products? Send us an owl or visit
+            our Diagon Alley location!
+          </p>
+        </section>
+
+        <div class="contactInfo">
+          <h3>Our Location & Contact Details</h3>
+          <p>
+            <strong>Address:</strong> 12 Diagon Alley, London (between Flourish
+            and Blotts and Quality Quidditch Supplies)
+          </p>
+          <p>
+            <strong>Floo Network:</strong> "Wizarding Emporium, Diagon Alley"
+          </p>
+          <p>
+            <strong>Owl Post:</strong> Address your letter to: The Proprietor,
+            The Wizarding Emporium, Diagon Alley, London
+          </p>
+          <p>
+            <strong>Store Hours:</strong> Monday-Friday: 9AM-7PM, Saturday:
+            10AM-8PM, Sunday: 11AM-5PM
+          </p>
+          <p>
+            <strong>Emergency After-Hours:</strong> Use the Patronus Charm -
+            we'll receive your message instantly
+          </p>
+        </div>
+
+        <section class="featuredSection">
+          <h2 class="sectionTitle">Send Us a Magical Message</h2>
+          <p class="sectionIntro">
+            Prefer to send a message? Fill out the form below and we'll respond
+            within 24 hours by return owl.
+          </p>
+          <form class="contactForm">
+            <div class="formGroup">
+              <label class="formLabel" for="name">Your Full Name:</label>
+              <input
+                class="formInput"
+                type="text"
+                id="name"
+                name="name"
+                placeholder="e.g., Harry Potter"
+                required
+              />
+            </div>
+
+            <div class="formGroup">
+              <label class="formLabel" for="email">Owl Post Address:</label>
+              <input
+                class="formInput"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="your.owl@hogwarts.edu"
+                required
+              />
+            </div>
+
+            <div class="formGroup">
+              <label class="formLabel" for="subject">Message Subject:</label>
+              <input
+                class="formInput"
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="e.g., Wand Repair Inquiry"
+                required
+              />
+            </div>
+
+            <div class="formGroup">
+              <label class="formLabel" for="category">Message Category:</label>
+              <select class="formInput" id="category" name="category" required>
+                <option value="">Select a category</option>
+                <option value="wand">Wand Questions</option>
+                <option value="potion">Potions Ingredients</option>
+                <option value="delivery">Delivery Inquiry</option>
+                <option value="repair">Magical Item Repair</option>
+                <option value="wholesale">Wholesale Orders</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="formGroup">
+              <label class="formLabel" for="message"
+                >Your Magical Message:</label
+              >
+              <textarea
+                class="formInput formTextarea"
+                id="message"
+                name="message"
+                placeholder="Please describe your inquiry in detail..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="formGroup">
+              <label class="formLabel">
+                <input type="checkbox" name="newsletter" checked />
+                Subscribe to our Monthly Owl Post Newsletter with exclusive
+                offers
+              </label>
+            </div>
+
+            <button class="submitBtn" type="submit">Send by Owl Post</button>
+          </form>
+        </section>
+
+        <section class="testimonialsSection">
+          <h2 class="sectionTitle">Why Wizards Choose Us</h2>
+          <div class="testimonialsGrid">
+            <div class="testimonialCard">
+              <p class="testimonialText">
+                "Their customer service is exceptional! When my son's wand
+                needed emergency repair before his O.W.L.s, they stayed open
+                late to help us."
+              </p>
+              <p class="testimonialAuthor">- Mrs. Weasley, The Burrow</p>
+            </div>
+            <div class="testimonialCard">
+              <p class="testimonialText">
+                "As Head of Ravenclaw House, I trust The Wizarding Emporium for
+                all our magical supplies. Their quality is unmatched."
+              </p>
+              <p class="testimonialAuthor">- Professor F. Flitwick</p>
+            </div>
+            <div class="testimonialCard">
+              <p class="testimonialText">
+                "They found a rare Peruvian Instant Darkness Powder shipment for
+                my research. Knowledgeable staff who understand complex magical
+                needs."
+              </p>
+              <p class="testimonialAuthor">- A. Dumbledore, Hogwarts</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="mainFooter">
+        <div class="footerContent">
+          <div class="footerSection">
+            <h3>The Wizarding Emporium</h3>
+            <p>
+              Diagon Alley, London<br />
+              Opposite Gringotts Wizarding Bank<br />
+              Floo Network: "Wizarding Emporium"
+            </p>
+          </div>
+          <div class="footerSection">
+            <h3>Store Hours</h3>
+            <p>
+              Monday-Friday: 9AM-7PM<br />
+              Saturday: 10AM-8PM<br />
+              Sunday: 11AM-5PM
+            </p>
+          </div>
+          <div class="footerSection">
+            <h3>Magical Services</h3>
+            <p>
+              Wand Matching<br />
+              Owl Post Delivery<br />
+              Floo Powder Delivery<br />
+              International Shipping
+            </p>
+          </div>
+        </div>
+        <div
+          style="
+            text-align: center;
+            color: #d4af37;
+            font-size: 0.9em;
+            margin-top: 15px;
+          "
+        >
+          Created by Bhuvi & Harshul
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

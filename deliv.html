@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delivery Process - The Wizarding Emporium</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="pageContainer">
+      <header class="mainHeader">
+        <div class="headerContent">
+          <h1 class="shopTitle">The Wizarding Emporium</h1>
+          <p class="shopTagline">
+            Diagon Alley's Premier Magical Supplier Since 1298
+          </p>
+        </div>
+        <nav class="mainNav">
+          <a href="index.html" class="navLink">Home</a>
+          <a href="contact.html" class="navLink">Contact</a>
+          <a href="deliv.html" class="navLink active">Delivery</a>
+          <div class="cauldronBadge">
+            <svg class="cauldronIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"/>
+              <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8"/>
+            </svg>
+            <span class="cauldronCount">0</span>
+          </div>
+        </nav>
+      </header>
+
+      <main class="mainContent">
+        <section class="welcomeSection">
+          <h2 class="sectionTitle">Magical Delivery Process</h2>
+          <p class="sectionIntro">
+            We deliver your magical items safely using traditional and enchanted
+            methods
+          </p>
+        </section>
+
+        <section class="featuredSection">
+          <h2 class="sectionTitle">Our Delivery Process</h2>
+
+          <div class="deliveryStep">
+            <h3 class="stepTitle">1. Place Your Order</h3>
+            <p>
+              Visit our Diagon Alley location or send your order via owl post.
+              We accept payment in Galleons, Sickles, and Knuts.
+            </p>
+          </div>
+
+          <div class="deliveryStep">
+            <h3 class="stepTitle">2. Order Processing</h3>
+            <p>
+              We'll send a confirmation via owl post. Our specialists prepare
+              your items with protective spells and packaging charms.
+            </p>
+          </div>
+
+          <div class="deliveryStep">
+            <h3 class="stepTitle">3. Choose Delivery Method</h3>
+            <div class="deliveryMethods">
+              <div class="deliveryMethod">
+                <div class="deliveryMethodHeader">
+                  <!-- reicon SVG: send -->
+                  <svg class="deliveryMethodIcon" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.5615 5.64099C23.4636 3.04509 20.9861 0.522263 18.3803 1.44085L3.44476 6.70576C0.578346 7.71619 0.500509 11.7624 3.32388 12.8849L3.3397 12.891L8.29288 14.7318C8.75501 14.9178 9.12031 15.2916 9.2978 15.764L11.222 20.6243C12.3084 23.4996 16.3744 23.4454 17.3839 20.5402L22.5615 5.64099ZM18.8789 2.85553C20.2743 2.36365 21.643 3.71458 21.1447 5.14861L15.9671 20.0478C15.4171 21.6302 13.2126 21.6573 12.6238 20.0902L10.6996 15.2299C10.6224 15.0256 10.5257 14.8311 10.4119 14.6487L14.0303 11.0303C14.3232 10.7374 14.3232 10.2626 14.0303 9.96967C13.7374 9.67678 13.2626 9.67678 12.9697 9.96967L9.34872 13.5906C9.18799 13.4915 9.01788 13.4058 8.83985 13.335L8.82404 13.3289L3.87079 11.4881C2.34161 10.8732 2.38813 8.6687 3.94344 8.12043L18.8789 2.85553Z"/>
+                  </svg>
+                  <h4>Standard Owl Post</h4>
+                </div>
+                <p>3-5 Business Days - FREE</p>
+              </div>
+
+              <div class="deliveryMethod">
+                <div class="deliveryMethodHeader">
+                  <!-- reicon SVG: flame -->
+                  <svg class="deliveryMethodIcon" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.25961 3.09856C9.6636 2.08774 10.9948 1.46276 12.0272 2.2492C13.7471 3.55935 15.9044 5.4855 17.6398 7.68865C19.3595 9.87197 20.75 12.4348 20.75 15C20.75 17.2933 20.0398 18.9975 19.0117 20.218C17.9933 21.4269 16.6994 22.1193 15.5816 22.4671C15.0076 22.6457 14.4825 22.3825 14.2275 21.9545C13.9871 21.5512 13.9859 21.0147 14.2863 20.583C15.1436 19.351 16.05 17.5793 16.05 16C16.05 15.2165 15.7123 14.2889 15.1668 13.3372C14.7566 12.6215 14.2539 11.9351 13.7643 11.3465C13.6627 12.7494 13.3578 14.5121 12.412 15.9696C11.9822 16.6319 11.0267 16.706 10.518 16.0627C10.3592 15.8618 10.2023 15.6412 10.0588 15.4393C10.0501 15.4271 10.0415 15.4151 10.033 15.403C9.9545 15.2927 9.87986 15.1882 9.80763 15.09C9.12187 15.773 8.48333 16.5902 8.48333 17.5C8.48333 18.3037 8.88448 19.4025 9.35898 20.3335C9.61561 20.837 9.50832 21.3951 9.1994 21.7606C8.87092 22.1492 8.27312 22.3491 7.70569 22.0206C5.76159 20.8952 3.25 18.4917 3.25 15C3.25 14.0531 3.57109 13.0736 4.0203 12.1168C4.47254 11.1536 5.0858 10.15 5.72984 9.14739C5.95297 8.80004 6.17941 8.45306 6.40546 8.10668C7.51002 6.41411 8.60528 4.73579 9.25961 3.09856ZM10.8983 3.41743C10.7958 3.45292 10.6992 3.53846 10.6525 3.65524C9.93718 5.44504 8.74008 7.27713 7.63532 8.9679C7.41569 9.30403 7.19971 9.63458 6.99189 9.95809C6.35264 10.9532 5.78547 11.8866 5.3781 12.7543C4.96769 13.6284 4.75 14.3737 4.75 15C4.75 17.2945 6.15653 19.0762 7.63307 20.1782C7.27845 19.3371 6.98333 18.367 6.98333 17.5C6.98333 15.7694 8.2827 14.4629 9.00894 13.7752C9.47929 13.3298 10.2914 13.2899 10.7647 13.874C10.9359 14.0853 11.1032 14.3197 11.2553 14.5336L11.2734 14.559C11.3161 14.619 11.3576 14.6774 11.3983 14.7342C12.0671 13.4599 12.2543 11.9056 12.3012 10.6262C12.3204 10.0998 12.6468 9.68344 13.0747 9.50935C13.5118 9.33153 14.0549 9.40987 14.4285 9.82319L13.8721 10.3261L14.4285 9.82319C15.0949 10.5604 15.8626 11.5347 16.4682 12.5913C17.0657 13.6337 17.55 14.8329 17.55 16C17.55 17.6926 16.7822 19.4101 16.0062 20.6885C16.6582 20.3692 17.3159 19.9028 17.8644 19.2516C18.6512 18.3177 19.25 16.9612 19.25 15C19.25 12.9433 18.1125 10.7131 16.4614 8.61679C14.8259 6.54033 12.7696 4.70034 11.1183 3.44243C11.0636 3.40079 10.993 3.38466 10.8983 3.41743Z"/>
+                  </svg>
+                  <h4>Floo Network Express</h4>
+                </div>
+                <p>Next-Day Delivery - 5 Galleons</p>
+              </div>
+
+              <div class="deliveryMethod">
+                <div class="deliveryMethodHeader">
+                  <!-- reicon SVG: bolt-lightning -->
+                  <svg class="deliveryMethodIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <g transform="scale(1.33333)">
+                      <path d="M7.25,16.25l2-7H4.466c-.348,0-.589-.346-.469-.672L6.38,2.078c.072-.197,.26-.328,.469-.328h4.17c.352,0,.593,.353,.466,.681l-1.485,3.819h3.75c.412,0,.647,.47,.4,.8l-6.9,9.2Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+                    </g>
+                  </svg>
+                  <h4>Apparition Direct</h4>
+                </div>
+                <p>Same-Day Delivery - 15 Galleons</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="deliveryStep">
+            <h3 class="stepTitle">4. Receive Your Items</h3>
+            <p>
+              Your items arrive with care instructions and certificates of
+              authenticity. All deliveries include anti-Muggle detection charms
+              for safety.
+            </p>
+          </div>
+        </section>
+
+        <section class="testimonialsSection">
+          <h2 class="sectionTitle">Delivery Testimonials</h2>
+          <div class="testimonialsGrid">
+            <div class="testimonialCard">
+              <p class="testimonialText">
+                "My Nimbus 2001 arrived perfectly despite terrible weather! The
+                protective spells worked perfectly."
+              </p>
+              <p class="testimonialAuthor">- Oliver Wood, Puddlemere United</p>
+            </div>
+            <div class="testimonialCard">
+              <p class="testimonialText">
+                "Living in a Muggle neighborhood, I was worried about delivery.
+                Their anti-Muggle charms are flawless!"
+              </p>
+              <p class="testimonialAuthor">- Hermione G., London</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="mainFooter">
+        <div class="footerContent">
+          <div class="footerSection">
+            <h3>The Wizarding Emporium</h3>
+            <p>
+              Diagon Alley, London<br />
+              Opposite Gringotts Wizarding Bank<br />
+              Floo Network: "Wizarding Emporium"
+            </p>
+          </div>
+          <div class="footerSection">
+            <h3>Store Hours</h3>
+            <p>
+              Monday-Friday: 9AM-7PM<br />
+              Saturday: 10AM-8PM<br />
+              Sunday: 11AM-5PM
+            </p>
+          </div>
+          <div class="footerSection">
+            <h3>Magical Services</h3>
+            <p>
+              Wand Matching<br />
+              Owl Post Delivery<br />
+              Floo Powder Delivery<br />
+              International Shipping
+            </p>
+          </div>
+        </div>
+        <div
+          style="
+            text-align: center;
+            color: #d4af37;
+            font-size: 0.9em;
+            margin-top: 15px;
+          "
+        >
+          Created by Bhuvi & Harshul
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
