@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff5cc"/>
+      <stop offset="60%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#8c6910"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark Magical Circle Background -->
+  <circle cx="32" cy="32" r="30" fill="#150522" stroke="#d4af37" stroke-width="2"/>
+  <circle cx="32" cy="32" r="26" fill="none" stroke="#d4af37" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+
+  <!-- Wizard Hat Base -->
+  <ellipse cx="32" cy="46" rx="20" ry="5" fill="url(#goldGlow)" filter="url(#glow)"/>
+
+  <!-- Wizard Hat Cone -->
+  <path d="M32 10 Q38 28 46 44 L18 44 Q26 28 32 10 Z" fill="url(#goldGlow)" filter="url(#glow)"/>
+
+  <!-- Wizard Hat Band -->
+  <path d="M20 42 Q32 46 44 42 L45 44 Q32 48 19 44 Z" fill="#2a0c40" stroke="#f3e5ab" stroke-width="0.8"/>
+
+  <!-- Magical Sparkle Stars -->
+  <path d="M32 18 L33.5 22 L38 23.5 L33.5 25 L32 29 L30.5 25 L26 23.5 L30.5 22 Z" fill="#ffffff"/>
+  <path d="M42 14 L42.8 16 L45 16.8 L42.8 17.6 L42 19.8 L41.2 17.6 L39 16.8 L41.2 16 Z" fill="#f5eaaf"/>
+</svg>
