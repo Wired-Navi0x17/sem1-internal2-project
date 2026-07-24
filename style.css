@@ -108,6 +108,94 @@ body::before {
   z-index: 2020;
 }
 
+/* ==================== Interactive Hanging Pull Cord Mechanism ==================== */
+.pullCordContainer {
+  position: fixed;
+  top: 0;
+  right: 50px;
+  width: 60px;
+  height: 220px;
+  z-index: 1500;
+  cursor: grab;
+  transform-origin: top center;
+  animation: cordSwayIdle 6s ease-in-out infinite;
+  user-select: none;
+}
+
+.pullCordContainer:active {
+  cursor: grabbing;
+}
+
+@keyframes cordSwayIdle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2.5deg); }
+  75% { transform: rotate(-2.5deg); }
+}
+
+.ropeLine {
+  position: absolute;
+  top: 0;
+  left: 28px;
+  width: 4px;
+  height: 130px;
+  background: repeating-linear-gradient(45deg, #d4af37 0px, #b8941f 4px, #7a550d 8px);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  transition: height 0.15s ease-out;
+}
+
+.brassRing {
+  position: absolute;
+  top: 125px;
+  left: 20px;
+  width: 20px;
+  height: 12px;
+  background: radial-gradient(ellipse at center, #f5eaaf 0%, #d4af37 60%, #7a550d 100%);
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.8);
+}
+
+.ropeCord {
+  position: absolute;
+  top: 135px;
+  left: 10px;
+  width: 40px;
+  height: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.15s ease-out;
+}
+
+.crystalGem {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, #ffffff 0%, #f3e5ab 60%, #d4af37 100%);
+  transform: rotate(45deg);
+  box-shadow: 0 0 12px #f5eaaf, 0 0 25px rgba(212, 175, 55, 0.8);
+  margin-bottom: 4px;
+  transition: box-shadow 0.3s ease;
+}
+
+.pullCordContainer:hover .crystalGem {
+  box-shadow: 0 0 20px #ffffff, 0 0 35px #d4af37;
+}
+
+.tasselHead {
+  width: 22px;
+  height: 14px;
+  background: linear-gradient(180deg, #d4af37 0%, #8c6910 100%);
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+}
+
+.tasselSkirt {
+  width: 28px;
+  height: 38px;
+  background: repeating-linear-gradient(90deg, #d4af37 0px, #b8941f 3px, #6e4b0c 6px);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.8);
+}
+
 /* ==================== Header & Navigation ==================== */
 .mainHeader {
   background: linear-gradient(180deg, rgba(20, 6, 32, 0.95) 0%, rgba(14, 4, 23, 0.92) 100%);
@@ -537,12 +625,6 @@ button.ctaButton:hover,
   font-size: 0.98em;
 }
 
-.footerActionRow {
-  display: flex;
-  justify-content: center;
-  margin-top: 25px;
-}
-
 /* ==================== 3D Handcrafted Alohomora Spellbook Overlay ==================== */
 #spellbookOverlay {
   position: fixed;
@@ -823,7 +905,7 @@ button.ctaButton:hover,
   height: 480px;
   pointer-events: none;
   z-index: 2005;
-  opacity: 0; /* Hidden until spell cast */
+  opacity: 0;
 }
 
 .magicCirclePath {
@@ -1228,6 +1310,11 @@ button.ctaButton:hover,
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+  .pullCordContainer {
+    right: 20px;
+    scale: 0.85;
+  }
+
   .shopTitle {
     font-size: 2.1em;
   }

@@ -1,7 +1,7 @@
 # 🧹 The Wizarding Emporium - Diagon Alley Magical Supplies
 
 > **Diagon Alley's Premier Magical Supplier Since 1298**  
-> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Cinematic GSAP/Anime.js Alohomora Entrance Spell** (session-based, only triggers on initial load, NOT when clicking Home link), an authentic **Dense Marauder's Map Information Scroll** with animated footprints & hand-drawn SVG pathways, aged parchment aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
+> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Cinematic GSAP/Anime.js Alohomora Entrance Spell** (runs on every page load and refresh), an **Upper-Right Hanging Castle Pull Cord** mechanism, an authentic **Dense Marauder's Map Information Scroll** with animated footprints & hand-drawn SVG pathways, aged parchment aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
 
 ---
 
@@ -15,23 +15,25 @@
 
 ## ✨ Key Features & Technical Highlights
 
-### 🪄 1. Cinematic Alohomora Spell Entrance (Session-Scoped & Bug Fixed)
-- **Session-Based & Navigation Fixed**: The Alohomora spell entrance activates **only on initial site visit or browser refresh**. Clicking `"Home"` in the main navigation menu cleanly displays the storefront without re-triggering the entrance animation overlay.
+### 🪄 1. Cinematic Alohomora Spell Entrance (Plays on Every Load/Refresh)
+- **Every Page Load & Refresh**: The 3D Alohomora spellbook entrance displays on every page load or refresh of `index.html` without using localStorage or sessionStorage to skip.
 - **Visual Anatomy of a Wand-Cast Spell**:
   1. **Phase 1 (Intent & Anticipation)**: Environment darkens, ambient dust pauses, lock emits a faint pulse, low magical hum & soft leather sound begins.
   2. **Phase 2 (Wand Trail & Energy Drawing)**: A curved golden spark trail arcs towards the lock, invisible wand stroke-animates magic circle (`strokeDashoffset`).
   3. **Phase 3 (Runes & Inward Streams)**: High crystal chimes & bell harmonics play as energy streams spiral inward to the lock.
   4. **Phase 4 (Lock Resistance & Unlocking)**: Lock vibrates with metal tension sound $\rightarrow$ crisp latch click $\rightarrow$ lock drops with bounce.
   5. **Phase 5 (Golden Burst & Pages Flutter)**: Warm golden light escapes, 3D leather cover opens, pages flutter open with paper sound.
-  6. **Phase 6 (Camera Drift & Lingering Magic)**: Floating camera enters pages into storefront, leaving residual golden dust particles that fade after 2 seconds.
+  6. **Phase 6 (Camera Drift & Lingering Magic)**: Floating camera enters pages into storefront, leaving residual golden dust particles that fade after entry.
 
-### 📜 2. Authentic Dense Marauder's Map Information Scroll
-- **Zoom & Scale Fix**: Optimized scroll scaling (`max-width: 820px`, `width: 92%`) ensuring comfortable, unzoomed viewing when summoned.
+### 📜 2. Interactive Upper-Right Hanging Castle Pull Cord Mechanism
+- **Upper-Right Corner Cord**: Replaces the footer button with an authentic hanging braided golden cord (`#pullCordContainer`), crystal gem, and tassel.
+- **Idle Sway & Drag Physics**: Gently sways while idle (`@keyframes cordSwayIdle`). On click/drag, the rope stretches downward, playing crystal chimes. Releasing the cord triggers spring-bounce physics and unrolls the Marauder Map parchment.
+
+### 📜 3. Authentic Dense Marauder's Map Information Scroll
+- **Parchment Unroll & Retract**: Unrolls from the ceiling upon pulling the cord, sways gently while descending, and auto-retracts smoothly back up after 6 seconds with no visible countdown timers.
 - **Dense Map Background (8% Opacity)**: Features castle floor plans, corridors, room outlines, hidden passage sketches, and Astronomy tower staircases.
 - **25% Enlarged Compass Rose**: Positioned beneath pathways, softly glowing on hover.
-- **Hand-Drawn SVG Pathways & Animated Footprints**:
-  - Anime.js `strokeDashoffset` path inking.
-  - Footprints (`.walkingFootprint`) step across pathways sequentially, pausing at each landmark to illuminate it.
+- **Hand-Drawn SVG Pathways & Animated Footprints**: Footprints (`.walkingFootprint`) step across pathways sequentially, pausing at each landmark to illuminate it.
 - **Wizarding Academic Decree Text & Map Landmarks**:
   - *"The Ministry of Magical Education hereby records that the apprentices named below have successfully completed the Second Internal Assignment of the First Semester..."*
   - 🪶 **Created By**: Bhuvi Singhal & Navi...
@@ -39,11 +41,6 @@
   - 📖 **Course**: B.Tech (Hons) CSE AIML
   - ⌛ **Semester**: Semester I
   - 🏆 **Assessment**: Internal Assessment II
-- **Tilted Wax Seal**: Tilted by -8 degrees over the paper border with realistic drop shadow.
-- **Faint Fold Lines & Burnt Edges**: Includes vertical/horizontal parchment crease lines and dark burnt vignette edges.
-
-### 📜 3. Footer Integration
-- Includes a `"📜 View Assignment Scroll"` button in the Diagon Alley notice board footer on all pages for manual replay at any time.
 
 ---
 
@@ -51,12 +48,12 @@
 
 ```
 Assignment2/
-├── index.html        # Storefront page with Anime.js/GSAP 3D Alohomora spellbook overlay & Marauder Map
-├── contact.html      # Diagon Alley location details & Owl Post message dispatch form
-├── deliv.html        # Delivery options (Owl Post, Floo Network, Apparition Direct)
+├── index.html        # Storefront page with Anime.js/GSAP 3D Alohomora spellbook overlay, pull cord & Marauder Map
+├── contact.html      # Diagon Alley location details, owl post form & pull cord
+├── deliv.html        # Delivery options & pull cord
 ├── favicon.svg       # Magical wizard hat & golden runes SVG favicon
-├── style.css         # CSS 3D perspective rules, sepia parchment texture, & responsive styles
-├── script.js        # GSAP/Anime.js entrance timeline, Web Audio synth, Marauder Map & cart logic
+├── style.css         # CSS 3D perspective rules, sepia parchment texture, & pull cord styles
+├── script.js        # GSAP/Anime.js entrance timeline, Web Audio synth, pull cord & cart logic
 ├── background.svg    # Custom aged parchment & dark stone SVG texture
 └── images/           # Magical item photography and webp backgrounds
 ```

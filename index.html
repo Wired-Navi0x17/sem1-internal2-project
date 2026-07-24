@@ -6,13 +6,13 @@
     <title>The Wizarding Emporium - Diagon Alley Magical Supplies</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="stylesheet" href="style.css" />
-    <!-- GSAP 3 & Anime.js Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- Anime.js & GSAP Animation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="script.js" defer></script>
   </head>
   <body>
-    <!-- 3D "Cast Alohomora" Handcrafted Spellbook Entrance Screen Overlay -->
+    <!-- 3D "Cast Alohomora" Handcrafted Spellbook Entrance Screen Overlay (Displays on Every Refresh) -->
     <div id="spellbookOverlay">
       <button id="skipEntrance" class="skipEntranceLink">Skip Animation</button>
       
@@ -104,6 +104,17 @@
 
           <button id="alohomoraBtn" class="alohomoraBtn">Cast Alohomora</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Hanging Castle Pull Cord Mechanism in Upper Right Corner -->
+    <div class="pullCordContainer" id="pullCordContainer" title="Pull Cord to Reveal Assignment Scroll">
+      <div class="ropeLine" id="ropeLine"></div>
+      <div class="brassRing" id="brassRing"></div>
+      <div class="ropeCord" id="ropeCord">
+        <div class="crystalGem" id="crystalGem"></div>
+        <div class="tasselHead"></div>
+        <div class="tasselSkirt"></div>
       </div>
     </div>
 
@@ -430,11 +441,6 @@
                 International Apparition Shipping
               </p>
             </div>
-          </div>
-          <div class="footerActionRow">
-            <button class="scrollReplayBtn" id="footerScrollBtn">
-              📜 View Assignment Scroll
-            </button>
           </div>
         </div>
         <div

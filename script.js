@@ -1,8 +1,8 @@
 // The Wizarding Emporium - Diagon Alley Interactive E-Commerce & Cinematic GSAP/Anime.js Entrance Logic
 
 document.addEventListener('DOMContentLoaded', () => {
-  initNavClickHandlers();
   initAlohomoraEntrance();
+  initPullCordMechanism();
   initAssignmentScrollEvents();
   initAmbientSparkles();
   initCauldronCart();
@@ -10,16 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initProductModals();
 });
-
-// Navigation Click Handler to prevent re-triggering entrance spell on Home link click
-function initNavClickHandlers() {
-  const homeLinks = document.querySelectorAll('a[href="index.html"]');
-  homeLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      sessionStorage.setItem('spellbookOpened', 'true');
-    });
-  });
-}
 
 // ==================== Web Audio API Multi-Layer Synthesizer ====================
 let audioCtx = null;
@@ -33,6 +23,37 @@ function getAudioContext() {
     audioCtx.resume();
   }
   return audioCtx;
+}
+
+// Idle Magical Ambient Atmosphere
+function playAmbientAtmosphere() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(65, now);
+    osc.frequency.linearRampToValueAtTime(75, now + 4);
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(300, now);
+
+    gain.gain.setValueAtTime(0.01, now);
+    gain.gain.linearRampToValueAtTime(0.04, now + 1.5);
+    gain.gain.linearRampToValueAtTime(0.001, now + 4.5);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 4.6);
+  } catch (e) {}
 }
 
 // Phase 1: Soft Leather Creak & Dormant Hover Hum
@@ -58,6 +79,32 @@ function playHoverHumSound() {
 
     osc.start(now);
     osc.stop(now + 0.35);
+  } catch (e) {}
+}
+
+// Pull Cord Crystal Chime
+function playCordPullChime() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    [1567.98, 2093.00, 2793.83].forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+
+      gain.gain.setValueAtTime(0.12, now + idx * 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45 + idx * 0.05);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + idx * 0.05);
+      osc.stop(now + 0.5);
+    });
   } catch (e) {}
 }
 
@@ -276,23 +323,21 @@ function initAlohomoraEntrance() {
   const mainContainer = document.getElementById('mainPageContainer');
   if (!overlay) return;
 
-  // Check if user has already opened the spellbook in this session, or navigated via Home link!
-  const hasOpenedInSession = sessionStorage.getItem('spellbookOpened') === 'true';
   const isSubPage = !window.location.pathname.endsWith('index.html') && window.location.pathname.endsWith('.html');
 
-  if (hasOpenedInSession || isSubPage) {
+  if (isSubPage) {
     overlay.style.display = 'none';
     if (mainContainer) mainContainer.style.opacity = '1';
     return;
   }
 
+  // Display spellbook overlay on every page load/refresh of index.html!
   if (mainContainer) mainContainer.style.opacity = '0';
 
   const alohomoraBtn = document.getElementById('alohomoraBtn');
   const skipBtn = document.getElementById('skipEntrance');
 
   const revealHomepage = () => {
-    sessionStorage.setItem('spellbookOpened', 'true');
     overlay.style.opacity = '0';
     setTimeout(() => {
       overlay.style.display = 'none';
@@ -305,14 +350,7 @@ function initAlohomoraEntrance() {
           );
         }
       }
-      
-      // Auto-trigger Marauder Assignment Scroll ONLY ONCE PER DAY
-      const todayStr = new Date().toDateString();
-      const lastShownDate = localStorage.getItem('marauderScrollLastShownDate');
-      if (lastShownDate !== todayStr) {
-        localStorage.setItem('marauderScrollLastShownDate', todayStr);
-        setTimeout(() => triggerAssignmentScroll(true), 600);
-      }
+      playAmbientAtmosphere();
     }, 500);
   };
 
@@ -358,7 +396,7 @@ function initAlohomoraEntrance() {
     // GSAP Orchestrated Spell Timeline
     const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
 
-    // Step 1: Room Darkens & Button Depresses (300ms Anticipation)
+    // Step 1: Room Darkens & Button Depresses (350ms Anticipation)
     tl.to('#spellbookOverlay', { backgroundColor: '#030007', duration: 0.35 })
     .to('#alohomoraBtn', { scale: 0.92, duration: 0.15 }, '<')
     // Step 2: Inward Energy Sparks & Rune Drawing
@@ -404,13 +442,92 @@ function initAlohomoraEntrance() {
   });
 }
 
+// ==================== Interactive Hanging Castle Pull Cord Mechanism ====================
+function initPullCordMechanism() {
+  const pullCord = document.getElementById('pullCordContainer');
+  const ropeLine = document.getElementById('ropeLine');
+  const ropeCord = document.getElementById('ropeCord');
+  if (!pullCord || !ropeLine || !ropeCord) return;
+
+  let isDragging = false;
+  let startY = 0;
+  let currentY = 0;
+
+  pullCord.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startY = e.clientY;
+    playCordPullChime();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaY = Math.max(0, Math.min(80, e.clientY - startY));
+    currentY = deltaY;
+
+    ropeLine.style.height = `${130 + deltaY}px`;
+    ropeCord.style.transform = `translateY(${deltaY}px)`;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    // Release Spring Bounce Physics
+    if (typeof gsap !== 'undefined') {
+      gsap.to(ropeLine, { height: 130, duration: 0.5, ease: 'bounce.out' });
+      gsap.to(ropeCord, { y: 0, duration: 0.5, ease: 'bounce.out' });
+    } else {
+      ropeLine.style.height = '130px';
+      ropeCord.style.transform = 'translateY(0)';
+    }
+
+    if (currentY > 25) {
+      triggerAssignmentScroll(true);
+    }
+    currentY = 0;
+  });
+
+  // Touch device support
+  pullCord.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startY = e.touches[0].clientY;
+    playCordPullChime();
+  });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const deltaY = Math.max(0, Math.min(80, e.touches[0].clientY - startY));
+    currentY = deltaY;
+
+    ropeLine.style.height = `${130 + deltaY}px`;
+    ropeCord.style.transform = `translateY(${deltaY}px)`;
+  });
+
+  window.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    if (typeof gsap !== 'undefined') {
+      gsap.to(ropeLine, { height: 130, duration: 0.5, ease: 'bounce.out' });
+      gsap.to(ropeCord, { y: 0, duration: 0.5, ease: 'bounce.out' });
+    } else {
+      ropeLine.style.height = '130px';
+      ropeCord.style.transform = 'translateY(0)';
+    }
+
+    if (currentY > 25) {
+      triggerAssignmentScroll(true);
+    }
+    currentY = 0;
+  });
+}
+
 // ==================== Authentic Marauder's Map Information Scroll Modal ====================
 let scrollTimer = null;
 
 function initAssignmentScrollEvents() {
   const scrollOverlay = document.getElementById('assignmentScrollOverlay');
   const closeBtn = document.getElementById('scrollCloseBtn');
-  const footerBtn = document.getElementById('footerScrollBtn');
 
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
@@ -423,13 +540,6 @@ function initAssignmentScrollEvents() {
       if (e.target === scrollOverlay) {
         dismissAssignmentScroll();
       }
-    });
-  }
-
-  if (footerBtn) {
-    footerBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      triggerAssignmentScroll(false); // Manual footer replay always runs!
     });
   }
 }
@@ -449,14 +559,14 @@ function triggerAssignmentScroll(isAutoClose = true) {
       easing: 'easeInOutCubic'
     });
 
-    // Step 1: Unfold Parchment
+    // Step 1: Unroll Parchment & Swing Gently
     mapTimeline.add({
       targets: marauderCard,
-      scale: [0.85, 1],
+      translateY: ['-100vh', 0],
       rotateZ: [-6, 0],
       rotateX: [15, 0],
       opacity: [0, 1],
-      duration: 850,
+      duration: 900,
       easing: 'easeOutBack'
     })
     // Step 2: Compass & Hand-Drawn SVG Pathways Inking
@@ -495,7 +605,7 @@ function triggerAssignmentScroll(isAutoClose = true) {
   if (isAutoClose) {
     scrollTimer = setTimeout(() => {
       dismissAssignmentScroll();
-    }, 6500);
+    }, 6000);
   }
 }
 
@@ -509,11 +619,11 @@ function dismissAssignmentScroll() {
   if (typeof anime !== 'undefined') {
     anime({
       targets: marauderCard,
-      translateY: [0, '-70vh'],
-      rotateZ: [0, 10],
-      scale: [1, 0.75],
+      translateY: [0, '-100vh'],
+      rotateZ: [0, 8],
+      scale: [1, 0.8],
       opacity: [1, 0],
-      duration: 750,
+      duration: 800,
       easing: 'easeInBack',
       complete: () => {
         scrollOverlay.classList.remove('active');
