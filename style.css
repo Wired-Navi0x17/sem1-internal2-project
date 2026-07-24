@@ -531,7 +531,7 @@ button.ctaButton:hover,
   margin-top: 25px;
 }
 
-/* ==================== 3D Alohomora Spellbook Entrance Overlay ==================== */
+/* ==================== 3D Handcrafted Alohomora Spellbook Overlay ==================== */
 #spellbookOverlay {
   position: fixed;
   top: 0;
@@ -545,7 +545,7 @@ button.ctaButton:hover,
   align-items: center;
   flex-direction: column;
   overflow: hidden;
-  perspective: 1200px;
+  perspective: 1400px;
 }
 
 .skipEntranceLink {
@@ -571,21 +571,49 @@ button.ctaButton:hover,
 
 .spellbookContainer3D {
   position: relative;
-  width: 360px;
-  height: 480px;
-  perspective: 1200px;
+  width: 380px;
+  height: 500px;
+  perspective: 1400px;
   transform-style: preserve-3d;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.95);
+  transition: transform 0.4s ease;
 }
 
-.spellbookPagesLayer {
+/* Raised Spine on Left */
+.spellbookSpine {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: -20px;
+  width: 22px;
   height: 100%;
-  background: #f4ebd0;
-  border-radius: 8px 16px 16px 8px;
-  box-shadow: inset 0 0 30px rgba(115, 85, 30, 0.4), 0 15px 40px rgba(0,0,0,0.9);
+  background: linear-gradient(90deg, #180326 0%, #3a0d54 60%, #1f0533 100%);
+  border-radius: 6px 0 0 6px;
+  box-shadow: inset -3px 0 6px rgba(0, 0, 0, 0.8), -5px 0 15px rgba(0, 0, 0, 0.9);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 40px 0;
+  box-sizing: border-box;
+}
+
+.spineRib {
+  height: 8px;
+  width: 100%;
+  background: linear-gradient(180deg, #d4af37 0%, #8c6910 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Visible Page Edges Peeking Out */
+.spellbookPagesLayer {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 99%;
+  height: 98%;
+  background: #f4ebd0 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><line x1="0" y1="0" x2="20" y2="0" stroke="%23d4af37" stroke-opacity="0.3"/></svg>');
+  border-radius: 4px 14px 14px 4px;
+  box-shadow: inset 0 0 30px rgba(115, 85, 30, 0.5), 8px 15px 35px rgba(0,0,0,0.9);
   border: 1px solid #c8b488;
   display: flex;
   justify-content: center;
@@ -594,95 +622,167 @@ button.ctaButton:hover,
   box-sizing: border-box;
 }
 
-.spellbookPagesLayer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(255, 235, 170, 0.95) 0%, rgba(212, 175, 55, 0.5) 60%, transparent 100%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  border-radius: 8px 16px 16px 8px;
-}
-
+/* Front Layered Leather Cover */
 .spellbookFrontCover {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #2a0c40 0%, #150522 100%);
+  background: radial-gradient(ellipse at center, #3d145a 0%, #200833 60%, #0d0217 100%),
+              url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%23200833" width="100" height="100"/><circle fill="%23000" opacity="0.1" cx="30" cy="30" r="20"/></svg>');
   border: 2px solid var(--accent-gold-bright);
-  border-radius: 8px 16px 16px 8px;
+  border-radius: 4px 14px 14px 4px;
   transform-origin: left center;
   transform-style: preserve-3d;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), inset 0 0 25px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.95), inset 0 0 35px rgba(0, 0, 0, 0.85);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 35px 25px;
+  padding: 30px 20px;
   box-sizing: border-box;
   text-align: center;
   backface-visibility: hidden;
 }
 
-.goldCornerPlate {
+/* Outer Gold Frame & Inner Floral Border */
+.outerGoldFrame {
   position: absolute;
-  width: 32px;
-  height: 32px;
-  border: 2px solid var(--accent-gold);
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1.5px solid #d4af37;
   pointer-events: none;
 }
 
-.cornerTopLeft { top: 12px; left: 12px; border-right: none; border-bottom: none; }
-.cornerTopRight { top: 12px; right: 12px; border-left: none; border-bottom: none; }
-.cornerBottomLeft { bottom: 12px; left: 12px; border-right: none; border-top: none; }
-.cornerBottomRight { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+.innerFloralBorder {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  border: 1px stroke-dasharray="4 2" stroke="#f5eaaf";
+  border: 1px dashed rgba(212, 175, 55, 0.6);
+  pointer-events: none;
+}
+
+.stitchingLine {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border: 1px dotted rgba(212, 175, 55, 0.3);
+  pointer-events: none;
+}
+
+/* Ornate Corner Plates */
+.goldCornerPlate {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.cornerSVG {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+}
+
+.cornerTopLeft { top: 6px; left: 6px; }
+.cornerTopRight { top: 6px; right: 6px; }
+.cornerBottomLeft { bottom: 6px; left: 6px; }
+.cornerBottomRight { bottom: 6px; right: 6px; }
+
+.engravedSymbolsSVG {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
 .spellbookTitle {
   color: var(--accent-gold);
   font-family: var(--font-serif);
-  font-size: 1.8em;
-  margin: 0 0 10px 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-  letter-spacing: 1.5px;
+  font-size: 1.6em;
+  margin: 10px 0 0 0;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9), 0 0 12px rgba(212, 175, 55, 0.4);
+  letter-spacing: 1.8px;
+  line-height: 1.25;
+}
+
+.subtitleRibbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.ribbonGlyph {
+  color: var(--accent-gold);
+  font-size: 1.1em;
 }
 
 .spellbookSubtitle {
   color: var(--accent-gold-light);
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 1.1em;
-  margin-bottom: 30px;
+  font-size: 1em;
+  margin: 0;
+}
+
+/* Centerpiece Focal Point Ring & Brass Lock */
+.centerpieceRing {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 2px solid var(--accent-gold);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3), inset 0 0 15px rgba(212, 175, 55, 0.2);
+  margin: 10px 0;
 }
 
 .spellbookLock {
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(135deg, #d4af37 0%, #8c6910 100%);
+  width: 76px;
+  height: 76px;
+  background: radial-gradient(circle, #d4af37 0%, #8c6910 80%, #4a3205 100%);
   border: 2px solid #f5eaaf;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px auto;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.6);
   position: relative;
-  transition: box-shadow 0.3s ease;
+  animation: lockPulseIdle 7s ease-in-out infinite;
+}
+
+@keyframes lockPulseIdle {
+  0%, 85%, 100% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  }
+  92% {
+    box-shadow: 0 0 45px rgba(212, 175, 55, 0.95), 0 0 70px rgba(245, 234, 175, 0.8);
+  }
 }
 
 .lockIconSVG {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   color: #0f051a;
 }
 
 .alohomoraBtn {
-  margin-top: 15px;
+  margin-bottom: 10px;
   background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8c6910 100%);
   color: #0f051a;
   border: 1.5px solid #f3e5ab;
@@ -710,6 +810,7 @@ button.ctaButton:hover,
   height: 480px;
   pointer-events: none;
   z-index: 2005;
+  opacity: 0; /* Hidden until spell cast */
 }
 
 .magicCirclePath {
@@ -1150,8 +1251,8 @@ button.ctaButton:hover,
   }
 
   .spellbookContainer3D {
-    width: 300px;
-    height: 420px;
+    width: 320px;
+    height: 440px;
   }
 
   .magicCircleSVG {
