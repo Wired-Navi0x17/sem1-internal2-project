@@ -1,7 +1,7 @@
 # 🧹 The Wizarding Emporium - Diagon Alley Magical Supplies
 
 > **Diagon Alley's Premier Magical Supplier Since 1298**  
-> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, old parchment/dark stone aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
+> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Anime.js "Cast Alohomora" 3D Spellbook Entrance**, aged parchment aesthetics, Cormorant & EB Garamond typography, Reicon vector icons, and real-time Cauldron purchasing state.
 
 ---
 
@@ -15,35 +15,28 @@
 
 ## ✨ Key Features & Technical Highlights
 
-### 📜 1. Aged Parchment & Dark Stone Aesthetic
-- Built with a custom, tileable SVG background texture ([background.svg](background.svg)) featuring aged stone noise, dark violet stain patches (`#250d3a`), and subtle gold star runes.
-- Enhanced with a full-viewport **candlelight vignette overlay** in CSS (`radial-gradient` around page boundaries).
+### 🪄 1. Anime.js "Cast Alohomora" 3D Spellbook Entrance
+- **Full Viewport Dark Screen**: Completely obscures the storefront upon initial visit until the spell sequence completes.
+- **3D Book Architecture**: Layered 3D book cover, metal lock, leather texture, gold corner plates, and embossed gold typography.
+- **SVG Path & Dash Animation**: SVG magic circle paths animated via Anime.js `strokeDashoffset` (`Outer Circle` $\rightarrow$ `Inner Circle` $\rightarrow$ `Runes`).
+- **Anticipation Delays & Lock Physics**: 200ms spell casting pause, lock vibration, gold glow pulse, and realistic bounce drop (`easing: 'easeOutBounce'`).
+- **3D Cover Flip & Page Transformation**: 3D front cover flips open (`rotateY: -115deg`), emitting a golden light burst while pages expand to reveal the storefront.
+- **SessionStorage Memory & Skip Link**: Includes `sessionStorage.setItem('spellbookOpened', 'true')` so returning to Home during the same browsing session skips the entrance, plus a discrete `"Skip Animation"` button.
+- **Staggered Homepage Entrance**: Upon opening, storefront elements (header, hero title, product cards) stagger into place using Anime.js (`anime.stagger(100)`).
 
-### 📖 2. Old Novel Typography & Ornaments
+### 🎶 2. Multi-Layer Web Audio API Sound Synthesizer
+- Generates 100% self-contained sound effects with **zero external audio dependencies**:
+  - **Spell Sweep**: Filtered noise oscillator frequency ramp.
+  - **Magical Chimes**: Layered E-major high sine wave bells.
+  - **Lock Release**: Square wave impulse click sound.
+
+### 📜 3. Uniform Border System (Left Yellow Border Removed)
+- Removed asymmetric 5px yellow left borders on card components ([style.css](style.css)), replacing them with a uniform `1px solid var(--border-gold)` border with subtle corner radii.
+
+### 📖 4. Old Novel Typography & Ornaments
 - Headings: **Cinzel** & **Cormorant Garamond** (magical serif display typography).
 - Body Text: **EB Garamond** & **Crimson Text** (styled to resemble an old novel).
-- Section Dividers: Golden decorative glyph dividers (`✧ ☽ ✧`) with subtle radial fade lines instead of plain hr rules.
-
-### 🦉 3. Reicon Vector SVGs (Zero Emoji Policy)
-- Replaced all front-end emojis with clean, responsive vector SVGs sourced from the **Reicon** icon system:
-  - **Standard Owl Post**: `send` vector SVG.
-  - **Floo Network Express**: `flame` vector SVG.
-  - **Apparition Direct**: `bolt-lightning` vector SVG.
-  - **Cauldron Shopping Bag**: `shopping-bag` vector SVG.
-
-### 🌟 4. Ambient Sparkles & Floating Animations
-- Automatic background golden dust particle generator in [script.js](script.js).
-- Floating product card micro-animations and embossed 3D golden buttons with gold gradient sweep on hover.
-
-### 🧪 5. Interactive Cauldron Purchasing Cart & Quick-View Modal
-- Real-time cart state management in [script.js](script.js):
-  - Add items to Cauldron with live Galleons total calculation.
-  - Item count badge in header.
-  - `localStorage` persistence across pages.
-  - Floating toast notifications and interactive product quick-view modal drawer.
-
-### 📜 6. Diagon Alley Notice Board Footer
-- Footer styled into a Ministry of Magic Approved Supplier Notice Board with parchment cards, gold borders, and Hogwarts credentials.
+- Section Dividers: Golden decorative glyph dividers (`✧ ☽ ✧`).
 
 ---
 
@@ -51,11 +44,11 @@
 
 ```
 Assignment2/
-├── index.html        # Storefront page featuring dramatic hero title & product grid
+├── index.html        # Storefront page with Anime.js 3D Alohomora spellbook overlay
 ├── contact.html      # Diagon Alley location details & Owl Post message dispatch form
 ├── deliv.html        # Delivery options (Owl Post, Floo Network, Apparition Direct)
-├── style.css         # CSS design system, typography scales, floating animations & responsive rules
-├── script.js        # Ambient sparkle particles, Cauldron cart logic, modals & toasts
+├── style.css         # CSS 3D perspective rules, typography, border fixes, & responsive styles
+├── script.js        # Anime.js entrance timeline, Web Audio synth, Cauldron cart & modals
 ├── background.svg    # Custom aged parchment & dark stone SVG texture
 └── images/           # Magical item photography and webp backgrounds
 ```

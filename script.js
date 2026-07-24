@@ -1,12 +1,270 @@
-// The Wizarding Emporium - Diagon Alley Interactive E-Commerce Logic
+// The Wizarding Emporium - Diagon Alley Interactive E-Commerce & Anime.js Alohomora Entrance Logic
 
 document.addEventListener('DOMContentLoaded', () => {
+  initAlohomoraEntrance();
   initAmbientSparkles();
   initCauldronCart();
   initContactForm();
   initMobileMenu();
   initProductModals();
 });
+
+// ==================== Web Audio API Layered Sound Synthesizer ====================
+let audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) audioCtx = new AudioContext();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function playSpellCastSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+
+  // Layer 1: Soft Whoosh (Subtle Noise / Sweep)
+  try {
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    const filter1 = ctx.createBiquadFilter();
+
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(150, now);
+    osc1.frequency.exponentialRampToValueAtTime(600, now + 0.3);
+
+    filter1.type = 'lowpass';
+    filter1.frequency.setValueAtTime(800, now);
+
+    gain1.gain.setValueAtTime(0.01, now);
+    gain1.gain.linearRampToValueAtTime(0.18, now + 0.15);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+    osc1.connect(filter1);
+    filter1.connect(gain1);
+    gain1.connect(ctx.destination);
+
+    osc1.start(now);
+    osc1.stop(now + 0.5);
+  } catch (e) {}
+
+  // Layer 2: Magical Bell (High Sine Chimes in E-major)
+  try {
+    [1318.51, 1661.22, 1975.53].forEach((freq, idx) => {
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(freq, now + 0.1 + idx * 0.05);
+
+      gain2.gain.setValueAtTime(0.12, now + 0.1 + idx * 0.05);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.7 + idx * 0.05);
+
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+
+      osc2.start(now + 0.1 + idx * 0.05);
+      osc2.stop(now + 0.8);
+    });
+  } catch (e) {}
+
+  // Layer 3: Low Resonance Warmth
+  try {
+    const osc3 = ctx.createOscillator();
+    const gain3 = ctx.createGain();
+
+    osc3.type = 'triangle';
+    osc3.frequency.setValueAtTime(110, now);
+    osc3.frequency.exponentialRampToValueAtTime(55, now + 0.6);
+
+    gain3.gain.setValueAtTime(0.15, now);
+    gain3.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+
+    osc3.connect(gain3);
+    gain3.connect(ctx.destination);
+
+    osc3.start(now);
+    osc3.stop(now + 0.75);
+  } catch (e) {}
+}
+
+function playLockClickSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+
+  try {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(320, now);
+    osc.frequency.exponentialRampToValueAtTime(80, now + 0.08);
+
+    gain.gain.setValueAtTime(0.25, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.1);
+  } catch (e) {}
+}
+
+// ==================== Anime.js 3D Alohomora Entrance Timeline ====================
+function initAlohomoraEntrance() {
+  const overlay = document.getElementById('spellbookOverlay');
+  const mainContainer = document.getElementById('mainPageContainer');
+  if (!overlay) return;
+
+  const isAlreadyOpened = sessionStorage.getItem('spellbookOpened') === 'true';
+  const isSubPage = !window.location.pathname.endsWith('index.html') && window.location.pathname.endsWith('.html');
+
+  if (isAlreadyOpened || isSubPage) {
+    overlay.style.display = 'none';
+    if (mainContainer) mainContainer.style.opacity = '1';
+    return;
+  }
+
+  if (mainContainer) mainContainer.style.opacity = '0';
+
+  const alohomoraBtn = document.getElementById('alohomoraBtn');
+  const skipBtn = document.getElementById('skipEntrance');
+
+  const revealHomepage = () => {
+    sessionStorage.setItem('spellbookOpened', 'true');
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      if (mainContainer) {
+        mainContainer.style.opacity = '1';
+        // Staggered Anime.js entrance for homepage elements
+        if (typeof anime !== 'undefined') {
+          anime({
+            targets: '.mainHeader, .heroBanner, .productCard, .categoryCard',
+            opacity: [0, 1],
+            translateY: [30, 0],
+            delay: anime.stagger(100),
+            duration: 800,
+            easing: 'easeOutCubic'
+          });
+        }
+      }
+    }, 500);
+  };
+
+  if (skipBtn) {
+    skipBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      revealHomepage();
+    });
+  }
+
+  if (!alohomoraBtn) return;
+
+  let animationStarted = false;
+
+  alohomoraBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (animationStarted) return;
+    animationStarted = true;
+
+    // Step 1: Click & Sound
+    playSpellCastSound();
+
+    if (typeof anime === 'undefined') {
+      revealHomepage();
+      return;
+    }
+
+    const timeline = anime.timeline({
+      easing: 'easeInOutCubic'
+    });
+
+    // Step 1: Depress Button
+    timeline.add({
+      targets: '#alohomoraBtn',
+      scale: 0.92,
+      duration: 150,
+      easing: 'easeOutQuad'
+    })
+    // Step 2: 200ms Anticipation delay & SVG Magic Circle Stroke Animation
+    .add({
+      targets: '#outerCircle, #innerCircle, #starRune1',
+      strokeDashoffset: [anime.setDashoffset, 0],
+      duration: 1100,
+      easing: 'easeInOutCubic'
+    }, '+=200')
+    // Runes Fade & Rotate
+    .add({
+      targets: '.runeTextPath',
+      opacity: [0, 1],
+      rotate: [0, 360],
+      duration: 1000,
+      easing: 'easeOutQuad'
+    }, '-=800')
+    // Step 3: Spellbook Shake & Lock Glow
+    .add({
+      targets: '#spellbook3D',
+      translateX: [-8, 8, -6, 6, -3, 3, 0],
+      duration: 500,
+      easing: 'easeInOutSine'
+    }, '-=200')
+    .add({
+      targets: '#spellbookLock',
+      boxShadow: [
+        '0 0 20px rgba(212, 175, 55, 0.4)',
+        '0 0 50px rgba(212, 175, 55, 0.95), 0 0 80px rgba(245, 234, 175, 0.8)'
+      ],
+      duration: 400
+    }, '-=400')
+    // Step 4: Lock Click & Drop with Bounce
+    .add({
+      targets: '#spellbookLock',
+      rotate: 45,
+      duration: 180,
+      complete: () => playLockClickSound()
+    })
+    .add({
+      targets: '#spellbookLock',
+      translateY: [0, 160],
+      opacity: [1, 0],
+      duration: 650,
+      easing: 'easeOutBounce'
+    })
+    // Step 5: Book Cover Opens 3D
+    .add({
+      targets: '#spellbookFrontCover',
+      rotateY: [0, -115],
+      duration: 950,
+      easing: 'easeInOutQuad'
+    }, '-=300')
+    // Golden Light Glow Emerges from Pages Layer
+    .add({
+      targets: '.spellbookPagesLayer::after',
+      opacity: [0, 1],
+      duration: 500
+    }, '-=600')
+    // Step 6: Pages Expand to Fill Viewport & Reveal Homepage
+    .add({
+      targets: '#spellbook3D',
+      scale: [1, 3.5],
+      opacity: [1, 0],
+      duration: 800,
+      easing: 'easeInCubic',
+      complete: () => {
+        revealHomepage();
+      }
+    }, '-=200');
+  });
+}
 
 // Ambient Golden Sparkle Dust Particles
 function initAmbientSparkles() {

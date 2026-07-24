@@ -37,6 +37,7 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   position: relative;
+  overflow-x: hidden;
 }
 
 /* Candlelight Vignette Overlay around page edges */
@@ -58,6 +59,7 @@ body::before {
   margin: 0 auto;
   position: relative;
   z-index: 3;
+  transition: opacity 0.6s ease;
 }
 
 /* Ambient Sparkles Background Layer */
@@ -471,7 +473,7 @@ button.ctaButton:hover,
   border: 1px solid rgba(124, 227, 152, 0.3);
 }
 
-/* ==================== Categories & Testimonials ==================== */
+/* ==================== Categories & Testimonials (Borders Fixed) ==================== */
 .categoriesSection,
 .testimonialsSection {
   margin: 70px 0;
@@ -519,15 +521,19 @@ button.ctaButton:hover,
   margin-top: 30px;
 }
 
+/* Clean uniform borders (Left yellow border REMOVED) */
 .testimonialCard {
   background: var(--bg-card);
   padding: 26px;
   border-radius: var(--radius-md);
-  border-left: 4px solid var(--accent-gold);
-  border-top: 1px solid var(--border-gold);
-  border-right: 1px solid var(--border-gold);
-  border-bottom: 1px solid var(--border-gold);
+  border: 1px solid var(--border-gold);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonialCard:hover {
+  border-color: var(--accent-gold-bright);
+  box-shadow: var(--shadow-gold);
 }
 
 .testimonialText {
@@ -547,17 +553,20 @@ button.ctaButton:hover,
   font-size: 0.95em;
 }
 
-/* ==================== Delivery Steps & Method Cards ==================== */
+/* ==================== Delivery Steps (Left Yellow Border REMOVED) ==================== */
 .deliveryStep {
   background: var(--bg-card);
   padding: 26px;
   margin-bottom: 24px;
   border-radius: var(--radius-md);
-  border-left: 5px solid var(--accent-gold);
-  border-top: 1px solid var(--border-gold);
-  border-right: 1px solid var(--border-gold);
-  border-bottom: 1px solid var(--border-gold);
+  border: 1px solid var(--border-gold);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.deliveryStep:hover {
+  border-color: var(--accent-gold-bright);
+  box-shadow: var(--shadow-gold);
 }
 
 .stepTitle {
@@ -741,6 +750,202 @@ button.ctaButton:hover,
   font-size: 0.98em;
 }
 
+/* ==================== 3D Alohomora Spellbook Entrance Overlay ==================== */
+#spellbookOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #080210;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.skipEntranceLink {
+  position: absolute;
+  bottom: 25px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-serif);
+  font-size: 0.95em;
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  z-index: 2010;
+}
+
+.skipEntranceLink:hover {
+  opacity: 1;
+  color: var(--accent-gold);
+}
+
+.spellbookContainer3D {
+  position: relative;
+  width: 360px;
+  height: 480px;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.spellbookPagesLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f4ebd0;
+  border-radius: 8px 16px 16px 8px;
+  box-shadow: inset 0 0 30px rgba(115, 85, 30, 0.4), 0 15px 40px rgba(0,0,0,0.9);
+  border: 1px solid #c8b488;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.spellbookPagesLayer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(255, 235, 170, 0.9) 0%, rgba(212, 175, 55, 0.4) 60%, transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  border-radius: 8px 16px 16px 8px;
+}
+
+.spellbookFrontCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2a0c40 0%, #150522 100%);
+  border: 2px solid var(--accent-gold-bright);
+  border-radius: 8px 16px 16px 8px;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), inset 0 0 25px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 35px 25px;
+  box-sizing: border-box;
+  text-align: center;
+  backface-visibility: hidden;
+}
+
+.goldCornerPlate {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--accent-gold);
+  pointer-events: none;
+}
+
+.cornerTopLeft { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+.cornerTopRight { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+.cornerBottomLeft { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+.cornerBottomRight { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+.spellbookTitle {
+  color: var(--accent-gold);
+  font-family: var(--font-serif);
+  font-size: 1.8em;
+  margin: 0 0 10px 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  letter-spacing: 1.5px;
+}
+
+.spellbookSubtitle {
+  color: var(--accent-gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.1em;
+  margin-bottom: 30px;
+}
+
+.spellbookLock {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #d4af37 0%, #8c6910 100%);
+  border: 2px solid #f5eaaf;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.lockIconSVG {
+  width: 32px;
+  height: 32px;
+  color: #0f051a;
+}
+
+.alohomoraBtn {
+  margin-top: 15px;
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 50%, #8c6910 100%);
+  color: #0f051a;
+  border: 1.5px solid #f3e5ab;
+  padding: 12px 32px;
+  font-size: 1.1em;
+  font-family: var(--font-serif);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.alohomoraBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(212, 175, 55, 0.6);
+}
+
+.magicCircleSVG {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  pointer-events: none;
+  z-index: 2005;
+}
+
+.magicCirclePath {
+  stroke: var(--accent-gold);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.runeTextPath {
+  fill: var(--accent-gold);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  opacity: 0;
+}
+
 /* Modal Quick View */
 .modalOverlay {
   position: fixed;
@@ -917,5 +1122,15 @@ button.ctaButton:hover,
 
   .modalBody {
     grid-template-columns: 1fr;
+  }
+
+  .spellbookContainer3D {
+    width: 300px;
+    height: 420px;
+  }
+
+  .magicCircleSVG {
+    width: 360px;
+    height: 360px;
   }
 }
