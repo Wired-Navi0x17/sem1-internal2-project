@@ -186,7 +186,7 @@ This project is licensed under a **Non-Commercial Attribution License**:
 ```text
 The Wizarding Emporium — Non-Commercial Attribution License
 
-Copyright (c) 2026 Bhuvi Singhal & Navi...
+Copyright (c) 2026 Bhuvi Singhal & Harshul Kala
 
 Permission is hereby granted to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to view, inspect, study, and run the Software for personal,
