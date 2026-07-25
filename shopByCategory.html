@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shop by Category — The Wizarding Emporium</title>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2319082b'/><text x='50' y='68' font-size='48' text-anchor='middle' fill='%23d4af37' font-family='serif' font-weight='bold'>W</text></svg>"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Playfair+Display+SC:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@400;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script src="js/scroll-map.js"></script>
+        <style>
+            :root {
+                --bg-dark: #0f051a;
+                --bg-surface: #19082b;
+                --bg-card: linear-gradient(145deg, #240a38 0%, #160624 100%);
+                --accent-gold: #d4af37;
+                --accent-gold-light: #f5eaaf;
+                --accent-gold-dark: #9e7a17;
+                --text-main: #ebdcb9;
+                --text-serif: #f3e8cb;
+                --text-muted: #c4b0d8;
+                --border-gold: rgba(212, 175, 55, 0.45);
+                --border-gold-bright: #d4af37;
+                --shadow-gold: 0 0 25px rgba(212, 175, 55, 0.3);
+                --trace-glow: #ddfffb;
+                --radius-sm: 6px;
+                --radius-md: 12px;
+                --radius-lg: 18px;
+                --font-serif: 'Cinzel', 'Cormorant Garamond', serif;
+                --font-decorative: 'Cinzel Decorative', 'Cinzel', serif;
+                --font-body: 'EB Garamond', 'Crimson Text', serif;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: var(--bg-dark);
+                background-image:
+                    radial-gradient(2px 2px at 20% 30%, rgba(212, 175, 55, 0.15), transparent),
+                    radial-gradient(1px 1px at 60% 70%, rgba(245, 234, 175, 0.12), transparent),
+                    radial-gradient(1.5px 1.5px at 80% 20%, rgba(212, 175, 55, 0.08), transparent),
+                    radial-gradient(1px 1px at 40% 80%, rgba(196, 176, 216, 0.06), transparent),
+                    radial-gradient(2px 2px at 90% 50%, rgba(212, 175, 55, 0.1), transparent),
+                    radial-gradient(1px 1px at 15% 60%, rgba(245, 234, 175, 0.08), transparent),
+                    radial-gradient(ellipse at 50% 0%, rgba(36, 10, 56, 0.5), transparent 60%);
+                background-size:
+                    300px 300px,
+                    400px 400px,
+                    350px 350px,
+                    500px 500px,
+                    250px 250px,
+                    380px 380px,
+                    100% 100%;
+                color: var(--text-main);
+                font-family: var(--font-body);
+                font-size: 1.05rem;
+                line-height: 1.7;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow-x: hidden;
+                position: relative;
+            }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                pointer-events: none;
+                background: radial-gradient(
+                    ellipse at 50% 30%,
+                    transparent 45%,
+                    rgba(10, 3, 16, 0.75) 80%,
+                    rgba(5, 1, 9, 0.95) 100%
+                );
+                z-index: 2;
+            }
+
+            /* Ambient sparkles */
+            .ambientSparkles {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                pointer-events: none;
+                z-index: 1;
+                overflow: hidden;
+            }
+
+            .sparkleParticle {
+                position: absolute;
+                background: radial-gradient(
+                    circle,
+                    #f3e5ab 0%,
+                    rgba(212, 175, 55, 0.8) 50%,
+                    transparent 100%
+                );
+                border-radius: 50%;
+                opacity: 0;
+            }
+
+            /* Page wrapper */
+            .pageContainer {
+                width: 88%;
+                max-width: 1140px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 3;
+                padding: 40px 0;
+            }
+
+            /* Section header */
+            .sectionHeader {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .sectionLabel {
+                font-family: 'Manrope', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                font-size: 0.75em;
+                color: var(--accent-gold-dark);
+                margin-bottom: 4px;
+                opacity: 0;
+            }
+
+            .sectionTitle {
+                color: var(--accent-gold);
+                font-family: var(--font-decorative);
+                font-size: clamp(2rem, 4.5vw, 2.8em);
+                font-weight: 900;
+                text-shadow:
+                    0 2px 10px rgba(0, 0, 0, 0.9),
+                    0 0 25px rgba(212, 175, 55, 0.35);
+                letter-spacing: 2px;
+                margin-bottom: 8px;
+                opacity: 0;
+            }
+
+            .sectionIntro {
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-size: 1.2em;
+                color: var(--text-serif);
+                max-width: 600px;
+                margin: 0 auto 40px;
+                text-align: center;
+                line-height: 1.6;
+                opacity: 0;
+            }
+
+            /* Magical divider */
+            .magicalDivider {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                margin: 50px 0;
+                color: var(--accent-gold);
+                font-size: 1.15em;
+                opacity: 0;
+            }
+            .magicalDivider::before,
+            .magicalDivider::after {
+                content: '';
+                height: 1px;
+                flex-grow: 1;
+                background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            }
+            .dividerGlyph {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                letter-spacing: 3px;
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            }
+
+            /* ============ ENHANCED CATEGORIES GRID ============ */
+            .categoriesGrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+                gap: 30px;
+                margin-top: 20px;
+            }
+
+            /* Outer wrapper — creates the double-border frame effect */
+            .categoryCardOuter {
+                background: linear-gradient(315deg, #2d1040 0%, #1a0730 50%, #240a38 100%);
+                padding: 5px;
+                border-radius: 20px;
+                box-shadow:
+                    0 0 0 10px rgba(15, 5, 26, 0.85),
+                    0 12px 35px rgba(0, 0, 0, 0.7);
+                position: relative;
+                opacity: 0;
+                transition:
+                    box-shadow 0.5s ease,
+                    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            .categoryCardOuter::before {
+                content: '';
+                position: absolute;
+                inset: -8px;
+                border-radius: 24px;
+                border: 1.5px solid rgba(212, 175, 55, 0.35);
+                pointer-events: none;
+                z-index: 0;
+                transition:
+                    border-color 0.5s ease,
+                    box-shadow 0.5s ease;
+            }
+
+            .categoryCardOuter:hover {
+                box-shadow:
+                    0 0 0 10px rgba(15, 5, 26, 0.9),
+                    0 0 45px rgba(212, 175, 55, 0.45),
+                    0 20px 50px rgba(0, 0, 0, 0.8);
+                transform: translateY(-10px);
+            }
+
+            .categoryCardOuter:hover::before {
+                border-color: var(--accent-gold-bright);
+                box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+            }
+
+            /* Top label badge (like "Harry Potter spells" in reference) */
+            .categoryBadge {
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 15;
+                background: linear-gradient(to top, #2d1040 0%, #3d1a55 74%);
+                color: var(--accent-gold-light);
+                font-family: var(--font-serif);
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 0.7em;
+                letter-spacing: 2px;
+                border-radius: 20px;
+                padding: 5px 18px;
+                white-space: nowrap;
+                border: 1px solid rgba(212, 175, 55, 0.5);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+                transition: all 0.4s ease;
+            }
+
+            .categoryCardOuter:hover .categoryBadge {
+                color: #fff;
+                border-color: var(--accent-gold-bright);
+                box-shadow:
+                    0 3px 15px rgba(212, 175, 55, 0.5),
+                    0 0 20px rgba(212, 175, 55, 0.3);
+                text-shadow: 0 0 8px rgba(245, 234, 175, 0.6);
+            }
+
+            /* Inner card */
+            .categoryCardInner {
+                border-radius: 17px;
+                overflow: hidden;
+                background: var(--bg-card);
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Trace shape area — the wand-movement SVG zone */
+            .categoryTraceArea {
+                width: 100%;
+                height: 260px;
+                background: radial-gradient(ellipse at center, #1c0a30 0%, #0f041a 100%);
+                display: grid;
+                place-items: center;
+                position: relative;
+                overflow: hidden;
+                border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            }
+
+            /* Faint background trace pattern */
+            .categoryTraceBg {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                opacity: 0.18;
+                background-repeat: no-repeat;
+                background-size: 65%;
+                background-position: center;
+                pointer-events: none;
+                transition: opacity 0.5s ease;
+                z-index: 0;
+            }
+
+            .categoryCardOuter:hover .categoryTraceBg {
+                opacity: 0.35;
+            }
+
+            /* The animated wand-trace SVG */
+            .categoryTraceSVG {
+                width: 70%;
+                max-width: 220px;
+                position: relative;
+                z-index: 2;
+                filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+                transition: filter 0.5s ease;
+            }
+
+            .categoryCardOuter:hover .categoryTraceSVG {
+                filter: drop-shadow(0 0 18px rgba(212, 175, 55, 0.7))
+                    drop-shadow(0 0 35px rgba(245, 234, 175, 0.45));
+            }
+
+            /* The trace motion path */
+            .traceMotionPath {
+                stroke: var(--accent-gold);
+                stroke-width: 8;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                fill: none;
+                opacity: 0.75;
+            }
+
+            /* Icon in center of trace */
+            .categoryIconCenter {
+                position: absolute;
+                z-index: 3;
+                width: 40px;
+                height: 40px;
+                color: var(--accent-gold-light);
+                pointer-events: none;
+                filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.5));
+                transition: all 0.5s ease;
+            }
+
+            .categoryCardOuter:hover .categoryIconCenter {
+                transform: scale(1.25);
+                filter: drop-shadow(0 0 15px rgba(245, 234, 175, 0.8))
+                    drop-shadow(0 0 30px rgba(212, 175, 55, 0.6));
+            }
+
+            /* Orbiting particles */
+            .orbitParticle {
+                position: absolute;
+                width: 3px;
+                height: 3px;
+                border-radius: 50%;
+                background: var(--accent-gold);
+                pointer-events: none;
+                z-index: 1;
+                opacity: 0;
+                box-shadow: 0 0 6px var(--accent-gold-light);
+            }
+
+            /* Content area */
+            .categoryContent {
+                padding: 20px 18px 24px;
+                text-align: center;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: relative;
+                z-index: 2;
+                background: linear-gradient(
+                    180deg,
+                    rgba(36, 10, 56, 0.95) 0%,
+                    rgba(22, 6, 36, 0.98) 100%
+                );
+            }
+
+            .categoryContent h3 {
+                font-family: var(--font-decorative);
+                font-weight: 700;
+                font-size: 1.3em;
+                color: var(--accent-gold);
+                margin: 0 0 8px 0;
+                letter-spacing: 0.6px;
+                transition: all 0.4s ease;
+            }
+
+            .categoryCardOuter:hover .categoryContent h3 {
+                color: var(--accent-gold-light);
+                text-shadow: 0 0 14px rgba(212, 175, 55, 0.5);
+            }
+
+            .categoryContent p {
+                color: var(--text-muted);
+                font-size: 0.9em;
+                margin: 0;
+                line-height: 1.55;
+                transition: color 0.4s ease;
+                font-family: var(--font-body);
+            }
+
+            .categoryCardOuter:hover .categoryContent p {
+                color: var(--text-main);
+            }
+
+            /* Subtle corner spark on hover */
+            .cornerSpark {
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent-gold-light);
+                pointer-events: none;
+                z-index: 5;
+                opacity: 0;
+                box-shadow:
+                    0 0 10px var(--accent-gold-light),
+                    0 0 20px var(--accent-gold);
+            }
+
+            /* Burst sparkles on hover */
+            .hoverSpark {
+                position: fixed;
+                pointer-events: none;
+                z-index: 999;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    #ffffff 0%,
+                    #f5eaaf 40%,
+                    #d4af37 80%,
+                    transparent 100%
+                );
+                opacity: 0;
+            }
+
+            /* ============ RESPONSIVE ============ */
+            @media (max-width: 768px) {
+                .categoriesGrid {
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 22px;
+                }
+                .categoryTraceArea {
+                    height: 200px;
+                }
+                .categoryTraceSVG {
+                    max-width: 160px;
+                }
+                .categoryIconCenter {
+                    width: 30px;
+                    height: 30px;
+                }
+                .categoryContent h3 {
+                    font-size: 1.05em;
+                }
+                .categoryBadge {
+                    font-size: 0.62em;
+                    padding: 4px 12px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .categoriesGrid {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 14px;
+                }
+                .categoryCardOuter {
+                    box-shadow:
+                        0 0 0 6px rgba(15, 5, 26, 0.85),
+                        0 8px 20px rgba(0, 0, 0, 0.7);
+                }
+                .categoryCardOuter::before {
+                    inset: -5px;
+                    border-radius: 18px;
+                }
+                .categoryTraceArea {
+                    height: 150px;
+                }
+                .categoryTraceSVG {
+                    max-width: 110px;
+                }
+                .categoryIconCenter {
+                    width: 24px;
+                    height: 24px;
+                }
+                .categoryContent {
+                    padding: 14px 10px 18px;
+                }
+                .categoryContent h3 {
+                    font-size: 0.88em;
+                    letter-spacing: 0.2px;
+                }
+                .categoryContent p {
+                    font-size: 0.75em;
+                }
+                .categoryBadge {
+                    font-size: 0.55em;
+                    letter-spacing: 1px;
+                    padding: 3px 10px;
+                    top: -8px;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .categoryCardOuter {
+                    transition: none !important;
+                }
+                .categoryCardOuter:hover {
+                    transform: none !important;
+                }
+                .traceMotionPath {
+                    animation: none !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Ambient Sparkles -->
+        <div class="ambientSparkles" id="sparkles"></div>
+
+        <!-- Pull Cord -->
+        <div class="pullCordContainer" id="pullCordContainer" title="Pull Cord to Reveal Assignment Scroll">
+            <div class="ceilingMount"></div>
+            <div class="ropeLine" id="ropeLine"></div>
+            <div class="brassRing" id="brassRing"></div>
+            <div class="ropeCord" id="ropeCord">
+                <div class="runeRingSmall">ᚠ ✦ ☽</div>
+                <div class="crystalGem" id="crystalGem"></div>
+                <div class="tasselHead"></div>
+                <div class="tasselSkirt"></div>
+            </div>
+        </div>
+        <div class="pullHint" id="pullHint">Pull to reveal scroll ✦</div>
+
+        <!-- Marauder Scroll Overlay -->
+        <div id="assignmentScrollOverlay" class="assignmentScrollOverlay">
+            <div class="scrollRollerTop" id="scrollRollerTop">
+                <div class="rollerCapLeft"></div>
+                <div class="rollerBody"></div>
+                <div class="rollerCapRight"></div>
+            </div>
+
+            <div class="marauderScrollCard" id="marauderCard">
+                <button class="scrollCloseBtn" id="scrollCloseBtn">&times;</button>
+
+                <!-- Dense background SVG layer -->
+                <svg class="marauderDenseSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
+                    <g stroke="#3b2007" stroke-width="1" fill="none" opacity="0.6">
+                        <rect x="30" y="30" width="80" height="90" stroke-dasharray="2 2" />
+                        <circle cx="70" cy="75" r="25" />
+                        <rect x="680" y="380" width="100" height="110" stroke-dasharray="2 2" />
+                        <circle cx="730" cy="435" r="35" />
+                        <path d="M110 75 L300 75 L300 180 L520 180 L520 90 L680 90" stroke-dasharray="3 3" />
+                        <path d="M70 120 L70 340 L280 340 L280 480 L680 480" stroke-dasharray="1 3" />
+                        <text x="120" y="65" font-size="9" font-family="Cinzel">Secret Passage to Honeydukes</text>
+                        <text x="540" y="170" font-size="9" font-family="Cinzel">Astronomy Tower Staircase</text>
+                        <text x="320" y="470" font-size="9" font-family="Cinzel">Dungeon Corridor</text>
+                    </g>
+                </svg>
+
+                <!-- Map paths SVG layer -->
+                <svg class="marauderMapPathsSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
+                    <path id="mapPath1" class="mapPathStroke" d="M 60 110 Q 220 50, 410 110 T 740 90" />
+                    <path id="mapPath2" class="mapPathStroke" d="M 740 90 Q 580 260, 410 270 T 80 340" />
+                    <path id="mapPath3" class="mapPathStroke" d="M 80 340 Q 280 460, 410 440 T 740 460" />
+                    <g transform="translate(710, 130)" opacity="0.45" class="compassGroup">
+                        <circle cx="0" cy="0" r="28" fill="none" stroke="#4a1c06" stroke-width="1.5" stroke-dasharray="3 2" />
+                        <polygon points="0,-32 7,-6 32,0 7,6 0,32 -7,6 -32,0 -7,-6" fill="#4a1c06" />
+                        <text x="0" y="-36" font-size="12" text-anchor="middle" fill="#4a1c06" font-family="Cinzel" font-weight="bold">N</text>
+                    </g>
+                </svg>
+
+                <!-- Footprint container -->
+                <div id="footprintContainer">
+                    <svg class="walkingFootprint leftFoot" id="step1" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
+                    <svg class="walkingFootprint rightFoot" id="step2" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
+                    <svg class="walkingFootprint leftFoot" id="step3" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
+                </div>
+
+                <!-- Scroll content -->
+                <div class="scrollHeader">
+                    <h2 class="scrollHeaderTitle" id="revealTitle">THE WIZARDING ASSIGNMENT SCROLL</h2>
+                    <p class="scrollHeaderSub" id="revealSub">Enchanted Decree of Academic Distinction &bull; Ministry Assessment</p>
+                </div>
+
+                <div class="decreeQuote" id="revealDecree">
+                    "The Ministry of Magical Education hereby records that the apprentices named below have successfully completed the Second Internal Assignment of the First Semester.<br /><br />
+                    The challenge bestowed upon these young enchanters was the construction of a fully static magical storefront using only the ancient disciplines of HTML, CSS, and JavaScript, without invoking backend enchantments or external magical services. May this humble emporium stand as a testament to their craftsmanship, creativity, and dedication."
+                </div>
+
+                <div class="mapLandmarksGrid">
+                    <div class="mapLandmarkCard" id="landmark1">
+                        <div class="mapLandmarkTitle">✦ Created By</div>
+                        <div class="mapLandmarkValue">Bhuvi Singhal & Navi...</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark2">
+                        <div class="mapLandmarkTitle">✦ Academy</div>
+                        <div class="mapLandmarkValue">RV University</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark3">
+                        <div class="mapLandmarkTitle">✦ Course</div>
+                        <div class="mapLandmarkValue">B.Tech (Hons) CSE AIML</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark4">
+                        <div class="mapLandmarkTitle">✦ Semester</div>
+                        <div class="mapLandmarkValue">Semester I</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark5">
+                        <div class="mapLandmarkTitle">✦ Assessment</div>
+                        <div class="mapLandmarkValue">Internal Assessment II</div>
+                    </div>
+                </div>
+
+                <div class="ministryApprovalSeal" id="revealSeal">
+                    <span>APPROVED BY MINISTRY OF MAGICAL EDUCATION</span>
+                </div>
+            </div>
+
+            <div class="scrollRollerBottom" id="scrollRollerBottom">
+                <div class="rollerCapLeft"></div>
+                <div class="rollerBody"></div>
+                <div class="rollerCapRight"></div>
+            </div>
+        </div>
+
+        <!-- Page Container -->
+        <div class="pageContainer">
+            <!-- Magical Divider (top) -->
+            <div class="magicalDivider" id="dividerTop">
+                <span class="dividerGlyph">✧ ☽ ✧</span>
+            </div>
+
+            <!-- Categories Section -->
+            <section class="categoriesSection">
+                <div class="sectionHeader">
+                    <p class="sectionLabel" id="sectionLabel">Diagon Alley Collections</p>
+                    <h2 class="sectionTitle" id="sectionTitle">Shop by Category</h2>
+                    <p class="sectionIntro" id="sectionIntro">
+                        Browse our enchanted collections — each curated by master artisans from
+                        across the wizarding world
+                    </p>
+                </div>
+
+                <div class="categoriesGrid" id="categoriesGrid">
+                    <!-- 1. Wands & Magical Cores -->
+                    <div class="categoryCardOuter" id="catWands">
+                        <div class="categoryBadge">Wands &amp; Cores</div>
+                        <div class="categoryCardInner">
+                            <div class="categoryTraceArea">
+                                <div
+                                    class="categoryTraceBg"
+                                    style="
+                                        background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 184 73.89%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M33,150s20-64,92-64,92,64,92,64%22 transform=%22translate(-33 -79)%22/%3E%3C/svg%3E');
+                                    "
+                                ></div>
+                                <svg class="categoryTraceSVG" viewBox="0 0 184 73.89">
+                                    <clipPath id="clipWands">
+                                        <path
+                                            d="M125,89c43.91,0,80.83,27.11,91.58,63.89C210.25,111.13,171.66,79,125,79s-85.25,32.13-91.58,73.89C44.17,116.11,81.09,89,125,89Z"
+                                        />
+                                    </clipPath>
+                                    <path
+                                        clip-path="url(#clipWands)"
+                                        class="traceMotionPath"
+                                        id="traceWands"
+                                        d="M33,150s20-64,92-64,92,64,92,64"
+                                        transform="translate(-33 -79)"
+                                    />
+                                </svg>
+                                <svg
+                                    class="categoryIconCenter"
+                                    viewBox="0 0 40 40"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M20 2 L25 16 L38 20 L25 24 L20 38 L15 24 L2 20 L15 16 Z"
+                                        fill="currentColor"
+                                        opacity="0.25"
+                                    />
+                                    <circle
+                                        cx="20"
+                                        cy="20"
+                                        r="4"
+                                        fill="currentColor"
+                                        opacity="0.8"
+                                    />
+                                </svg>
+                                <div class="orbitParticle op1"></div>
+                                <div class="orbitParticle op2"></div>
+                                <div class="orbitParticle op3"></div>
+                                <div class="cornerSpark cs1"></div>
+                                <div class="cornerSpark cs2"></div>
+                            </div>
+                            <div class="categoryContent">
+                                <h3>Wands &amp; Magical Cores</h3>
+                                <p>Dragon heartstring, phoenix feather, and unicorn hair cores</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Potions Ingredients -->
+                    <div class="categoryCardOuter" id="catPotions">
+                        <div class="categoryBadge">Potions &amp; Herbs</div>
+                        <div class="categoryCardInner">
+                            <div class="categoryTraceArea">
+                                <div
+                                    class="categoryTraceBg"
+                                    style="
+                                        background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 201 117.05%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M21.14,141.53S25,181,60,181c0,0,15,1,32-17s36-46,39-54c0,0,25-34,40-34,0,0,29-15,48,21%22 transform=%22translate(-21 -68.63)%22/%3E%3C/svg%3E');
+                                    "
+                                ></div>
+                                <svg class="categoryTraceSVG" viewBox="0 0 201 117.05">
+                                    <clipPath id="clipPotions">
+                                        <path
+                                            d="M21,139s-1,24,30,32c28.83,7.44,58.34-38.49,61.63-45.22.29-.61,29.53-47,51.19-54.41.65-.22,43.46-16.21,58.18,31.63,0,0-.25-.69-.78-1.87-9.33-20.51-34.05-28.73-54.07-18.36A53.11,53.11,0,0,0,154,92c-11.69,11.69-48.35,63.55-48.76,64.14C101.44,161.61,83.84,185,60,185c0,0-19,5-31-12C29,173,21,164,21,139Z"
+                                        />
+                                    </clipPath>
+                                    <path
+                                        clip-path="url(#clipPotions)"
+                                        class="traceMotionPath"
+                                        id="tracePotions"
+                                        d="M21.14,141.53S25,181,60,181c0,0,15,1,32-17s36-46,39-54c0,0,25-34,40-34,0,0,29-15,48,21"
+                                        transform="translate(-21 -68.63)"
+                                    />
+                                </svg>
+                                <svg
+                                    class="categoryIconCenter"
+                                    viewBox="0 0 40 40"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        d="M20 4 L20 16 L10 20 L12 28 L20 34 L28 28 L30 20 L20 16"
+                                        fill="currentColor"
+                                        opacity="0.15"
+                                    />
+                                    <ellipse
+                                        cx="20"
+                                        cy="20"
+                                        rx="4"
+                                        ry="3"
+                                        fill="currentColor"
+                                        opacity="0.6"
+                                    />
+                                    <line x1="20" y1="18" x2="20" y2="24" stroke-width="2" />
+                                </svg>
+                                <div class="orbitParticle op1"></div>
+                                <div class="orbitParticle op2"></div>
+                                <div class="orbitParticle op3"></div>
+                                <div class="cornerSpark cs1"></div>
+                                <div class="cornerSpark cs2"></div>
+                            </div>
+                            <div class="categoryContent">
+                                <h3>Potions Ingredients</h3>
+                                <p>Rare herbs, magical creature parts, and crystal phials</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Magical Creatures -->
+                    <div class="categoryCardOuter" id="catCreatures">
+                        <div class="categoryBadge">Magical Creatures</div>
+                        <div class="categoryCardInner">
+                            <div class="categoryTraceArea">
+                                <div
+                                    class="categoryTraceBg"
+                                    style="
+                                        background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 159.22 187.39%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M207.22,33.9,123,120,54,45l3,85s-4,50,21,68,65,19,75,13c0,0,37.94-17.47,44.47-42.23%22 transform=%22translate(-48 -32.61)%22/%3E%3C/svg%3E');
+                                    "
+                                ></div>
+                                <svg class="categoryTraceSVG" viewBox="0 0 159.22 187.39">
+                                    <clipPath id="clipCreatures">
+                                        <path
+                                            d="M119.09,124l.91,1h.4a4.88,4.88,0,0,0,5.26,0H126l.53-.59a14.78,14.78,0,0,0,3-3.3L205,37s5-5,0-3l-82,79L52,34s-4-5-4,4,4,122,4,122-1,56,79,60c0,0,47.74,0,65.78-49.47-3,7.12-13,23.3-42.78,32.47,0,0-73,23-89-46L60,60l57.89,62.71A11.28,11.28,0,0,0,119.09,124Z"
+                                        />
+                                    </clipPath>
+                                    <path
+                                        clip-path="url(#clipCreatures)"
+                                        class="traceMotionPath"
+                                        id="traceCreatures"
+                                        d="M207.22,33.9,123,120,54,45l3,85s-4,50,21,68,65,19,75,13c0,0,37.94-17.47,44.47-42.23"
+                                        transform="translate(-48 -32.61)"
+                                    />
+                                </svg>
+                                <svg
+                                    class="categoryIconCenter"
+                                    viewBox="0 0 40 40"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <ellipse
+                                        cx="20"
+                                        cy="22"
+                                        rx="12"
+                                        ry="10"
+                                        fill="currentColor"
+                                        opacity="0.1"
+                                    />
+                                    <circle
+                                        cx="15"
+                                        cy="17"
+                                        r="4"
+                                        fill="currentColor"
+                                        opacity="0.4"
+                                    />
+                                    <circle
+                                        cx="25"
+                                        cy="17"
+                                        r="4"
+                                        fill="currentColor"
+                                        opacity="0.4"
+                                    />
+                                    <circle cx="15" cy="17" r="1.5" fill="#0f051a" />
+                                    <circle cx="25" cy="17" r="1.5" fill="#0f051a" />
+                                    <path d="M17 26 Q20 30 23 26" fill="none" stroke-width="2" />
+                                </svg>
+                                <div class="orbitParticle op1"></div>
+                                <div class="orbitParticle op2"></div>
+                                <div class="orbitParticle op3"></div>
+                                <div class="cornerSpark cs1"></div>
+                                <div class="cornerSpark cs2"></div>
+                            </div>
+                            <div class="categoryContent">
+                                <h3>Magical Creatures</h3>
+                                <p>Owls, cats, toads and magical creature care supplies</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Quidditch Equipment -->
+                    <div class="categoryCardOuter" id="catQuidditch">
+                        <div class="categoryBadge">Quidditch Gear</div>
+                        <div class="categoryCardInner">
+                            <div class="categoryTraceArea">
+                                <div
+                                    class="categoryTraceBg"
+                                    style="
+                                        background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 184 101.5%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M107.41,174.11S112,125,163,125s52,45.22,54,49.11c0,0,2-84.11-92-96.11,0,0-80,2.15-91.51,88.07%22 transform=%22translate(-33 -74.25)%22/%3E%3C/svg%3E');
+                                    "
+                                ></div>
+                                <svg class="categoryTraceSVG" viewBox="0 0 184 101.5">
+                                    <clipPath id="clipQuidditch">
+                                        <path
+                                            d="M216.62,164.26c.09,1,.17,2,.23,3,.1-1.66.15-3.32.15-5,0-48.6-41.19-88-92-88s-92,39.4-92,88c0,1.68,0,3.34.15,5,12.85-46,42.79-83,91.85-83,9.2,0,56,4,76,48a1.18,1.18,0,0,1-1.82,1.44A57.21,57.21,0,0,0,162,120.25c-30.38,0-55,22.83-55,51,0,1.52.09,3,.23,4.5,2.45-26.06,26-46.5,54.77-46.5s52.32,20.44,54.77,46.5c.14-1.48.23-3,.23-4.5a47.59,47.59,0,0,0-.5-6.9A.94.94,0,0,0,216.62,164.26Z"
+                                        />
+                                    </clipPath>
+                                    <path
+                                        clip-path="url(#clipQuidditch)"
+                                        class="traceMotionPath"
+                                        id="traceQuidditch"
+                                        d="M107.41,174.11S112,125,163,125s52,45.22,54,49.11c0,0,2-84.11-92-96.11,0,0-80,2.15-91.51,88.07"
+                                        transform="translate(-33 -74.25)"
+                                    />
+                                </svg>
+                                <svg
+                                    class="categoryIconCenter"
+                                    viewBox="0 0 40 40"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle
+                                        cx="20"
+                                        cy="20"
+                                        r="14"
+                                        fill="currentColor"
+                                        opacity="0.08"
+                                    />
+                                    <circle
+                                        cx="20"
+                                        cy="20"
+                                        r="5"
+                                        fill="currentColor"
+                                        opacity="0.5"
+                                    />
+                                    <ellipse
+                                        cx="20"
+                                        cy="20"
+                                        rx="12"
+                                        ry="5"
+                                        fill="none"
+                                        opacity="0.4"
+                                        transform="rotate(-30 20 20)"
+                                    />
+                                    <ellipse
+                                        cx="20"
+                                        cy="20"
+                                        rx="12"
+                                        ry="5"
+                                        fill="none"
+                                        opacity="0.4"
+                                        transform="rotate(30 20 20)"
+                                    />
+                                </svg>
+                                <div class="orbitParticle op1"></div>
+                                <div class="orbitParticle op2"></div>
+                                <div class="orbitParticle op3"></div>
+                                <div class="cornerSpark cs1"></div>
+                                <div class="cornerSpark cs2"></div>
+                            </div>
+                            <div class="categoryContent">
+                                <h3>Quidditch Equipment</h3>
+                                <p>Brooms, gloves, goggles and professional gear</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Magical Divider (bottom) -->
+            <div class="magicalDivider" id="dividerBottom">
+                <span class="dividerGlyph">✦ ☽ ✦</span>
+            </div>
+        </div>
+
+        <script>
+            // ============ INIT ============
+            document.addEventListener('DOMContentLoaded', () => {
+                initAmbientSparkles();
+                initEntranceAnimations();
+                initTraceAnimations();
+                initHoverEffects();
+                initOrbitParticles();
+                if (typeof initPullCordMechanism === 'function') initPullCordMechanism();
+                if (typeof initAssignmentScrollEvents === 'function') initAssignmentScrollEvents();
+            });
+
+            // ============ Ambient Sparkles ============
+            function initAmbientSparkles() {
+                const container = document.getElementById('sparkles');
+                const count = 30;
+                for (let i = 0; i < count; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'sparkleParticle';
+                    const size = 2 + Math.random() * 3;
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = Math.random() * 100 + '%';
+                    container.appendChild(p);
+                    anime({
+                        targets: p,
+                        translateY: [0, -80 - Math.random() * 120],
+                        translateX: [0, (Math.random() - 0.5) * 80],
+                        scale: [0.5, 1.3, 0.5],
+                        opacity: [0, 0.8, 0.8, 0],
+                        duration: 8000 + Math.random() * 6000,
+                        delay: Math.random() * 5000,
+                        loop: true,
+                        easing: 'easeInOutSine',
+                    });
+                }
+            }
+
+            // ============ Entrance Animations ============
+            function initEntranceAnimations() {
+                // Label
+                anime({
+                    targets: '#sectionLabel',
+                    opacity: [0, 1],
+                    translateY: [-15, 0],
+                    duration: 700,
+                    delay: 200,
+                    easing: 'easeOutExpo',
+                });
+
+                // Title
+                anime({
+                    targets: '#sectionTitle',
+                    opacity: [0, 1],
+                    translateY: [-30, 0],
+                    scale: [0.9, 1],
+                    duration: 900,
+                    delay: 350,
+                    easing: 'easeOutExpo',
+                });
+
+                // Intro
+                anime({
+                    targets: '#sectionIntro',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 800,
+                    delay: 500,
+                    easing: 'easeOutExpo',
+                });
+
+                // Dividers
+                anime({
+                    targets: '.magicalDivider',
+                    opacity: [0, 1],
+                    scale: [0.85, 1],
+                    delay: anime.stagger(200, { start: 200 }),
+                    duration: 700,
+                    easing: 'easeOutExpo',
+                });
+
+                // Category cards — staggered entrance
+                anime({
+                    targets: '.categoryCardOuter',
+                    opacity: [0, 1],
+                    translateY: [70, 0],
+                    scale: [0.8, 1],
+                    rotate: [4, 0],
+                    delay: anime.stagger(180, { start: 700 }),
+                    duration: 1000,
+                    easing: 'easeOutElastic(1, .75)',
+                });
+            }
+
+            // ============ Trace Path Animation Setup ============
+            function initTraceAnimations() {
+                const tracePaths = document.querySelectorAll('.traceMotionPath');
+
+                tracePaths.forEach((path) => {
+                    const length = path.getTotalLength();
+                    // Set up initial state
+                    path.style.strokeDasharray = length;
+                    path.style.strokeDashoffset = length;
+                    // Store length for hover animation
+                    path.dataset.traceLength = length;
+                });
+            }
+
+            // ============ Hover Effects ============
+            function initHoverEffects() {
+                const cards = document.querySelectorAll('.categoryCardOuter');
+
+                cards.forEach((card) => {
+                    const tracePath = card.querySelector('.traceMotionPath');
+                    const traceBg = card.querySelector('.categoryTraceBg');
+                    const cornerSparks = card.querySelectorAll('.cornerSpark');
+                    const traceLength = tracePath ? parseFloat(tracePath.dataset.traceLength) : 600;
+
+                    // On mouseenter
+                    card.addEventListener('mouseenter', (e) => {
+                        // Animate the trace path — draw it
+                        if (tracePath) {
+                            anime({
+                                targets: tracePath,
+                                strokeDashoffset: [traceLength, 0],
+                                duration: 800,
+                                easing: 'easeInOutQuad',
+                            });
+                        }
+
+                        // Brighten background trace
+                        if (traceBg) {
+                            anime({
+                                targets: traceBg,
+                                opacity: [0.18, 0.4],
+                                duration: 500,
+                                easing: 'easeOutQuad',
+                            });
+                        }
+
+                        // Burst sparkles from card center
+                        const rect = card.getBoundingClientRect();
+                        const cx = rect.left + rect.width / 2;
+                        const cy = rect.top + rect.height / 2;
+                        burstSparkles(cx, cy, 10);
+
+                        // Corner spark flashes
+                        cornerSparks.forEach((spark, i) => {
+                            const sparkRect = spark.getBoundingClientRect();
+                            const sx = sparkRect.left + sparkRect.width / 2;
+                            const sy = sparkRect.top + sparkRect.height / 2;
+                            anime({
+                                targets: spark,
+                                opacity: [0, 1, 0],
+                                scale: [0, 2.5, 0],
+                                duration: 600,
+                                delay: i * 150,
+                                easing: 'easeOutQuad',
+                            });
+                        });
+                    });
+
+                    // On mouseleave — reset trace
+                    card.addEventListener('mouseleave', () => {
+                        if (tracePath) {
+                            anime({
+                                targets: tracePath,
+                                strokeDashoffset: [0, traceLength],
+                                duration: 500,
+                                easing: 'easeInQuad',
+                            });
+                        }
+                        if (traceBg) {
+                            anime({
+                                targets: traceBg,
+                                opacity: [0.4, 0.18],
+                                duration: 500,
+                                easing: 'easeOutQuad',
+                            });
+                        }
+                    });
+
+                    // Click — bigger burst
+                    card.addEventListener('click', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const cx = rect.left + rect.width / 2;
+                        const cy = rect.top + rect.height / 2;
+                        burstSparkles(cx, cy, 22);
+
+                        // Brief pulse
+                        anime({
+                            targets: card,
+                            scale: [1, 0.93, 1.04, 1],
+                            duration: 600,
+                            easing: 'easeOutElastic(1, .5)',
+                        });
+
+                        // Re-draw trace
+                        if (tracePath) {
+                            const len = parseFloat(tracePath.dataset.traceLength);
+                            tracePath.style.strokeDashoffset = len;
+                            anime({
+                                targets: tracePath,
+                                strokeDashoffset: [len, 0],
+                                duration: 700,
+                                easing: 'easeInOutQuad',
+                            });
+                        }
+                    });
+                });
+            }
+
+            // ============ Orbit Particles ============
+            function initOrbitParticles() {
+                const cards = document.querySelectorAll('.categoryCardOuter');
+
+                cards.forEach((card) => {
+                    const particles = card.querySelectorAll('.orbitParticle');
+                    const traceArea = card.querySelector('.categoryTraceArea');
+
+                    particles.forEach((p, i) => {
+                        const angle = (i / particles.length) * Math.PI * 2;
+                        const dist = 55 + Math.random() * 35;
+                        p.style.left = '50%';
+                        p.style.top = '50%';
+                        p.style.marginLeft = '-1.5px';
+                        p.style.marginTop = '-1.5px';
+
+                        // Idle orbit
+                        let currentAngle = angle;
+                        const orbitInterval = setInterval(() => {
+                            if (!traceArea.isConnected) {
+                                clearInterval(orbitInterval);
+                                return;
+                            }
+                            currentAngle += 0.015;
+                            const x =
+                                50 +
+                                Math.cos(currentAngle) * ((dist / traceArea.offsetWidth) * 100);
+                            const y =
+                                50 +
+                                Math.sin(currentAngle) * ((dist / traceArea.offsetHeight) * 100);
+                            p.style.left = x + '%';
+                            p.style.top = y + '%';
+                            p.style.opacity = 0.25 + 0.35 * Math.sin(currentAngle * 2);
+                        }, 50);
+                    });
+
+                    // On hover — particles burst outward then return
+                    card.addEventListener('mouseenter', () => {
+                        particles.forEach((p, i) => {
+                            const burstAngle = (i / particles.length) * Math.PI * 2;
+                            const burstDist = 80 + Math.random() * 50;
+                            const tx = Math.cos(burstAngle) * burstDist;
+                            const ty = Math.sin(burstAngle) * burstDist;
+                            anime({
+                                targets: p,
+                                translateX: [0, tx, 0],
+                                translateY: [0, ty, 0],
+                                opacity: [0, 1, 0.5],
+                                scale: [0.5, 2, 1],
+                                duration: 1200 + Math.random() * 400,
+                                easing: 'easeOutElastic(1, .5)',
+                            });
+                        });
+                    });
+                });
+            }
+
+            // ============ Burst Sparkles Helper ============
+            function burstSparkles(x, y, count) {
+                for (let i = 0; i < count; i++) {
+                    const sp = document.createElement('div');
+                    sp.className = 'hoverSpark';
+                    sp.style.left = x + 'px';
+                    sp.style.top = y + 'px';
+                    const size = 3 + Math.random() * 5;
+                    sp.style.width = size + 'px';
+                    sp.style.height = size + 'px';
+                    sp.style.opacity = '1';
+                    document.body.appendChild(sp);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = 30 + Math.random() * 90;
+
+                    anime({
+                        targets: sp,
+                        translateX: Math.cos(angle) * dist,
+                        translateY: Math.sin(angle) * dist - 25,
+                        scale: [1, 0],
+                        opacity: [1, 0],
+                        duration: 700 + Math.random() * 500,
+                        easing: 'easeOutQuad',
+                        complete: () => sp.remove(),
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,100 @@
+<!--
+  components/alohomora-entrance.html
+  ===================================
+  Self-contained markup for the Alohomora spellbook intro overlay.
+  Injected into every page by js/main.js → HTMLLoader.
+  Controlled entirely by js/alohomora.js.
+-->
+<div id="spellbookOverlay">
+  <button id="skipEntrance" class="skipEntranceLink">Skip Animation</button>
+
+  <!-- SVG Magic Circle and Celestial Runes -->
+  <svg class="magicCircleSVG" viewBox="0 0 500 500">
+    <circle id="outerCircle" class="magicCirclePath" cx="250" cy="250" r="220" />
+    <circle id="innerCircle" class="magicCirclePath" cx="250" cy="250" r="170" fill="none" stroke-dasharray="8 8" />
+    <path id="starRune1" class="magicCirclePath" d="M250 20 L250 480 M20 250 L480 250" stroke-opacity="0.3"/>
+    <text x="250" y="65"  class="runeTextPath" text-anchor="middle">ᚠ  ✧  ☽  ✦  ○</text>
+    <text x="250" y="445" class="runeTextPath" text-anchor="middle">○  ✦  ☽  ✧  ᚠ</text>
+  </svg>
+
+  <!-- Inward Swirling Spark Container -->
+  <div id="sparkContainer"></div>
+
+  <!-- Ambient Floating Embers & Dust -->
+  <div id="bookDustContainer"></div>
+
+  <!-- 3D Spellbook Structure -->
+  <div class="spellbookContainer3D" id="spellbook3D">
+
+    <!-- Raised Spine on Left -->
+    <div class="spellbookSpine">
+      <div class="spineRib"></div>
+      <div class="spineRib"></div>
+      <div class="spineRib"></div>
+    </div>
+
+    <!-- Visible Gold-Leaf Page Edges -->
+    <div class="spellbookPagesLayer" id="spellbookPages">
+      <div style="text-align:center;color:#160624;font-family:'Cinzel',serif;">
+        <h3 style="margin:0;font-size:1.6em;color:#8c6910;">Diagon Alley Archives</h3>
+        <p style="margin-top:10px;font-style:italic;font-size:1em;">Entering The Wizarding Emporium...</p>
+      </div>
+    </div>
+
+    <!-- Front Leather Cover -->
+    <div class="spellbookFrontCover" id="spellbookFrontCover">
+      <!-- Nested Embossed Borders -->
+      <div class="outerGoldFrame"></div>
+      <div class="innerFloralBorder"></div>
+      <div class="stitchingLine"></div>
+
+      <!-- Engraved Corner Plates -->
+      <div class="goldCornerPlate cornerTopLeft">
+        <svg viewBox="0 0 40 40" class="cornerSVG"><path d="M0 0 L40 0 L40 10 Q 10 10 10 40 L0 40 Z" fill="#d4af37"/><circle cx="8" cy="8" r="2" fill="#4a3205"/></svg>
+      </div>
+      <div class="goldCornerPlate cornerTopRight">
+        <svg viewBox="0 0 40 40" class="cornerSVG"><path d="M40 0 L0 0 L0 10 Q 30 10 30 40 L40 40 Z" fill="#d4af37"/><circle cx="32" cy="8" r="2" fill="#4a3205"/></svg>
+      </div>
+      <div class="goldCornerPlate cornerBottomLeft">
+        <svg viewBox="0 0 40 40" class="cornerSVG"><path d="M0 40 L40 40 L40 30 Q 10 30 10 0 L0 0 Z" fill="#d4af37"/><circle cx="8" cy="32" r="2" fill="#4a3205"/></svg>
+      </div>
+      <div class="goldCornerPlate cornerBottomRight">
+        <svg viewBox="0 0 40 40" class="cornerSVG"><path d="M40 40 L0 40 L0 30 Q 30 30 30 0 L40 0 Z" fill="#d4af37"/><circle cx="32" cy="32" r="2" fill="#4a3205"/></svg>
+      </div>
+
+      <!-- Faint Engraved Background Runes -->
+      <svg class="engravedSymbolsSVG" viewBox="0 0 360 480">
+        <g stroke="#d4af37" stroke-width="0.8" fill="none" opacity="0.12">
+          <circle cx="180" cy="240" r="130" stroke-dasharray="4 4"/>
+          <path d="M 60 120 L 300 360 M 300 120 L 60 360" opacity="0.4"/>
+          <path class="owlSilhouette" d="M 310 430 C 300 420, 290 440, 280 430 C 275 425, 275 410, 285 410 C 295 410, 305 420, 310 430 Z" fill="#d4af37" opacity="0.25"/>
+        </g>
+      </svg>
+
+      <!-- Embossed Title -->
+      <div class="titleContainer">
+        <h1 class="spellbookTitle">✦ THE WIZARDING EMPORIUM ✦</h1>
+      </div>
+
+      <!-- Subtitle Ribbon -->
+      <div class="subtitleRibbon">
+        <span class="ribbonGlyph">❦</span>
+        <p class="spellbookSubtitle">"This book is sealed by ancient magic."</p>
+        <span class="ribbonGlyph">❦</span>
+      </div>
+
+      <!-- Brass Lock & Cast Button -->
+      <div class="centerpieceRing">
+        <div class="spellbookLock" id="spellbookLock">
+          <div class="lockKeyhole">
+            <svg class="lockIconSVG" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <button id="alohomoraBtn" class="alohomoraBtn">Cast Alohomora</button>
+    </div>
+  </div>
+</div>

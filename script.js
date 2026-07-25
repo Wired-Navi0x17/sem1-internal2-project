@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initMobileMenu();
   initProductModals();
+  initProphetAnimation();
+  initDeskLoadSequence();
+  initOwlPostDesk();
 });
 
 // ==================== Web Audio API Multi-Layer Synthesizer ====================
@@ -50,6 +53,54 @@ function playHoverShimmer() {
     osc.stop(now + 0.3);
   } catch (e) {}
 }
+
+// Soft hum used when candle lights during desk load sequence
+function playHoverHumSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(110, now);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.04, now + 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.65);
+  } catch (e) {}
+}
+
+// Ink-nib scratch used when SVG engravings draw themselves
+function playQuillInkSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    const bufferSize = ctx.sampleRate * 0.18;
+    const buffer     = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data       = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.6;
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    const filter = ctx.createBiquadFilter();
+    filter.type            = 'highpass';
+    filter.frequency.value = 4000;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.04, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    source.start(now);
+    source.stop(now + 0.22);
+  } catch (e) {}
+}
+
+
 
 // Rope Pull & Fabric Tension
 function playRopeTensionSound() {
@@ -1010,9 +1061,484 @@ function openQuickView(card) {
     if (e.target === modalOverlay) closeModal();
   });
 
+
   modalBuyBtn.addEventListener('click', () => {
     const buyButtonInCard = card.querySelector('.buyButton');
     if (buyButtonInCard) buyButtonInCard.click();
     closeModal();
   });
 }
+
+// ==================== Daily Prophet Newspaper Unfold Animation ====================
+function initProphetAnimation() {
+  const panel = document.getElementById('prophetPanel');
+  if (!panel || typeof anime === 'undefined') return;
+
+  // Start folded — JS sets transform only on desktop
+  if (window.innerWidth >= 900) {
+    panel.style.transformOrigin = 'top center';
+    panel.style.transform = 'scaleY(0.15) perspective(600px) rotateX(30deg)';
+    panel.style.opacity = '0';
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries[0].isIntersecting) return;
+    observer.disconnect();
+
+    playPaperUnfoldSound();
+
+    anime.timeline({ easing: 'easeOutBack' })
+      // 1. Unfurl from folded state
+      .add({
+        targets: panel,
+        scaleY: [0.15, 1.04],
+        rotateX: [30, -2],
+        opacity: [0, 1],
+        duration: 750,
+        easing: 'easeOutBack'
+      })
+      // 2. Wrinkle settle
+      .add({
+        targets: panel,
+        scaleY: [1.04, 0.99, 1],
+        rotateX: [-2, 1, 0],
+        duration: 350,
+        easing: 'easeInOutQuad'
+      })
+      // 3. Nameplate + meta fade in
+      .add({
+        targets: '.prophetNameplate, .prophetMeta',
+        opacity: [0, 1],
+        duration: 400
+      }, '-=100')
+      // 4. Articles stagger in
+      .add({
+        targets: '#prophetGrid .prophetArticle',
+        opacity: [0, 1],
+        translateY: [10, 0],
+        duration: 500,
+        delay: anime.stagger(90),
+        easing: 'easeOutCubic'
+      }, '-=200')
+      // 5. SVG engravings ink themselves via strokeDashoffset
+      .add({
+        targets: '.prophetSVGPath',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        duration: 1000,
+        delay: anime.stagger(160),
+        easing: 'easeInOutSine',
+        changeBegin: () => playQuillInkSound()
+      }, '-=100');
+
+    // 6. Floating newspaper dust particles
+    spawnProphetDust(panel);
+
+  }, { threshold: 0.2 });
+
+  observer.observe(panel);
+}
+
+function spawnProphetDust(panel) {
+  if (!panel) return;
+  const count = 10;
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const dust = document.createElement('div');
+      dust.className = 'prophetDust';
+      const size = Math.random() * 5 + 2;
+      dust.style.width  = `${size}px`;
+      dust.style.height = `${size}px`;
+      dust.style.left   = `${10 + Math.random() * 80}%`;
+      dust.style.bottom = `${10 + Math.random() * 60}%`;
+      dust.style.animationDuration = `${2 + Math.random() * 2}s`;
+      dust.style.animationDelay    = `${Math.random() * 0.5}s`;
+      panel.appendChild(dust);
+      setTimeout(() => dust.remove(), 4000);
+    }, i * 80);
+  }
+}
+
+// ==================== Owl Post Desk Ambient Load Sequence ====================
+function initDeskLoadSequence() {
+  const desk      = document.getElementById('owlDeskPanel');
+  const parchment = document.getElementById('deskParchment');
+  if (!desk || !parchment) return;
+
+  // On mobile, show immediately — only animate on desktop
+  if (window.innerWidth < 900) {
+    if (parchment) parchment.style.opacity = '1';
+    return;
+  }
+
+  // All desk objects start invisible
+  const objs = desk.querySelectorAll('.deskObj');
+  objs.forEach(o => { o.style.opacity = '0'; });
+
+  const delay = window.innerWidth >= 900 ? 1300 : 0;
+
+  setTimeout(() => {
+    if (typeof anime === 'undefined') {
+      objs.forEach(o => { o.style.opacity = '1'; });
+      if (parchment) { parchment.style.opacity = '1'; parchment.style.transform = 'none'; }
+      return;
+    }
+
+    anime.timeline({ easing: 'easeOutCubic' })
+      // Candle lights up
+      .add({ targets: '.deskObj--candle', opacity: [0, 1], duration: 500,
+             changeBegin: () => playHoverHumSound() })
+      // Quill drifts in
+      .add({ targets: '.deskObj--quill', opacity: [0, 1], translateY: [-8, 0], duration: 600 }, '-=100')
+      // Ink bottle and key glow
+      .add({ targets: '.deskObj--inkpot, .deskObj--key', opacity: [0, 1], duration: 450 }, '-=200')
+      // Remaining objects stagger
+      .add({ targets: '.deskObj--parchment, .deskObj--crystal, .deskObj--spectacles, .deskObj--feather',
+             opacity: [0, 1], duration: 500, delay: anime.stagger(75) }, '-=200')
+      // Parchment letter appears
+      .add({ targets: parchment, opacity: [0, 1], translateY: [8, 0], duration: 550,
+             changeBegin: () => playHoverShimmer() }, '-=100');
+
+  }, delay);
+}
+
+// ==================== Owl Post Desk — Interactions & 9-Step Submission ====================
+function initOwlPostDesk() {
+  const form = document.getElementById('owlPostForm');
+  if (!form) return;
+
+  // Per-character quill chime on keydown
+  const allFields = form.querySelectorAll('.parchmentInput, .parchmentTextarea');
+  allFields.forEach(field => {
+    field.addEventListener('keydown', (e) => {
+      if (e.key.length === 1) playQuillFocusChime();
+    });
+    field.addEventListener('focus', () => spawnParchmentSparkle(field));
+  });
+
+  // 9-step wax seal cinematic submission
+  const btn = document.getElementById('waxSealBtn');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (btn.disabled) return;
+    btn.disabled = true;
+
+    // STEP 1: Wax glows brighter on hover
+    await animeP({ targets: btn,
+      boxShadow: [
+        '0 0 0 5px rgba(139,60,30,.42), 0 8px 24px rgba(0,0,0,.72)',
+        '0 0 0 14px rgba(192,57,43,.5), 0 0 55px rgba(200,60,40,.75), 0 8px 24px rgba(0,0,0,.85)'
+      ],
+      duration: 420 });
+
+    // STEP 2: Seal presses (stamp motion)
+    playWaxSealSound();
+    await animeP({ targets: btn, scale: [1, 0.76, 1.08, 1], duration: 580, easing: 'easeInOutBack' });
+
+    // STEP 3: Letter folds (parchment collapses)
+    playPaperFoldSound();
+    const parchment = document.getElementById('deskParchment');
+    await animeP({ targets: parchment, scaleY: [1, 0.02], opacity: [1, 0], duration: 680, easing: 'easeInBack' });
+
+    // STEP 4: Envelope seals itself (golden flash over parchment)
+    spawnEnvelopeSeal();
+    await sleep(480);
+
+    // STEP 5: Owl lands from above
+    const owlWrap = document.getElementById('owlFlyWrap');
+    owlWrap.style.display = 'block';
+    owlWrap.style.position = 'fixed';
+    owlWrap.style.top   = '38%';
+    owlWrap.style.left  = '50%';
+    owlWrap.style.transform = 'translate(-50%, -50%)';
+    playOwlHootSound();
+    await animeP({ targets: owlWrap, translateY: ['-62vh', 0], opacity: [0, 1], duration: 750, easing: 'easeOutBack' });
+
+    // STEP 6: Owl looks around (head left-right scan)
+    await animeP({ targets: owlWrap, rotate: [-9, 9, -5, 0], duration: 850, easing: 'easeInOutSine' });
+
+    // STEP 7: Grabs parchment — wings flap, launches
+    await animeP({ targets: '#owlWingL', rotate: [0, -42, 0, -36, 0], duration: 500 });
+    playWindWhooshSound();
+    await animeP({ targets: owlWrap,
+      translateX: [0, '-145vw'], translateY: [0, '-38vh'],
+      rotate: [0, -18], opacity: [1, 0],
+      duration: 1150, easing: 'easeInCubic' });
+    owlWrap.style.display = 'none';
+
+    // STEP 8: Feather falls from where owl was
+    spawnFallingFeather();
+    await sleep(850);
+
+    // STEP 9: Confirmation appears
+    const conf = document.getElementById('owlConfirmation');
+    conf.style.display = 'flex';
+    conf.setAttribute('aria-hidden', 'false');
+    await animeP({ targets: conf, opacity: [0, 1], translateY: [20, 0], duration: 650 });
+
+    form.reset();
+    btn.disabled = false;
+  });
+}
+
+// Spawn sparkle that travels along parchment line on field focus
+function spawnParchmentSparkle(field) {
+  const wrap = field.closest('.parchmentField, .parchmentTextareaWrap');
+  if (!wrap) return;
+
+  const spark = document.createElement('div');
+  spark.className = 'parchSparkle';
+  spark.style.position = 'absolute';
+  spark.style.left     = '0px';
+  spark.style.bottom   = '0px';
+  spark.style.zIndex   = '10';
+  wrap.style.position  = 'relative';
+  wrap.appendChild(spark);
+
+  if (typeof anime !== 'undefined') {
+    anime({
+      targets: spark,
+      left: ['0%', '100%'],
+      opacity: [0.9, 0],
+      duration: 600,
+      easing: 'easeOutCubic',
+      complete: () => spark.remove()
+    });
+  } else {
+    setTimeout(() => spark.remove(), 700);
+  }
+}
+
+// Spawn golden envelope seal flash over the parchment
+function spawnEnvelopeSeal() {
+  const parchment = document.getElementById('deskParchment');
+  if (!parchment) return;
+
+  const flash = document.createElement('div');
+  flash.className = 'envelopeSealFlash';
+  parchment.appendChild(flash);
+  setTimeout(() => flash.remove(), 600);
+}
+
+// Spawn a falling feather SVG at centre of viewport
+function spawnFallingFeather() {
+  const feather = document.createElement('div');
+  feather.className = 'fallingFeather';
+  feather.style.top  = '35%';
+  feather.style.left = `${45 + Math.random() * 10}%`;
+  feather.innerHTML  = `<svg width="14" height="55" viewBox="0 0 14 55">
+    <path d="M7 0 C3 14 2 26 5 42 L7 55" stroke="#c8a870" stroke-width="1.1" fill="none"/>
+    <path d="M7 6  C4 10 1 14 0 22" stroke="#c8a870" stroke-width="0.65" fill="none" opacity="0.55"/>
+    <path d="M7 15 C4 19 1 23 0 31" stroke="#c8a870" stroke-width="0.65" fill="none" opacity="0.55"/>
+    <path d="M7 6  C10 10 13 14 14 22" stroke="#c8a870" stroke-width="0.65" fill="none" opacity="0.55"/>
+    <path d="M7 15 C10 19 13 23 14 31" stroke="#c8a870" stroke-width="0.65" fill="none" opacity="0.55"/>
+  </svg>`;
+  document.body.appendChild(feather);
+  setTimeout(() => feather.remove(), 2800);
+}
+
+// Utility: Promise-wrapped anime.js
+function animeP(params) {
+  return new Promise(resolve => anime({ ...params, complete: resolve }));
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// ==================== New Web Audio Synthesis Functions ====================
+
+// Soft paper crinkle (newspaper unfold)
+function playPaperUnfoldSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    const bufferSize = ctx.sampleRate * 0.35;
+    const buffer     = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data       = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
+
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type            = 'bandpass';
+    filter.frequency.value = 1200;
+    filter.Q.value         = 0.5;
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.07, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    source.start(now);
+    source.stop(now + 0.4);
+  } catch (e) {}
+}
+
+// Delicate single quill chime on field focus
+function playQuillFocusChime() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(2093, now);
+    osc.frequency.exponentialRampToValueAtTime(2637, now + 0.06);
+
+    gain.gain.setValueAtTime(0.055, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.25);
+  } catch (e) {}
+}
+
+// Deep wax thud + sizzle (wax seal press)
+function playWaxSealSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    // Thud
+    const osc  = ctx.createOscillator();
+    const gainT = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(75, now);
+    osc.frequency.exponentialRampToValueAtTime(38, now + 0.12);
+    gainT.gain.setValueAtTime(0.28, now);
+    gainT.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+    osc.connect(gainT);
+    gainT.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.2);
+
+    // Sizzle noise
+    const bufferSize = ctx.sampleRate * 0.22;
+    const buffer     = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data       = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
+
+    const ns   = ctx.createBufferSource();
+    ns.buffer  = buffer;
+    const filt = ctx.createBiquadFilter();
+    filt.type            = 'highpass';
+    filt.frequency.value = 3000;
+    const gainS = ctx.createGain();
+    gainS.gain.setValueAtTime(0.045, now);
+    gainS.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+    ns.connect(filt);
+    filt.connect(gainS);
+    gainS.connect(ctx.destination);
+    ns.start(now);
+    ns.stop(now + 0.27);
+  } catch (e) {}
+}
+
+// Paper fold rustling
+function playPaperFoldSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    const bufferSize = ctx.sampleRate * 0.3;
+    const buffer     = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data       = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
+
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type            = 'bandpass';
+    filter.frequency.value = 800;
+    filter.Q.value         = 1.2;
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.06, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    source.start(now);
+    source.stop(now + 0.34);
+  } catch (e) {}
+}
+
+// Soft owl hoot (two overlapping sines with vibrato)
+function playOwlHootSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    [[220, 0.12], [330, 0.07]].forEach(([freq, vol]) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      // Vibrato LFO
+      const lfo     = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+      lfo.frequency.value  = 5.5;
+      lfoGain.gain.value   = 8;
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc.frequency);
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.88, now + 0.5);
+
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(vol,   now + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+
+      lfo.connect(lfoGain);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      lfo.start(now); lfo.stop(now + 0.7);
+      osc.start(now); osc.stop(now + 0.7);
+    });
+  } catch (e) {}
+}
+
+// Wind whoosh as owl departs
+function playWindWhooshSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  try {
+    const bufferSize = ctx.sampleRate * 0.7;
+    const buffer     = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data       = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1);
+
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(180, now);
+    filter.frequency.exponentialRampToValueAtTime(2800, now + 0.55);
+    filter.Q.value = 0.7;
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.09, now);
+    gain.gain.linearRampToValueAtTime(0.14, now + 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.72);
+
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    source.start(now);
+    source.stop(now + 0.75);
+  } catch (e) {}
+}
+

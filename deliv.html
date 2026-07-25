@@ -1,299 +1,2338 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Delivery Process - The Wizarding Emporium</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <!-- Detailed Hanging Castle Pull Cord Mechanism in Upper Right Corner -->
-    <div class="pullCordContainer" id="pullCordContainer" title="Pull Cord to Reveal Assignment Scroll">
-      <div class="ceilingMount"></div>
-      <div class="ropeLine" id="ropeLine"></div>
-      <div class="brassRing" id="brassRing"></div>
-      <div class="ropeCord" id="ropeCord">
-        <div class="runeRingSmall">ᚠ ✦ ☽</div>
-        <div class="crystalGem" id="crystalGem"></div>
-        <div class="tasselHead"></div>
-        <div class="tasselSkirt"></div>
-      </div>
-    </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Delivery Process - The Wizarding Emporium</title>
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2319082b'/><text x='50' y='68' font-size='48' text-anchor='middle' fill='%23d4af37' font-family='serif' font-weight='bold'>W</text></svg>"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Playfair+Display+SC:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@400;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <style>
+            /* ============ Reset & Tokens ============ */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-    <!-- Authentic Dense Hanging Marauder's Map Information Scroll Overlay -->
-    <div id="assignmentScrollOverlay" class="assignmentScrollOverlay">
-      <!-- Scroll Roller Container -->
-      <div class="scrollRollerTop" id="scrollRollerTop">
-        <div class="rollerCapLeft"></div>
-        <div class="rollerBody"></div>
-        <div class="rollerCapRight"></div>
-      </div>
+            :root {
+                --bg-dark: #0f051a;
+                --bg-surface: #19082b;
+                --bg-card: linear-gradient(145deg, #240a38 0%, #160624 100%);
+                --accent-gold: #d4af37;
+                --accent-gold-light: #f5eaaf;
+                --accent-gold-dark: #9e7a17;
+                --text-main: #ebdcb9;
+                --text-serif: #f3e8cb;
+                --text-muted: #c4b0d8;
+                --border-gold: rgba(212, 175, 55, 0.45);
+                --border-gold-bright: #d4af37;
+                --shadow-gold: 0 0 25px rgba(212, 175, 55, 0.3);
+                --radius-sm: 6px;
+                --radius-md: 12px;
+                --radius-lg: 18px;
+                --font-serif: 'Cinzel', 'Cormorant Garamond', serif;
+                --font-body: 'EB Garamond', 'Crimson Text', serif;
+            }
 
-      <div class="marauderScrollCard" id="marauderCard">
-        <button class="scrollCloseBtn" id="scrollCloseBtn">&times;</button>
-        <div class="waxSealBadge">RV</div>
+            html {
+                scroll-behavior: smooth;
+            }
 
-        <!-- Faint Castle Floor Plans, Corridors & Secret Passages (Dense Marauder Layer) -->
-        <svg class="marauderDenseSVG" viewBox="0 0 820 540">
-          <g stroke="#3b2007" stroke-width="1" fill="none" opacity="0.6">
-            <!-- Castle Towers & Rooms -->
-            <rect x="30" y="30" width="80" height="90" stroke-dasharray="2 2"/>
-            <circle cx="70" cy="75" r="25"/>
-            <rect x="680" y="380" width="100" height="110" stroke-dasharray="2 2"/>
-            <circle cx="730" cy="435" r="35"/>
-            <!-- Corridors & Hidden Passages -->
-            <path d="M110 75 L300 75 L300 180 L520 180 L520 90 L680 90" stroke-dasharray="3 3"/>
-            <path d="M70 120 L70 340 L280 340 L280 480 L680 480" stroke-dasharray="1 3"/>
-            <!-- Faint Runes & Text -->
-            <text x="120" y="65" font-size="9" font-family="Cinzel">Secret Passage to Honeydukes</text>
-            <text x="540" y="170" font-size="9" font-family="Cinzel">Astronomy Tower Staircase</text>
-            <text x="320" y="470" font-size="9" font-family="Cinzel">Dungeon Corridor</text>
-          </g>
-        </svg>
+            body {
+                background-color: var(--bg-dark);
+                background-image:
+                    radial-gradient(2px 2px at 20% 30%, rgba(212, 175, 55, 0.15), transparent),
+                    radial-gradient(1px 1px at 60% 70%, rgba(245, 234, 175, 0.12), transparent),
+                    radial-gradient(1.5px 1.5px at 80% 20%, rgba(212, 175, 55, 0.08), transparent),
+                    radial-gradient(1px 1px at 40% 80%, rgba(196, 176, 216, 0.06), transparent),
+                    radial-gradient(2px 2px at 90% 50%, rgba(212, 175, 55, 0.1), transparent),
+                    radial-gradient(1px 1px at 15% 60%, rgba(245, 234, 175, 0.08), transparent),
+                    radial-gradient(ellipse at 50% 0%, rgba(36, 10, 56, 0.5), transparent 60%);
+                background-size:
+                    300px 300px,
+                    400px 400px,
+                    350px 350px,
+                    500px 500px,
+                    250px 250px,
+                    380px 380px,
+                    100% 100%;
+                color: var(--text-main);
+                font-family: var(--font-body);
+                font-size: 1.05rem;
+                line-height: 1.7;
+                min-height: 100vh;
+                position: relative;
+                overflow-x: hidden;
+            }
 
-        <!-- Hand-Drawn SVG Map Pathways & Enlarged Compass Rose -->
-        <svg class="marauderMapPathsSVG" viewBox="0 0 820 540">
-          <path id="mapPath1" class="mapPathStroke" d="M 60 110 Q 220 50, 410 110 T 740 90" />
-          <path id="mapPath2" class="mapPathStroke" d="M 740 90 Q 580 260, 410 270 T 80 340" />
-          <path id="mapPath3" class="mapPathStroke" d="M 80 340 Q 280 460, 410 440 T 740 460" />
-          <!-- 25% Larger Compass Rose -->
-          <g transform="translate(710, 130)" opacity="0.45" class="compassGroup">
-            <circle cx="0" cy="0" r="28" fill="none" stroke="#4a1c06" stroke-width="1.5" stroke-dasharray="3 2"/>
-            <polygon points="0,-32 7,-6 32,0 7,6 0,32 -7,6 -32,0 -7,-6" fill="#4a1c06"/>
-            <text x="0" y="-36" font-size="12" text-anchor="middle" fill="#4a1c06" font-family="Cinzel" font-weight="bold">N</text>
-          </g>
-        </svg>
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                pointer-events: none;
+                background: radial-gradient(
+                    ellipse at 50% 30%,
+                    transparent 45%,
+                    rgba(10, 3, 16, 0.75) 80%,
+                    rgba(5, 1, 9, 0.95) 100%
+                );
+                z-index: 2;
+            }
 
-        <!-- Animated Alternating Left & Right Footprints -->
-        <div id="footprintContainer">
-          <svg class="walkingFootprint leftFoot" id="step1" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-          <svg class="walkingFootprint rightFoot" id="step2" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-          <svg class="walkingFootprint leftFoot" id="step3" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-        </div>
+            /* ============ Ambient Sparkles ============ */
+            .ambientSparkles {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                pointer-events: none;
+                z-index: 1;
+                overflow: hidden;
+            }
 
-        <div class="scrollHeader">
-          <h2 class="scrollHeaderTitle" id="revealTitle">THE WIZARDING ASSIGNMENT SCROLL</h2>
-          <p class="scrollHeaderSub" id="revealSub">Enchanted Decree of Academic Distinction &bull; Ministry Assessment</p>
-        </div>
+            .sparkleParticle {
+                position: absolute;
+                background: radial-gradient(
+                    circle,
+                    #f3e5ab 0%,
+                    rgba(212, 175, 55, 0.8) 50%,
+                    transparent 100%
+                );
+                border-radius: 50%;
+                opacity: 0;
+            }
 
-        <div class="decreeQuote" id="revealDecree">
-          "The Ministry of Magical Education hereby records that the apprentices named below have successfully completed the Second Internal Assignment of the First Semester.<br/><br/>
-          The challenge bestowed upon these young enchanters was the construction of a fully static magical storefront using only the ancient disciplines of HTML, CSS, and JavaScript, without invoking backend enchantments or external magical services. May this humble emporium stand as a testament to their craftsmanship, creativity, and dedication."
-        </div>
+            /* ============ Pull Cord ============ */
+            .pullCordContainer {
+                position: fixed;
+                top: 0;
+                right: 55px;
+                width: 60px;
+                height: 230px;
+                z-index: 1500;
+                cursor: grab;
+                transform-origin: top center;
+                animation: cordSwayIdle 6s ease-in-out infinite;
+                user-select: none;
+                opacity: 0;
+            }
 
-        <!-- Organic Asymmetric Map Landmarks (Sequential Footprint Destinations) -->
-        <div class="mapLandmarksGrid">
-          <div class="mapLandmarkCard" id="landmark1">
-            <div class="mapLandmarkTitle">🪶 Created By</div>
-            <div class="mapLandmarkValue">Bhuvi Singhal & Navi...</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark2" style="transform: translateY(-6px) rotate(-1deg);">
-            <div class="mapLandmarkTitle">🏰 Academy</div>
-            <div class="mapLandmarkValue">RV University</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark3" style="transform: translateY(8px) rotate(1deg);">
-            <div class="mapLandmarkTitle">📖 Course</div>
-            <div class="mapLandmarkValue">B.Tech (Hons) CSE AIML</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark4" style="transform: translateY(-4px);">
-            <div class="mapLandmarkTitle">⌛ Semester</div>
-            <div class="mapLandmarkValue">Semester I</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark5" style="transform: translateY(4px) rotate(-1deg);">
-            <div class="mapLandmarkTitle">🏆 Assessment</div>
-            <div class="mapLandmarkValue">Internal Assessment II</div>
-          </div>
-        </div>
+            .pullCordContainer:active {
+                cursor: grabbing;
+            }
 
-        <!-- Official Ministry Approval Seal Stamp -->
-        <div class="ministryApprovalSeal" id="revealSeal">
-          <span>APPROVED BY MINISTRY OF MAGICAL EDUCATION</span>
-        </div>
-      </div>
+            @keyframes cordSwayIdle {
+                0%,
+                100% {
+                    transform: rotate(0deg);
+                }
+                25% {
+                    transform: rotate(2.5deg);
+                }
+                75% {
+                    transform: rotate(-2.5deg);
+                }
+            }
 
-      <div class="scrollRollerBottom" id="scrollRollerBottom">
-        <div class="rollerCapLeft"></div>
-        <div class="rollerBody"></div>
-        <div class="rollerCapRight"></div>
-      </div>
-    </div>
+            .ceilingMount {
+                position: absolute;
+                top: 0;
+                left: 15px;
+                width: 30px;
+                height: 12px;
+                background: linear-gradient(180deg, #5a3c0e 0%, #d4af37 50%, #2a1b05 100%);
+                border-radius: 0 0 6px 6px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+            }
 
-    <div class="pageContainer">
-      <header class="mainHeader">
-        <div class="headerContent">
-          <h1 class="shopTitle">The Wizarding Emporium</h1>
-          <p class="shopTagline">
-            Diagon Alley's Premier Magical Supplier Since 1298
-          </p>
-        </div>
-        <nav class="mainNav">
-          <a href="index.html" class="navLink">Home</a>
-          <a href="contact.html" class="navLink">Contact</a>
-          <a href="deliv.html" class="navLink active">Delivery</a>
-          <div class="cauldronBadge">
-            <svg class="cauldronIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"/>
-              <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8"/>
-            </svg>
-            <span class="cauldronCount">0</span>
-          </div>
-        </nav>
-      </header>
+            .ropeLine {
+                position: absolute;
+                top: 10px;
+                left: 28px;
+                width: 4px;
+                height: 125px;
+                background: repeating-linear-gradient(45deg, #d4af37 0px, #b8941f 4px, #7a550d 8px);
+                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            }
 
-      <main class="mainContent">
-        <section class="welcomeSection">
-          <h2 class="sectionTitle">Magical Delivery Process</h2>
-          <p class="sectionIntro">
-            We deliver your magical items safely using traditional and enchanted
-            methods
-          </p>
-        </section>
+            .brassRing {
+                position: absolute;
+                top: 130px;
+                left: 20px;
+                width: 20px;
+                height: 12px;
+                background: radial-gradient(
+                    ellipse at center,
+                    #f5eaaf 0%,
+                    #d4af37 60%,
+                    #7a550d 100%
+                );
+                border-radius: 50%;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+            }
 
-        <div class="magicalDivider">
-          <span class="dividerGlyph">✧ ☽ ✧</span>
-        </div>
+            .ropeCord {
+                position: absolute;
+                top: 140px;
+                left: 10px;
+                width: 40px;
+                height: 80px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
 
-        <section class="featuredSection">
-          <h2 class="sectionTitle">Our Delivery Process</h2>
+            .runeRingSmall {
+                font-size: 8px;
+                color: #d4af37;
+                font-family: var(--font-serif);
+                margin-bottom: 2px;
+                letter-spacing: 1px;
+            }
 
-          <div class="deliveryStep">
-            <h3 class="stepTitle">1. Place Your Order</h3>
-            <p>
-              Visit our Diagon Alley location or send your order via owl post.
-              We accept payment in Galleons, Sickles, and Knuts.
-            </p>
-          </div>
+            .crystalGem {
+                width: 14px;
+                height: 14px;
+                background: radial-gradient(circle, #ffffff 0%, #f3e5ab 60%, #d4af37 100%);
+                transform: rotate(45deg);
+                box-shadow:
+                    0 0 12px #f5eaaf,
+                    0 0 25px rgba(212, 175, 55, 0.8);
+                margin-bottom: 4px;
+                transition: box-shadow 0.3s ease;
+            }
 
-          <div class="deliveryStep">
-            <h3 class="stepTitle">2. Order Processing</h3>
-            <p>
-              We'll send a confirmation via owl post. Our specialists prepare
-              your items with protective spells and packaging charms.
-            </p>
-          </div>
+            .pullCordContainer:hover .crystalGem {
+                box-shadow:
+                    0 0 20px #ffffff,
+                    0 0 35px #d4af37;
+            }
 
-          <div class="deliveryStep">
-            <h3 class="stepTitle">3. Choose Delivery Method</h3>
-            <div class="deliveryMethods">
-              <div class="deliveryMethod">
-                <div class="deliveryMethodHeader">
-                  <!-- reicon SVG: send -->
-                  <svg class="deliveryMethodIcon" viewBox="0 0 24 24" fill="currentColor">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.5615 5.64099C23.4636 3.04509 20.9861 0.522263 18.3803 1.44085L3.44476 6.70576C0.578346 7.71619 0.500509 11.7624 3.32388 12.8849L3.3397 12.891L8.29288 14.7318C8.75501 14.9178 9.12031 15.2916 9.2978 15.764L11.222 20.6243C12.3084 23.4996 16.3744 23.4454 17.3839 20.5402L22.5615 5.64099ZM18.8789 2.85553C20.2743 2.36365 21.643 3.71458 21.1447 5.14861L15.9671 20.0478C15.4171 21.6302 13.2126 21.6573 12.6238 20.0902L10.6996 15.2299C10.6224 15.0256 10.5257 14.8311 10.4119 14.6487L14.0303 11.0303C14.3232 10.7374 14.3232 10.2626 14.0303 9.96967C13.7374 9.67678 13.2626 9.67678 12.9697 9.96967L9.34872 13.5906C9.18799 13.4915 9.01788 13.4058 8.83985 13.335L8.82404 13.3289L3.87079 11.4881C2.34161 10.8732 2.38813 8.6687 3.94344 8.12043L18.8789 2.85553Z"/>
-                  </svg>
-                  <h4>Standard Owl Post</h4>
-                </div>
-                <p>3-5 Business Days - FREE</p>
-              </div>
+            .tasselHead {
+                width: 22px;
+                height: 14px;
+                background: linear-gradient(180deg, #d4af37 0%, #8c6910 100%);
+                border-radius: 6px 6px 0 0;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+            }
 
-              <div class="deliveryMethod">
-                <div class="deliveryMethodHeader">
-                  <!-- reicon SVG: flame -->
-                  <svg class="deliveryMethodIcon" viewBox="0 0 24 24" fill="currentColor">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.25961 3.09856C9.6636 2.08774 10.9948 1.46276 12.0272 2.2492C13.7471 3.55935 15.9044 5.4855 17.6398 7.68865C19.3595 9.87197 20.75 12.4348 20.75 15C20.75 17.2933 20.0398 18.9975 19.0117 20.218C17.9933 21.4269 16.6994 22.1193 15.5816 22.4671C15.0076 22.6457 14.4825 22.3825 14.2275 21.9545C13.9871 21.5512 13.9859 21.0147 14.2863 20.583C15.1436 19.351 16.05 17.5793 16.05 16C16.05 15.2165 15.7123 14.2889 15.1668 13.3372C14.7566 12.6215 14.2539 11.9351 13.7643 11.3465C13.6627 12.7494 13.3578 14.5121 12.412 15.9696C11.9822 16.6319 11.0267 16.706 10.518 16.0627C10.3592 15.8618 10.2023 15.6412 10.0588 15.4393C10.0501 15.4271 10.0415 15.4151 10.033 15.403C9.9545 15.2927 9.87986 15.1882 9.80763 15.09C9.12187 15.773 8.48333 16.5902 8.48333 17.5C8.48333 18.3037 8.88448 19.4025 9.35898 20.3335C9.61561 20.837 9.50832 21.3951 9.1994 21.7606C8.87092 22.1492 8.27312 22.3491 7.70569 22.0206C5.76159 20.8952 3.25 18.4917 3.25 15C3.25 14.0531 3.57109 13.0736 4.0203 12.1168C4.47254 11.1536 5.0858 10.15 5.72984 9.14739C5.95297 8.80004 6.17941 8.45306 6.40546 8.10668C7.51002 6.41411 8.60528 4.73579 9.25961 3.09856ZM10.8983 3.41743C10.7958 3.45292 10.6992 3.53846 10.6525 3.65524C9.93718 5.44504 8.74008 7.27713 7.63532 8.9679C7.41569 9.30403 7.19971 9.63458 6.99189 9.95809C6.35264 10.9532 5.78547 11.8866 5.3781 12.7543C4.96769 13.6284 4.75 14.3737 4.75 15C4.75 17.2945 6.15653 19.0762 7.63307 20.1782C7.27845 19.3371 6.98333 18.367 6.98333 17.5C6.98333 15.7694 8.2827 14.4629 9.00894 13.7752C9.47929 13.3298 10.2914 13.2899 10.7647 13.874C10.9359 14.0853 11.1032 14.3197 11.2553 14.5336L11.2734 14.559C11.3161 14.619 11.3576 14.6774 11.3983 14.7342C12.0671 13.4599 12.2543 11.9056 12.3012 10.6262C12.3204 10.0998 12.6468 9.68344 13.0747 9.50935C13.5118 9.33153 14.0549 9.40987 14.4285 9.82319L13.8721 10.3261L14.4285 9.82319C15.0949 10.5604 15.8626 11.5347 16.4682 12.5913C17.0657 13.6337 17.55 14.8329 17.55 16C17.55 17.6926 16.7822 19.4101 16.0062 20.6885C16.6582 20.3692 17.3159 19.9028 17.8644 19.2516C18.6512 18.3177 19.25 16.9612 19.25 15C19.25 12.9433 18.1125 10.7131 16.4614 8.61679C14.8259 6.54033 12.7696 4.70034 11.1183 3.44243C10.0636 3.40079 10.993 3.38466 10.8983 3.41743Z"/>
-                  </svg>
-                  <h4>Floo Network Express</h4>
-                </div>
-                <p>Next-Day Delivery - 5 Galleons</p>
-              </div>
+            .tasselSkirt {
+                width: 28px;
+                height: 38px;
+                background: repeating-linear-gradient(90deg, #d4af37 0px, #b8941f 3px, #6e4b0c 6px);
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 5px 12px rgba(0, 0, 0, 0.8);
+            }
 
-              <div class="deliveryMethod">
-                <div class="deliveryMethodHeader">
-                  <!-- reicon SVG: bolt-lightning -->
-                  <svg class="deliveryMethodIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <g transform="scale(1.33333)">
-                      <path d="M7.25,16.25l2-7H4.466c-.348,0-.589-.346-.469-.672L6.38,2.078c.072-.197,.26-.328,.469-.328h4.17c.352,0,.593,.353,.466,.681l-1.485,3.819h3.75c.412,0,.647,.47,.4,.8l-6.9,9.2Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
-                    </g>
-                  </svg>
-                  <h4>Apparition Direct</h4>
-                </div>
-                <p>Same-Day Delivery - 15 Galleons</p>
-              </div>
-            </div>
-          </div>
+            .pullHint {
+                position: absolute;
+                top: 100px;
+                right: 80px;
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-size: 0.8rem;
+                color: var(--accent-gold);
+                letter-spacing: 0.08em;
+                white-space: nowrap;
+                opacity: 0;
+                pointer-events: none;
+                text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+                z-index: 1501;
+            }
 
-          <div class="deliveryStep">
-            <h3 class="stepTitle">4. Receive Your Items</h3>
-            <p>
-              Your items arrive with care instructions and certificates of
-              authenticity. All deliveries include anti-Muggle detection charms
-              for safety.
-            </p>
-          </div>
-        </section>
+            /* ============ Marauder Scroll Overlay ============ */
+            .assignmentScrollOverlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(4, 1, 8, 0.92);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                z-index: 2100;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.4s ease;
+                overflow-y: auto;
+            }
 
-        <div class="magicalDivider">
-          <span class="dividerGlyph">✦ ☽ ✦</span>
-        </div>
+            .assignmentScrollOverlay.active {
+                opacity: 1;
+                pointer-events: auto;
+            }
 
-        <section class="testimonialsSection">
-          <h2 class="sectionTitle">Delivery Testimonials</h2>
-          <div class="testimonialsGrid">
-            <div class="testimonialCard">
-              <p class="testimonialText">
-                "My Nimbus 2001 arrived perfectly despite terrible weather! The
-                protective spells worked perfectly."
-              </p>
-              <p class="testimonialAuthor">- Oliver Wood, Puddlemere United</p>
-            </div>
-            <div class="testimonialCard">
-              <p class="testimonialText">
-                "Living in a Muggle neighborhood, I was worried about delivery.
-                Their anti-Muggle charms are flawless!"
-              </p>
-              <p class="testimonialAuthor">- Hermione G., London</p>
-            </div>
-          </div>
-        </section>
-      </main>
+            .scrollRollerTop,
+            .scrollRollerBottom {
+                width: 94%;
+                max-width: 840px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 7;
+                transform: scaleY(0);
+            }
 
-      <footer class="mainFooter">
-        <div class="noticeBoardContainer">
-          <div class="noticeBoardBadge">Ministry Approved Supplier Notice Board</div>
-          <div class="footerContent">
-            <div class="footerSection">
-              <h3>The Wizarding Emporium</h3>
-              <p>
-                Diagon Alley, London<br />
-                Opposite Gringotts Wizarding Bank<br />
-                Floo Network: "Wizarding Emporium"
-              </p>
-            </div>
-            <div class="footerSection">
-              <h3>Diagon Alley Hours</h3>
-              <p>
-                Monday-Friday: 9AM-7PM<br />
-                Saturday: 10AM-8PM<br />
-                Sunday: 11AM-5PM
-              </p>
-            </div>
-            <div class="footerSection">
-              <h3>Magical Services</h3>
-              <p>
-                Wand Matching & Alignment<br />
-                Hogwarts Owl Post Dispatch<br />
-                Floo Network Express Delivery<br />
-                International Apparition Shipping
-              </p>
-            </div>
-          </div>
-        </div>
+            .scrollRollerTop {
+                transform-origin: bottom center;
+            }
+            .scrollRollerBottom {
+                transform-origin: top center;
+            }
+
+            .rollerCapLeft,
+            .rollerCapRight {
+                width: 28px;
+                height: 28px;
+                background: radial-gradient(circle, #f5eaaf 0%, #d4af37 60%, #4a3205 100%);
+                border-radius: 50%;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+                flex-shrink: 0;
+            }
+
+            .rollerBody {
+                flex-grow: 1;
+                height: 14px;
+                background: linear-gradient(180deg, #6e4b1f 0%, #3b2007 50%, #1f0f02 100%);
+                border-radius: 4px;
+                box-shadow: inset 0 2px 4px rgba(255, 235, 170, 0.3);
+            }
+
+            .marauderScrollCard {
+                background: #e8d7b5
+                    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect fill='%23e8d7b5' width='300' height='300'/%3E%3Ccircle fill='%236e4b1f' opacity='0.06' cx='80' cy='80' r='70'/%3E%3Ccircle fill='%234a2e0e' opacity='0.05' cx='220' cy='220' r='90'/%3E%3Cpath fill='%23381e05' opacity='0.04' d='M0 0 L300 300 M300 0 L0 300'/%3E%3C/svg%3E");
+                color: #2c1605;
+                border-left: 4px double #7a4f1d;
+                border-right: 4px double #7a4f1d;
+                border-radius: 4px;
+                max-width: 820px;
+                width: 92%;
+                padding: 35px 30px;
+                box-shadow:
+                    0 25px 70px rgba(0, 0, 0, 0.95),
+                    0 0 40px rgba(122, 79, 29, 0.4);
+                position: relative;
+                font-family: var(--font-body);
+                overflow: hidden;
+                margin: 0 auto;
+                transform: scaleY(0);
+                transform-origin: top center;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .marauderScrollCard::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                background: radial-gradient(
+                    ellipse at center,
+                    transparent 55%,
+                    rgba(56, 30, 5, 0.45) 85%,
+                    rgba(20, 8, 1, 0.85) 100%
+                );
+                z-index: 2;
+            }
+
+            .marauderScrollCard::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                background:
+                    linear-gradient(
+                        90deg,
+                        transparent 33%,
+                        rgba(90, 55, 20, 0.12) 33.5%,
+                        transparent 34%,
+                        transparent 66%,
+                        rgba(90, 55, 20, 0.12) 66.5%,
+                        transparent 67%
+                    ),
+                    linear-gradient(
+                        180deg,
+                        transparent 50%,
+                        rgba(90, 55, 20, 0.12) 50.5%,
+                        transparent 51%
+                    );
+                z-index: 3;
+            }
+
+            .marauderScrollCard::-webkit-scrollbar {
+                width: 8px;
+            }
+            .marauderScrollCard::-webkit-scrollbar-track {
+                background: rgba(90, 55, 20, 0.2);
+            }
+            .marauderScrollCard::-webkit-scrollbar-thumb {
+                background: #7a4f1d;
+                border-radius: 4px;
+            }
+
+            .waxSealBadge {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                width: 62px;
+                height: 62px;
+                background: radial-gradient(circle, #8a1414 0%, #4a0606 85%);
+                border-radius: 50%;
+                border: 2px solid #d4af37;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #f3e5ab;
+                font-family: var(--font-serif);
+                font-weight: 700;
+                font-size: 1.2em;
+                box-shadow:
+                    0 6px 16px rgba(0, 0, 0, 0.75),
+                    inset 0 2px 4px rgba(255, 235, 170, 0.4);
+                transform: rotate(-8deg);
+                z-index: 6;
+            }
+
+            .marauderDenseSVG {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+                opacity: 0;
+            }
+
+            .marauderMapPathsSVG {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 4;
+                opacity: 0;
+            }
+
+            .mapPathStroke {
+                stroke: #5c3812;
+                stroke-width: 2.2;
+                stroke-dasharray: 6 5;
+                fill: none;
+                opacity: 0.75;
+            }
+
+            .compassGroup {
+                transform-origin: 710px 130px;
+            }
+
+            #footprintContainer {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 5;
+            }
+
+            .walkingFootprint {
+                position: absolute;
+                width: 10px;
+                height: 16px;
+                fill: #3b2007;
+                opacity: 0;
+                z-index: 5;
+                pointer-events: none;
+            }
+
+            .walkingFootprint.rightFoot {
+                transform: scaleX(-1);
+            }
+
+            .scrollHeader {
+                position: relative;
+                z-index: 5;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .scrollHeaderTitle {
+                color: #4a1c06;
+                font-family: var(--font-serif);
+                font-size: 2em;
+                margin: 0 0 2px 0;
+                text-align: center;
+                letter-spacing: 1.5px;
+                line-height: 1.1;
+                opacity: 0;
+            }
+
+            .scrollHeaderSub {
+                text-align: center;
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                color: #6e3d0d;
+                font-size: 1.05em;
+                margin-bottom: 20px;
+                opacity: 0;
+            }
+
+            .decreeQuote {
+                background: rgba(122, 79, 29, 0.07);
+                border-left: 3px solid #7a4f1d;
+                padding: 14px 18px;
+                margin-bottom: 22px;
+                font-style: italic;
+                font-size: 1em;
+                line-height: 1.6;
+                color: #2c1605;
+                border-radius: 4px;
+                position: relative;
+                z-index: 5;
+                opacity: 0;
+            }
+
+            .mapLandmarksGrid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                gap: 18px;
+                position: relative;
+                z-index: 5;
+            }
+
+            .mapLandmarkCard {
+                background: transparent;
+                border: none;
+                padding: 8px 12px;
+                opacity: 0;
+                text-align: center;
+                min-width: 120px;
+            }
+
+            .mapLandmarkTitle {
+                color: #4a1c06;
+                font-family: var(--font-serif);
+                font-size: 0.88em;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                margin-bottom: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+            }
+
+            .mapLandmarkValue {
+                color: #2c1605;
+                font-size: 1em;
+                font-weight: 700;
+                font-family: var(--font-body);
+            }
+
+            .ministryApprovalSeal {
+                text-align: center;
+                margin-top: 15px;
+                font-family: var(--font-serif);
+                font-size: 0.78em;
+                color: #8a1414;
+                letter-spacing: 2px;
+                font-weight: 700;
+                opacity: 0;
+                border: 1px dashed #8a1414;
+                display: inline-block;
+                padding: 4px 16px;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .scrollCloseBtn {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: transparent;
+                border: none;
+                color: #4a1c06;
+                font-size: 1.6em;
+                cursor: pointer;
+                line-height: 1;
+                z-index: 10;
+                transition:
+                    transform 0.3s ease,
+                    color 0.3s ease;
+            }
+
+            .scrollCloseBtn:hover {
+                transform: rotate(90deg);
+                color: #8a1414;
+            }
+
+            /* ============ Page Container ============ */
+            .pageContainer {
+                width: 88%;
+                max-width: 1140px;
+                margin: 0 auto;
+                position: relative;
+                z-index: 3;
+            }
+
+            /* ============ Header ============ */
+            .mainHeader {
+                background: linear-gradient(
+                    180deg,
+                    rgba(20, 6, 32, 0.95) 0%,
+                    rgba(14, 4, 23, 0.92) 100%
+                );
+                padding: 24px 0 16px 0;
+                border-bottom: 2px solid var(--accent-gold);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+                position: relative;
+                z-index: 10;
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+            }
+
+            .headerContent {
+                text-align: center;
+                padding: 0 20px;
+            }
+
+            .shopTitle {
+                color: var(--accent-gold);
+                margin: 0;
+                font-size: clamp(1.8rem, 5vw, 2.6em);
+                font-family: var(--font-serif);
+                font-weight: 900;
+                text-shadow:
+                    0 2px 10px rgba(0, 0, 0, 0.9),
+                    0 0 15px rgba(212, 175, 55, 0.3);
+                letter-spacing: 2.5px;
+            }
+
+            .shopTitle .letter {
+                display: inline-block;
+                opacity: 0;
+            }
+
+            .shopTitle .star {
+                display: inline-block;
+                color: var(--accent-gold);
+                font-size: 0.5em;
+                margin: 0 0.4em;
+                vertical-align: middle;
+                opacity: 0;
+            }
+
+            .shopTagline {
+                color: var(--accent-gold-light);
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                margin: 6px 0 0 0;
+                font-size: 1.1em;
+                letter-spacing: 0.8px;
+                opacity: 0;
+            }
+
+            .mainNav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+                margin-top: 20px;
+                padding: 10px 24px;
+                background: rgba(15, 5, 26, 0.8);
+                border-radius: var(--radius-md);
+                border: 1px solid var(--border-gold);
+                box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+                flex-wrap: wrap;
+            }
+
+            .navLink {
+                color: var(--accent-gold);
+                text-decoration: none;
+                font-family: var(--font-serif);
+                font-size: 1.05em;
+                padding: 6px 18px;
+                border: 1px solid transparent;
+                border-radius: var(--radius-sm);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                opacity: 0;
+            }
+
+            .navLink:hover {
+                border-color: var(--accent-gold);
+                background-color: rgba(212, 175, 55, 0.18);
+                text-shadow: 0 0 12px var(--accent-gold-light);
+                transform: translateY(-2px);
+            }
+
+            .navLink.active {
+                border-color: var(--accent-gold);
+                background: linear-gradient(
+                    135deg,
+                    rgba(212, 175, 55, 0.3) 0%,
+                    rgba(212, 175, 55, 0.1) 100%
+                );
+                box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+            }
+
+            .cauldronBadge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                margin-left: 8px;
+                background: linear-gradient(
+                    135deg,
+                    rgba(212, 175, 55, 0.25) 0%,
+                    rgba(36, 10, 56, 0.6) 100%
+                );
+                padding: 5px 14px;
+                border-radius: 999px;
+                border: 1px solid var(--border-gold-bright);
+                color: var(--accent-gold-light);
+                font-family: var(--font-serif);
+                font-size: 0.9em;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                opacity: 0;
+            }
+
+            .cauldronBadge:hover {
+                transform: scale(1.08);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            }
+
+            .cauldronIcon {
+                width: 18px;
+                height: 18px;
+                color: var(--accent-gold);
+            }
+
+            .cauldronCount {
+                background: var(--accent-gold);
+                color: #0f051a;
+                font-size: 0.85em;
+                font-weight: 700;
+                font-family: var(--font-body);
+                border-radius: 999px;
+                padding: 2px 7px;
+                min-width: 16px;
+                height: 16px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* ============ Main Content ============ */
+            .mainContent {
+                padding: 35px 0 20px;
+            }
+
+            .welcomeSection,
+            .featuredSection,
+            .testimonialsSection {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .sectionTitle {
+                color: var(--accent-gold);
+                font-family: var(--font-serif);
+                font-size: clamp(1.5rem, 3.5vw, 2.2em);
+                font-weight: 700;
+                text-shadow:
+                    0 2px 10px rgba(0, 0, 0, 0.9),
+                    0 0 15px rgba(212, 175, 55, 0.3);
+                letter-spacing: 1px;
+                opacity: 0;
+            }
+
+            .sectionIntro {
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-size: 1.2em;
+                color: var(--text-serif);
+                max-width: 680px;
+                margin: 10px auto 0;
+                line-height: 1.6;
+                opacity: 0;
+            }
+
+            /* ============ Magical Divider ============ */
+            .magicalDivider {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                margin: 50px 0;
+                color: var(--accent-gold);
+                font-size: 1.15em;
+                opacity: 0;
+            }
+
+            .magicalDivider::before,
+            .magicalDivider::after {
+                content: '';
+                height: 1px;
+                flex-grow: 1;
+                background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            }
+
+            .dividerGlyph {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                letter-spacing: 3px;
+                text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            }
+
+            /* ============ Delivery Timeline ============ */
+            .deliveryTimeline {
+                position: relative;
+                max-width: 800px;
+                margin: 30px auto 0;
+                text-align: left;
+            }
+
+            .deliveryTimeline::before {
+                content: '';
+                position: absolute;
+                left: 29px;
+                top: 30px;
+                bottom: 30px;
+                width: 2px;
+                background: linear-gradient(
+                    180deg,
+                    transparent 0%,
+                    var(--accent-gold) 10%,
+                    var(--accent-gold) 90%,
+                    transparent 100%
+                );
+                opacity: 0.4;
+                z-index: 0;
+            }
+
+            .deliveryStep {
+                background: var(--bg-card);
+                padding: 26px 26px 26px 80px;
+                border-radius: var(--radius-md);
+                border: 1px solid var(--border-gold);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+                transition:
+                    border-color 0.3s ease,
+                    box-shadow 0.3s ease,
+                    transform 0.3s ease;
+                margin-bottom: 24px;
+                position: relative;
+                opacity: 0;
+            }
+
+            .deliveryStep:hover {
+                border-color: var(--accent-gold-bright);
+                box-shadow: var(--shadow-gold);
+                transform: translateX(6px);
+            }
+
+            .stepNumber {
+                position: absolute;
+                left: 8px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 44px;
+                height: 44px;
+                background: radial-gradient(circle, #240a38 0%, #0f051a 100%);
+                border: 2px solid var(--accent-gold);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: var(--font-serif);
+                font-size: 1.2em;
+                font-weight: 900;
+                color: var(--accent-gold);
+                box-shadow:
+                    0 0 15px rgba(212, 175, 55, 0.3),
+                    inset 0 0 8px rgba(212, 175, 55, 0.15);
+                z-index: 1;
+                text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+            }
+
+            .stepNumber::after {
+                content: '';
+                position: absolute;
+                inset: -6px;
+                border-radius: 50%;
+                border: 1px dashed rgba(212, 175, 55, 0.3);
+                animation: numberSpin 12s linear infinite;
+            }
+
+            @keyframes numberSpin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .stepTitle {
+                color: var(--accent-gold);
+                font-family: var(--font-serif);
+                font-size: 1.3em;
+                margin: 0 0 10px 0;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+            }
+
+            .deliveryStep p {
+                color: var(--text-main);
+                line-height: 1.7;
+                font-size: 1rem;
+                margin: 0;
+            }
+
+            /* ============ Delivery Methods ============ */
+            .deliveryMethods {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 18px;
+                margin-top: 20px;
+            }
+
+            .deliveryMethod {
+                background: linear-gradient(
+                    145deg,
+                    rgba(36, 10, 56, 0.8) 0%,
+                    rgba(22, 6, 36, 0.9) 100%
+                );
+                border: 1px solid var(--border-gold);
+                border-radius: var(--radius-md);
+                padding: 22px 18px;
+                text-align: center;
+                transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                overflow: hidden;
+                opacity: 0;
+            }
+
+            .deliveryMethod::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 50%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(212, 175, 55, 0.1),
+                    transparent
+                );
+                transform: skewX(-25deg);
+                transition: left 0.6s ease;
+            }
+
+            .deliveryMethod:hover::before {
+                left: 150%;
+            }
+
+            .deliveryMethod:hover {
+                border-color: var(--accent-gold-bright);
+                box-shadow: 0 8px 24px rgba(212, 175, 55, 0.25);
+                transform: translateY(-5px);
+            }
+
+            .deliveryMethodHeader {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 12px;
+            }
+
+            .deliveryMethodIcon {
+                width: 48px;
+                height: 48px;
+                color: var(--accent-gold);
+                filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+                transition:
+                    transform 0.3s ease,
+                    filter 0.3s ease;
+            }
+
+            .deliveryMethod:hover .deliveryMethodIcon {
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 14px rgba(245, 234, 175, 0.7));
+            }
+
+            .deliveryMethodIcon svg {
+                width: 100%;
+                height: 100%;
+            }
+
+            .deliveryMethod h4 {
+                color: var(--accent-gold-light);
+                font-family: var(--font-serif);
+                font-size: 1.05em;
+                margin: 0;
+                letter-spacing: 0.5px;
+            }
+
+            .deliveryMethod p {
+                color: var(--text-muted);
+                font-size: 0.92em;
+                margin: 0;
+                font-family: var(--font-body);
+            }
+
+            .deliveryMethod p strong {
+                color: var(--accent-gold);
+            }
+
+            /* ============ Testimonials ============ */
+            .testimonialsGrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 24px;
+                margin-top: 30px;
+            }
+
+            .testimonialCard {
+                background: var(--bg-card);
+                padding: 26px;
+                border-radius: var(--radius-md);
+                border: 1px solid var(--border-gold);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+                transition: all 0.35s ease;
+                position: relative;
+                opacity: 0;
+            }
+
+            .testimonialCard::before {
+                content: '\201C';
+                position: absolute;
+                top: -8px;
+                left: 16px;
+                font-family: 'Playfair Display', serif;
+                font-size: 3.5rem;
+                color: var(--accent-gold-dark);
+                line-height: 1;
+                opacity: 0.5;
+            }
+
+            .testimonialCard:hover {
+                border-color: var(--accent-gold-bright);
+                box-shadow: var(--shadow-gold);
+                transform: translateY(-4px);
+            }
+
+            .testimonialText {
+                font-family: 'EB Garamond', serif;
+                font-style: italic;
+                font-size: 1.05em;
+                color: var(--text-main);
+                line-height: 1.7;
+                margin-bottom: 14px;
+            }
+
+            .testimonialAuthor {
+                font-family: var(--font-serif);
+                font-size: 0.88em;
+                color: var(--accent-gold);
+                letter-spacing: 1px;
+                font-weight: 700;
+            }
+
+            /* ============ Footer ============ */
+            .mainFooter {
+                background: linear-gradient(180deg, #140522 0%, #0a0212 100%);
+                padding: 50px 0 30px 0;
+                border-top: 3px solid var(--accent-gold);
+                margin-top: 60px;
+                position: relative;
+            }
+
+            .noticeBoardContainer {
+                background: linear-gradient(135deg, #1d072e 0%, #12041d 100%);
+                border: 1.5px solid var(--border-gold-bright);
+                border-radius: var(--radius-lg);
+                padding: 32px;
+                margin-bottom: 30px;
+                box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.7),
+                    inset 0 0 15px rgba(212, 175, 55, 0.12);
+                position: relative;
+            }
+
+            .noticeBoardBadge {
+                position: absolute;
+                top: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--accent-gold);
+                color: #0f051a;
+                font-family: var(--font-serif);
+                font-weight: 700;
+                font-size: 0.85em;
+                padding: 3px 18px;
+                border-radius: 999px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+                letter-spacing: 1.2px;
+                text-transform: uppercase;
+            }
+
+            .footerContent {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+                gap: 32px;
+                margin-top: 10px;
+            }
+
+            .footerSection h3 {
+                color: var(--accent-gold);
+                font-family: var(--font-serif);
+                margin: 0 0 14px 0;
+                font-size: 1.2em;
+                border-bottom: 1px solid var(--border-gold);
+                padding-bottom: 8px;
+            }
+
+            .footerSection p {
+                margin: 8px 0;
+                line-height: 1.65;
+                color: var(--text-main);
+                font-size: 0.98em;
+            }
+
+            .creditLine {
+                text-align: center;
+                color: var(--accent-gold);
+                font-size: 0.95em;
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                letter-spacing: 1px;
+                opacity: 0.8;
+            }
+
+            /* ============ Flying Owl ============ */
+            .flyingOwl {
+                position: fixed;
+                z-index: 50;
+                pointer-events: none;
+                opacity: 0;
+            }
+
+            .flyingOwl svg {
+                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+            }
+
+            @keyframes wingFlap {
+                0%,
+                100% {
+                    transform: scaleY(1);
+                }
+                50% {
+                    transform: scaleY(0.82);
+                }
+            }
+
+            .owlWing {
+                transform-origin: 50px 45px;
+                animation: wingFlap 0.35s ease-in-out infinite;
+            }
+
+            /* ============ Responsive ============ */
+            @media (max-width: 768px) {
+                .pullCordContainer {
+                    right: 20px;
+                    transform: scale(0.85);
+                    transform-origin: top right;
+                }
+                .pullHint {
+                    right: 60px;
+                    font-size: 0.7rem;
+                }
+                .mainNav {
+                    gap: 10px;
+                    padding: 8px 12px;
+                }
+                .navLink {
+                    font-size: 0.9em;
+                    padding: 5px 12px;
+                }
+                .deliveryStep {
+                    padding: 20px 20px 20px 70px;
+                }
+                .stepNumber {
+                    width: 38px;
+                    height: 38px;
+                    font-size: 1em;
+                    left: 6px;
+                }
+                .deliveryTimeline::before {
+                    left: 25px;
+                }
+                .deliveryMethods {
+                    grid-template-columns: 1fr;
+                }
+                .pageContainer {
+                    width: 92%;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .shopTitle {
+                    letter-spacing: 1px;
+                }
+                .shopTitle .star {
+                    display: none;
+                }
+                .navLink {
+                    font-size: 0.8em;
+                    padding: 4px 10px;
+                    letter-spacing: 0;
+                }
+                .deliveryStep {
+                    padding: 16px 16px 16px 60px;
+                }
+                .stepNumber {
+                    width: 34px;
+                    height: 34px;
+                    font-size: 0.9em;
+                    left: 4px;
+                }
+                .deliveryTimeline::before {
+                    left: 21px;
+                }
+                .footerContent {
+                    grid-template-columns: 1fr;
+                }
+                .testimonialsGrid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .pullCordContainer,
+                .stepNumber::after,
+                .owlWing {
+                    animation: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Ambient Sparkles -->
+        <div class="ambientSparkles" id="sparkles"></div>
+
+        <!-- Pull Cord -->
         <div
-          style="
-            text-align: center;
-            color: #d4af37;
-            font-size: 0.95em;
-            font-family: var(--font-serif);
-            letter-spacing: 1px;
-          "
+            class="pullCordContainer"
+            id="pullCordContainer"
+            title="Pull Cord to Reveal Assignment Scroll"
         >
-          Created by Bhuvi Singhal & Navi...
+            <div class="ceilingMount"></div>
+            <div class="ropeLine" id="ropeLine"></div>
+            <div class="brassRing" id="brassRing"></div>
+            <div class="ropeCord" id="ropeCord">
+                <div class="runeRingSmall">ᚠ ✦ ☽</div>
+                <div class="crystalGem" id="crystalGem"></div>
+                <div class="tasselHead"></div>
+                <div class="tasselSkirt"></div>
+            </div>
         </div>
-      </footer>
-    </div>
-  </body>
+        <div class="pullHint" id="pullHint">Pull to reveal scroll ✦</div>
+
+        <!-- Marauder Scroll Overlay -->
+        <div id="assignmentScrollOverlay" class="assignmentScrollOverlay">
+            <div class="scrollRollerTop" id="scrollRollerTop">
+                <div class="rollerCapLeft"></div>
+                <div class="rollerBody"></div>
+                <div class="rollerCapRight"></div>
+            </div>
+
+            <div class="marauderScrollCard" id="marauderCard">
+                <button class="scrollCloseBtn" id="scrollCloseBtn">&times;</button>
+
+                <svg class="marauderDenseSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
+                    <g stroke="#3b2007" stroke-width="1" fill="none" opacity="0.6">
+                        <rect x="30" y="30" width="80" height="90" stroke-dasharray="2 2" />
+                        <circle cx="70" cy="75" r="25" />
+                        <rect x="680" y="380" width="100" height="110" stroke-dasharray="2 2" />
+                        <circle cx="730" cy="435" r="35" />
+                        <path
+                            d="M110 75 L300 75 L300 180 L520 180 L520 90 L680 90"
+                            stroke-dasharray="3 3"
+                        />
+                        <path
+                            d="M70 120 L70 340 L280 340 L280 480 L680 480"
+                            stroke-dasharray="1 3"
+                        />
+                        <text x="120" y="65" font-size="9" font-family="Cinzel">
+                            Secret Passage to Honeydukes
+                        </text>
+                        <text x="540" y="170" font-size="9" font-family="Cinzel">
+                            Astronomy Tower Staircase
+                        </text>
+                        <text x="320" y="470" font-size="9" font-family="Cinzel">
+                            Dungeon Corridor
+                        </text>
+                    </g>
+                </svg>
+
+                <svg class="marauderMapPathsSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
+                    <path
+                        id="mapPath1"
+                        class="mapPathStroke"
+                        d="M 60 110 Q 220 50, 410 110 T 740 90"
+                    />
+                    <path
+                        id="mapPath2"
+                        class="mapPathStroke"
+                        d="M 740 90 Q 580 260, 410 270 T 80 340"
+                    />
+                    <path
+                        id="mapPath3"
+                        class="mapPathStroke"
+                        d="M 80 340 Q 280 460, 410 440 T 740 460"
+                    />
+                    <g transform="translate(710, 130)" opacity="0.45" class="compassGroup">
+                        <circle
+                            cx="0"
+                            cy="0"
+                            r="28"
+                            fill="none"
+                            stroke="#4a1c06"
+                            stroke-width="1.5"
+                            stroke-dasharray="3 2"
+                        />
+                        <polygon
+                            points="0,-32 7,-6 32,0 7,6 0,32 -7,6 -32,0 -7,-6"
+                            fill="#4a1c06"
+                        />
+                        <text
+                            x="0"
+                            y="-36"
+                            font-size="12"
+                            text-anchor="middle"
+                            fill="#4a1c06"
+                            font-family="Cinzel"
+                            font-weight="bold"
+                        >
+                            N
+                        </text>
+                    </g>
+                </svg>
+
+                <div id="footprintContainer">
+                    <svg class="walkingFootprint leftFoot" id="step1" viewBox="0 0 10 16">
+                        <path
+                            d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"
+                        />
+                    </svg>
+                    <svg class="walkingFootprint rightFoot" id="step2" viewBox="0 0 10 16">
+                        <path
+                            d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"
+                        />
+                    </svg>
+                    <svg class="walkingFootprint leftFoot" id="step3" viewBox="0 0 10 16">
+                        <path
+                            d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"
+                        />
+                    </svg>
+                </div>
+
+                <div class="scrollHeader">
+                    <h2 class="scrollHeaderTitle" id="revealTitle">
+                        THE WIZARDING ASSIGNMENT SCROLL
+                    </h2>
+                    <p class="scrollHeaderSub" id="revealSub">
+                        Enchanted Decree of Academic Distinction &bull; Ministry Assessment
+                    </p>
+                </div>
+
+                <div class="decreeQuote" id="revealDecree">
+                    "The Ministry of Magical Education hereby records that the apprentices named
+                    below have successfully completed the Second Internal Assignment of the First
+                    Semester.<br /><br />
+                    The challenge bestowed upon these young enchanters was the construction of a
+                    fully static magical storefront using only the ancient disciplines of HTML, CSS,
+                    and JavaScript, without invoking backend enchantments or external magical
+                    services. May this humble emporium stand as a testament to their craftsmanship,
+                    creativity, and dedication."
+                </div>
+
+                <div class="mapLandmarksGrid">
+                    <div class="mapLandmarkCard" id="landmark1">
+                        <div class="mapLandmarkTitle">✦ Created By</div>
+                        <div class="mapLandmarkValue">Bhuvi Singhal & Navi...</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark2">
+                        <div class="mapLandmarkTitle">✦ Academy</div>
+                        <div class="mapLandmarkValue">RV University</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark3">
+                        <div class="mapLandmarkTitle">✦ Course</div>
+                        <div class="mapLandmarkValue">B.Tech (Hons) CSE AIML</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark4">
+                        <div class="mapLandmarkTitle">✦ Semester</div>
+                        <div class="mapLandmarkValue">Semester I</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark5">
+                        <div class="mapLandmarkTitle">✦ Assessment</div>
+                        <div class="mapLandmarkValue">Internal Assessment II</div>
+                    </div>
+                </div>
+
+                <div class="ministryApprovalSeal" id="revealSeal">
+                    <span>APPROVED BY MINISTRY OF MAGICAL EDUCATION</span>
+                </div>
+            </div>
+
+            <div class="scrollRollerBottom" id="scrollRollerBottom">
+                <div class="rollerCapLeft"></div>
+                <div class="rollerBody"></div>
+                <div class="rollerCapRight"></div>
+            </div>
+        </div>
+
+        <!-- Page Container -->
+        <div class="pageContainer">
+            <header class="mainHeader">
+                <div class="headerContent">
+                    <h1 class="shopTitle" id="shopTitle">The Wizarding Emporium</h1>
+                    <p class="shopTagline">Diagon Alley's Premier Magical Supplier Since 1298</p>
+                </div>
+                <nav class="mainNav">
+                    <a href="index.html" class="navLink">Home</a>
+                    <a href="contact.html" class="navLink">Contact</a>
+                    <a href="deliv.html" class="navLink active">Delivery</a>
+                    <div class="cauldronBadge" id="cauldronBadge">
+                        <svg
+                            class="cauldronIcon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"
+                            />
+                            <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8" />
+                        </svg>
+                        <span class="cauldronCount">0</span>
+                    </div>
+                </nav>
+            </header>
+
+            <main class="mainContent">
+                <section class="welcomeSection">
+                    <h2 class="sectionTitle">Magical Delivery Process</h2>
+                    <p class="sectionIntro">
+                        We deliver your magical items safely using traditional and enchanted methods
+                    </p>
+                </section>
+
+                <div class="magicalDivider">
+                    <span class="dividerGlyph">✧ ☽ ✧</span>
+                </div>
+
+                <section class="featuredSection">
+                    <h2 class="sectionTitle">Our Delivery Process</h2>
+
+                    <div class="deliveryTimeline">
+                        <div class="deliveryStep" id="step1card">
+                            <div class="stepNumber">1</div>
+                            <h3 class="stepTitle">Place Your Order</h3>
+                            <p>
+                                Visit our Diagon Alley location or send your order via owl post. We
+                                accept payment in Galleons, Sickles, and Knuts.
+                            </p>
+                        </div>
+
+                        <div class="deliveryStep" id="step2card">
+                            <div class="stepNumber">2</div>
+                            <h3 class="stepTitle">Order Processing</h3>
+                            <p>
+                                We'll send a confirmation via owl post. Our specialists prepare your
+                                items with protective spells and packaging charms.
+                            </p>
+                        </div>
+
+                        <div class="deliveryStep" id="step3card">
+                            <div class="stepNumber">3</div>
+                            <h3 class="stepTitle">Choose Delivery Method</h3>
+                            <div class="deliveryMethods">
+                                <div class="deliveryMethod" id="method1">
+                                    <div class="deliveryMethodHeader">
+                                        <div class="deliveryMethodIcon">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    clip-rule="evenodd"
+                                                    d="M22.5615 5.64099C23.4636 3.04509 20.9861 0.522263 18.3803 1.44085L3.44476 6.70576C0.578346 7.71619 0.500509 11.7624 3.32388 12.8849L3.3397 12.891L8.29288 14.7318C8.75501 14.9178 9.12031 15.2916 9.2978 15.764L11.222 20.6243C12.3084 23.4996 16.3744 23.4454 17.3839 20.5402L22.5615 5.64099ZM18.8789 2.85553C20.2743 2.36365 21.643 3.71458 21.1447 5.14861L15.9671 20.0478C15.4171 21.6302 13.2126 21.6573 12.6238 20.0902L10.6996 15.2299C10.6224 15.0256 10.5257 14.8311 10.4119 14.6487L14.0303 11.0303C14.3232 10.7374 14.3232 10.2626 14.0303 9.96967C13.7374 9.67678 13.2626 9.67678 12.9697 9.96967L9.34872 13.5906C9.18799 13.4915 9.01788 13.4058 8.83985 13.335L8.82404 13.3289L3.87079 11.4881C2.34161 10.8732 2.38813 8.6687 3.94344 8.12043L18.8789 2.85553Z"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <h4>Standard Owl Post</h4>
+                                    </div>
+                                    <p>3-5 Business Days - <strong>FREE</strong></p>
+                                </div>
+
+                                <div class="deliveryMethod" id="method2">
+                                    <div class="deliveryMethodHeader">
+                                        <div class="deliveryMethodIcon">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    clip-rule="evenodd"
+                                                    d="M9.25961 3.09856C9.6636 2.08774 10.9948 1.46276 12.0272 2.2492C13.7471 3.55935 15.9044 5.4855 17.6398 7.68865C19.3595 9.87197 20.75 12.4348 20.75 15C20.75 17.2933 20.0398 18.9975 19.0117 20.218C17.9933 21.4269 16.6994 22.1193 15.5816 22.4671C15.0076 22.6457 14.4825 22.3825 14.2275 21.9545C13.9871 21.5512 13.9859 21.0147 14.2863 20.583C15.1436 19.351 16.05 17.5793 16.05 16C16.05 15.2165 15.7123 14.2889 15.1668 13.3372C14.7566 12.6215 14.2539 11.9351 13.7643 11.3465C13.6627 12.7494 13.3578 14.5121 12.412 15.9696C11.9822 16.6319 11.0267 16.706 10.518 16.0627C10.3592 15.8618 10.2023 15.6412 10.0588 15.4393C10.0501 15.4271 10.0415 15.4151 10.033 15.403C9.9545 15.2927 9.87986 15.1882 9.80763 15.09C9.12187 15.773 8.48333 16.5902 8.48333 17.5C8.48333 18.3037 8.88448 19.4025 9.35898 20.3335C9.61561 20.837 9.50832 21.3951 9.1994 21.7606C8.87092 22.1492 8.27312 22.3491 7.70569 22.0206C5.76159 20.8952 3.25 18.4917 3.25 15C3.25 14.0531 3.57109 13.0736 4.0203 12.1168C4.47254 11.1536 5.0858 10.15 5.72984 9.14739C5.95297 8.80004 6.17941 8.45306 6.40546 8.10668C7.51002 6.41411 8.60528 4.73579 9.25961 3.09856ZM10.8983 3.41743C10.7958 3.45292 10.6992 3.53846 10.6525 3.65524C9.93718 5.44504 8.74008 7.27713 7.63532 8.9679C7.41569 9.30403 7.19971 9.63458 6.99189 9.95809C6.35264 10.9532 5.78547 11.8866 5.3781 12.7543C4.96769 13.6284 4.75 14.3737 4.75 15C4.75 17.2945 6.15653 19.0762 7.63307 20.1782C7.27845 19.3371 6.98333 18.367 6.98333 17.5C6.98333 15.7694 8.2827 14.4629 9.00894 13.7752C9.47929 13.3298 10.2914 13.2899 10.7647 13.874C10.9359 14.0853 11.1032 14.3197 11.2553 14.5336L11.2734 14.559C11.3161 14.619 11.3576 14.6774 11.3983 14.7342C12.0671 13.4599 12.2543 11.9056 12.3012 10.6262C12.3204 10.0998 12.6468 9.68344 13.0747 9.50935C13.5118 9.33153 14.0549 9.40987 14.4285 9.82319L13.8721 10.3261L14.4285 9.82319C15.0949 10.5604 15.8626 11.5347 16.4682 12.5913C17.0657 13.6337 17.55 14.8329 17.55 16C17.55 17.6926 16.7822 19.4101 16.0062 20.6885C16.6582 20.3692 17.3159 19.9028 17.8644 19.2516C18.6512 18.3177 19.25 16.9612 19.25 15C19.25 12.9433 18.1125 10.7131 16.4614 8.61679C14.8259 6.54033 12.7696 4.70034 11.1183 3.44243C10.0636 3.40079 10.993 3.38466 10.8983 3.41743Z"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <h4>Floo Network Express</h4>
+                                    </div>
+                                    <p>Next-Day Delivery - <strong>5 Galleons</strong></p>
+                                </div>
+
+                                <div class="deliveryMethod" id="method3">
+                                    <div class="deliveryMethodHeader">
+                                        <div class="deliveryMethodIcon">
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <path
+                                                    d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"
+                                                    fill="currentColor"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <h4>Apparition Direct</h4>
+                                    </div>
+                                    <p>Same-Day Delivery - <strong>15 Galleons</strong></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="deliveryStep" id="step4card">
+                            <div class="stepNumber">4</div>
+                            <h3 class="stepTitle">Receive Your Items</h3>
+                            <p>
+                                Your items arrive with care instructions and certificates of
+                                authenticity. All deliveries include anti-Muggle detection charms
+                                for safety.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="magicalDivider">
+                    <span class="dividerGlyph">✦ ☽ ✦</span>
+                </div>
+
+                <section class="testimonialsSection">
+                    <h2 class="sectionTitle">Delivery Testimonials</h2>
+                    <div class="testimonialsGrid">
+                        <div class="testimonialCard" id="testimonial1">
+                            <p class="testimonialText">
+                                "My Nimbus 2001 arrived perfectly despite terrible weather! The
+                                protective spells worked perfectly."
+                            </p>
+                            <p class="testimonialAuthor">- Oliver Wood, Puddlemere United</p>
+                        </div>
+                        <div class="testimonialCard" id="testimonial2">
+                            <p class="testimonialText">
+                                "Living in a Muggle neighborhood, I was worried about delivery.
+                                Their anti-Muggle charms are flawless!"
+                            </p>
+                            <p class="testimonialAuthor">- Hermione G., London</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="mainFooter">
+                <div class="noticeBoardContainer">
+                    <div class="noticeBoardBadge">Ministry Approved Supplier Notice Board</div>
+                    <div class="footerContent">
+                        <div class="footerSection">
+                            <h3>The Wizarding Emporium</h3>
+                            <p>
+                                Diagon Alley, London<br />Opposite Gringotts Wizarding Bank<br />Floo
+                                Network: "Wizarding Emporium"
+                            </p>
+                        </div>
+                        <div class="footerSection">
+                            <h3>Diagon Alley Hours</h3>
+                            <p>
+                                Monday-Friday: 9AM-7PM<br />Saturday: 10AM-8PM<br />Sunday: 11AM-5PM
+                            </p>
+                        </div>
+                        <div class="footerSection">
+                            <h3>Magical Services</h3>
+                            <p>
+                                Wand Matching & Alignment<br />Hogwarts Owl Post Dispatch<br />Floo
+                                Network Express Delivery<br />International Apparition Shipping
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="creditLine">Created by Bhuvi Singhal & Navi...</div>
+            </footer>
+        </div>
+
+        <script>
+            // ============ Init ============
+            document.addEventListener('DOMContentLoaded', () => {
+                prepareTitleLetters();
+                initSparkles();
+                initLoadAnimations();
+                initStepHoverEffects();
+                initMethodHoverEffects();
+                initCauldronInteraction();
+                initAmbientOwlFlight();
+                initPullCord();
+                initScrollClose();
+            });
+
+            // ============ Title Letters ============
+            function prepareTitleLetters() {
+                const title = document.getElementById('shopTitle');
+                const text = title.textContent;
+                title.innerHTML = '';
+
+                const star1 = document.createElement('span');
+                star1.className = 'star';
+                star1.textContent = '✦';
+                title.appendChild(star1);
+
+                [...text].forEach((char) => {
+                    const span = document.createElement('span');
+                    span.className = 'letter';
+                    span.textContent = char === ' ' ? '\u00A0' : char;
+                    title.appendChild(span);
+                });
+
+                const star2 = document.createElement('span');
+                star2.className = 'star';
+                star2.textContent = '✦';
+                title.appendChild(star2);
+            }
+
+            // ============ Sparkles ============
+            function initSparkles() {
+                const container = document.getElementById('sparkles');
+                const count = 35;
+
+                for (let i = 0; i < count; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'sparkleParticle';
+                    const size = 2 + Math.random() * 3;
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = Math.random() * 100 + '%';
+                    container.appendChild(p);
+
+                    anime({
+                        targets: p,
+                        translateY: [0, -80 - Math.random() * 120],
+                        translateX: [0, (Math.random() - 0.5) * 80],
+                        scale: [0.5, 1.3, 0.5],
+                        opacity: [0, 0.8, 0.8, 0],
+                        duration: 8000 + Math.random() * 6000,
+                        delay: Math.random() * 5000,
+                        loop: true,
+                        easing: 'easeInOutSine',
+                    });
+                }
+            }
+
+            // ============ Load Animations ============
+            function initLoadAnimations() {
+                // Pull cord
+                anime({
+                    targets: '#pullCordContainer',
+                    opacity: [0, 1],
+                    translateY: [-80, 0],
+                    duration: 1500,
+                    delay: 500,
+                    easing: 'easeOutElastic(1, .7)',
+                });
+
+                anime({
+                    targets: '#pullHint',
+                    opacity: [0, 0.85],
+                    duration: 1000,
+                    delay: 2000,
+                    easing: 'easeOutQuad',
+                });
+
+                // Title letters
+                anime({
+                    targets: '.shopTitle .letter',
+                    opacity: [0, 1],
+                    translateY: [-40, 0],
+                    rotate: [-15, 0],
+                    scale: [0.5, 1],
+                    delay: anime.stagger(50, { start: 200 }),
+                    duration: 900,
+                    easing: 'easeOutExpo',
+                });
+
+                anime({
+                    targets: '.shopTitle .star',
+                    opacity: [0, 1],
+                    scale: [0, 1.3, 1],
+                    rotate: [0, 180],
+                    delay: anime.stagger(200, { start: 100 }),
+                    duration: 1200,
+                    easing: 'easeOutElastic(1, .6)',
+                });
+
+                // Tagline
+                anime({
+                    targets: '.shopTagline',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 1000,
+                    delay: 1100,
+                    easing: 'easeOutExpo',
+                });
+
+                // Nav
+                anime({
+                    targets: '.navLink, .cauldronBadge',
+                    opacity: [0, 1],
+                    translateY: [-20, 0],
+                    delay: anime.stagger(100, { start: 1300 }),
+                    duration: 700,
+                    easing: 'easeOutExpo',
+                });
+
+                // Welcome section
+                anime({
+                    targets: '.welcomeSection .sectionTitle',
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    duration: 1000,
+                    delay: 1700,
+                    easing: 'easeOutExpo',
+                });
+
+                anime({
+                    targets: '.welcomeSection .sectionIntro',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 900,
+                    delay: 1900,
+                    easing: 'easeOutExpo',
+                });
+
+                // Dividers
+                anime({
+                    targets: '.magicalDivider',
+                    opacity: [0, 1],
+                    scale: [0.85, 1],
+                    delay: anime.stagger(150, { start: 2100 }),
+                    duration: 800,
+                    easing: 'easeOutExpo',
+                });
+
+                // Featured section title
+                anime({
+                    targets: '.featuredSection .sectionTitle',
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    duration: 1000,
+                    delay: 2300,
+                    easing: 'easeOutExpo',
+                });
+
+                // Delivery steps stagger
+                anime({
+                    targets: '.deliveryStep',
+                    opacity: [0, 1],
+                    translateX: [-40, 0],
+                    delay: anime.stagger(180, { start: 2500 }),
+                    duration: 800,
+                    easing: 'easeOutExpo',
+                });
+
+                // Delivery methods stagger (after step 3)
+                anime({
+                    targets: '.deliveryMethod',
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    scale: [0.9, 1],
+                    delay: anime.stagger(120, { start: 3400 }),
+                    duration: 700,
+                    easing: 'easeOutElastic(1, .6)',
+                });
+
+                // Testimonials
+                anime({
+                    targets: '.testimonialsSection .sectionTitle',
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    duration: 1000,
+                    delay: 3800,
+                    easing: 'easeOutExpo',
+                });
+
+                anime({
+                    targets: '.testimonialCard',
+                    opacity: [0, 1],
+                    translateY: [40, 0],
+                    delay: anime.stagger(150, { start: 4000 }),
+                    duration: 800,
+                    easing: 'easeOutExpo',
+                });
+            }
+
+            // ============ Step Hover Effects ============
+            function initStepHoverEffects() {
+                document.querySelectorAll('.deliveryStep').forEach((step) => {
+                    const num = step.querySelector('.stepNumber');
+
+                    step.addEventListener('mouseenter', () => {
+                        anime({
+                            targets: num,
+                            scale: [1, 1.15],
+                            boxShadow: [
+                                '0 0 15px rgba(212,175,55,0.3), inset 0 0 8px rgba(212,175,55,0.15)',
+                                '0 0 30px rgba(212,175,55,0.6), inset 0 0 15px rgba(212,175,55,0.3)',
+                            ],
+                            duration: 400,
+                            easing: 'easeOutQuad',
+                        });
+                    });
+
+                    step.addEventListener('mouseleave', () => {
+                        anime({
+                            targets: num,
+                            scale: [1.15, 1],
+                            boxShadow: [
+                                '0 0 30px rgba(212,175,55,0.6), inset 0 0 15px rgba(212,175,55,0.3)',
+                                '0 0 15px rgba(212,175,55,0.3), inset 0 0 8px rgba(212,175,55,0.15)',
+                            ],
+                            duration: 400,
+                            easing: 'easeOutQuad',
+                        });
+                    });
+                });
+            }
+
+            // ============ Method Hover Sparkles ============
+            function initMethodHoverEffects() {
+                document.querySelectorAll('.deliveryMethod').forEach((method) => {
+                    method.addEventListener('mouseenter', () => {
+                        // Sparkle burst from icon
+                        const icon = method.querySelector('.deliveryMethodIcon');
+                        const rect = icon.getBoundingClientRect();
+                        const cx = rect.left + rect.width / 2;
+                        const cy = rect.top + rect.height / 2;
+
+                        for (let i = 0; i < 8; i++) {
+                            const sp = document.createElement('div');
+                            sp.style.position = 'fixed';
+                            sp.style.left = cx + 'px';
+                            sp.style.top = cy + 'px';
+                            sp.style.width = '4px';
+                            sp.style.height = '4px';
+                            sp.style.background = '#f5eaaf';
+                            sp.style.borderRadius = '50%';
+                            sp.style.boxShadow = '0 0 6px #f5eaaf, 0 0 12px rgba(212,175,55,0.6)';
+                            sp.style.pointerEvents = 'none';
+                            sp.style.zIndex = '60';
+                            document.body.appendChild(sp);
+
+                            const angle = (Math.PI * 2 * i) / 8;
+                            const dist = 40 + Math.random() * 20;
+
+                            anime({
+                                targets: sp,
+                                translateX: Math.cos(angle) * dist,
+                                translateY: Math.sin(angle) * dist,
+                                scale: [1, 0],
+                                opacity: [1, 0],
+                                duration: 700,
+                                easing: 'easeOutQuad',
+                                complete: () => sp.remove(),
+                            });
+                        }
+                    });
+                });
+            }
+
+            // ============ Cauldron ============
+            function initCauldronInteraction() {
+                const badge = document.getElementById('cauldronBadge');
+                badge.addEventListener('click', () => {
+                    anime({
+                        targets: badge,
+                        rotate: [0, -15, 15, -10, 10, 0],
+                        duration: 600,
+                        easing: 'easeInOutSine',
+                    });
+                });
+            }
+
+            // ============ Ambient Owl Flight ============
+            function initAmbientOwlFlight() {
+                setTimeout(spawnAmbientOwl, 6000);
+                setInterval(spawnAmbientOwl, 28000);
+            }
+
+            function createOwlSVG(size) {
+                return `<svg viewBox="0 0 100 80" width="${size}" height="${size * 0.8}" xmlns="http://www.w3.org/2000/svg">
+    <g class="owlWing">
+      <path d="M20 40 Q5 30 0 45 Q5 50 15 50 Z" fill="#3a2818"/>
+      <path d="M80 40 Q95 30 100 45 Q95 50 85 50 Z" fill="#3a2818"/>
+    </g>
+    <ellipse cx="50" cy="45" rx="22" ry="25" fill="#4a3020"/>
+    <ellipse cx="50" cy="25" rx="18" ry="15" fill="#4a3020"/>
+    <path d="M35 15 L38 8 L42 15 Z" fill="#3a2818"/>
+    <path d="M58 15 L62 8 L65 15 Z" fill="#3a2818"/>
+    <circle cx="42" cy="22" r="6" fill="#d4af37"/>
+    <circle cx="58" cy="22" r="6" fill="#d4af37"/>
+    <circle cx="42" cy="22" r="3" fill="#1a0f08"/>
+    <circle cx="58" cy="22" r="3" fill="#1a0f08"/>
+    <circle cx="43" cy="21" r="1" fill="#fff"/>
+    <circle cx="59" cy="21" r="1" fill="#fff"/>
+    <path d="M46 30 L50 35 L54 30 Z" fill="#8a7228"/>
+    <path d="M30 50 Q35 55 40 50" stroke="#3a2818" stroke-width="1" fill="none"/>
+    <path d="M40 55 Q45 60 50 55" stroke="#3a2818" stroke-width="1" fill="none"/>
+    <path d="M50 55 Q55 60 60 55" stroke="#3a2818" stroke-width="1" fill="none"/>
+    <path d="M60 50 Q65 55 70 50" stroke="#3a2818" stroke-width="1" fill="none"/>
+    <path d="M42 68 L40 72 M44 68 L44 73 M46 68 L48 72" stroke="#8a7228" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M54 68 L52 72 M56 68 L56 73 M58 68 L60 72" stroke="#8a7228" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  </svg>`;
+            }
+
+            function spawnAmbientOwl() {
+                if (document.hidden) return;
+
+                const owl = document.createElement('div');
+                owl.className = 'flyingOwl';
+                owl.innerHTML = createOwlSVG(50);
+                owl.style.opacity = '0';
+
+                const fromLeft = Math.random() > 0.5;
+                const startY = window.innerHeight * (0.1 + Math.random() * 0.4);
+                const endY = window.innerHeight * (0.1 + Math.random() * 0.4);
+
+                if (fromLeft) {
+                    owl.style.left = '-80px';
+                    owl.style.top = startY + 'px';
+                    document.body.appendChild(owl);
+
+                    anime({
+                        targets: owl,
+                        translateX: window.innerWidth + 160,
+                        translateY: endY - startY,
+                        opacity: [0, 0.6, 0.6, 0],
+                        rotate: [0, 5, 0],
+                        duration: 11000,
+                        easing: 'easeInOutSine',
+                        complete: () => owl.remove(),
+                    });
+                } else {
+                    owl.style.left = window.innerWidth + 'px';
+                    owl.style.top = startY + 'px';
+                    owl.style.transform = 'scaleX(-1)';
+                    document.body.appendChild(owl);
+
+                    anime({
+                        targets: owl,
+                        translateX: -(window.innerWidth + 160),
+                        translateY: endY - startY,
+                        opacity: [0, 0.6, 0.6, 0],
+                        rotate: [0, -5, 0],
+                        duration: 11000,
+                        easing: 'easeInOutSine',
+                        complete: () => owl.remove(),
+                    });
+                }
+            }
+
+            // ============ Pull Cord & Scroll ============
+            function initPullCord() {
+                const cord = document.getElementById('pullCordContainer');
+                const ropeCord = document.getElementById('ropeCord');
+                const ropeLine = document.getElementById('ropeLine');
+                const hint = document.getElementById('pullHint');
+                let isPulled = false;
+
+                const pullAction = () => {
+                    if (isPulled) return;
+                    isPulled = true;
+
+                    anime({
+                        targets: ropeCord,
+                        translateY: [0, 30, 0],
+                        duration: 600,
+                        easing: 'easeOutBounce',
+                    });
+
+                    anime({
+                        targets: ropeLine,
+                        translateY: [0, 10, 0],
+                        duration: 600,
+                        easing: 'easeOutBounce',
+                    });
+
+                    anime({
+                        targets: hint,
+                        opacity: 0,
+                        duration: 300,
+                        easing: 'easeOutQuad',
+                    });
+
+                    anime({
+                        targets: '#crystalGem',
+                        scale: [1, 1.6, 1],
+                        boxShadow: [
+                            '0 0 12px #f5eaaf, 0 0 25px rgba(212,175,55,0.8)',
+                            '0 0 40px #ffffff, 0 0 80px rgba(212,175,55,1), 0 0 120px rgba(245,234,175,0.8)',
+                            '0 0 12px #f5eaaf, 0 0 25px rgba(212,175,55,0.8)',
+                        ],
+                        duration: 800,
+                        easing: 'easeInOutSine',
+                    });
+
+                    const gemRect = document.getElementById('crystalGem').getBoundingClientRect();
+                    burstSparklesAt(
+                        gemRect.left + gemRect.width / 2,
+                        gemRect.top + gemRect.height / 2,
+                        20
+                    );
+
+                    setTimeout(() => openScroll(), 500);
+                };
+
+                cord.addEventListener('click', pullAction);
+            }
+
+            function burstSparklesAt(x, y, count) {
+                for (let i = 0; i < count; i++) {
+                    const sp = document.createElement('div');
+                    sp.style.position = 'fixed';
+                    sp.style.left = x + 'px';
+                    sp.style.top = y + 'px';
+                    const size = 3 + Math.random() * 4;
+                    sp.style.width = size + 'px';
+                    sp.style.height = size + 'px';
+                    sp.style.background = Math.random() > 0.5 ? '#f5eaaf' : '#d4af37';
+                    sp.style.borderRadius = '50%';
+                    sp.style.boxShadow = '0 0 8px #f5eaaf, 0 0 16px rgba(212,175,55,0.6)';
+                    sp.style.pointerEvents = 'none';
+                    sp.style.zIndex = '70';
+                    document.body.appendChild(sp);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = 60 + Math.random() * 120;
+
+                    anime({
+                        targets: sp,
+                        translateX: Math.cos(angle) * dist,
+                        translateY: Math.sin(angle) * dist,
+                        scale: [1, 0],
+                        opacity: [1, 0],
+                        duration: 1000 + Math.random() * 500,
+                        easing: 'easeOutQuad',
+                        complete: () => sp.remove(),
+                    });
+                }
+            }
+
+            function openScroll() {
+                const overlay = document.getElementById('assignmentScrollOverlay');
+                const rollerTop = document.getElementById('scrollRollerTop');
+                const rollerBottom = document.getElementById('scrollRollerBottom');
+                const card = document.getElementById('marauderCard');
+
+                overlay.classList.add('active');
+
+                anime({
+                    targets: rollerTop,
+                    scaleY: [0, 1],
+                    duration: 400,
+                    easing: 'easeOutQuad',
+                });
+
+                anime({
+                    targets: card,
+                    scaleY: [0, 1],
+                    duration: 800,
+                    delay: 300,
+                    easing: 'easeOutExpo',
+                    complete: () => {
+                        anime({
+                            targets: rollerBottom,
+                            scaleY: [0, 1],
+                            duration: 400,
+                            easing: 'easeOutQuad',
+                        });
+                        revealScrollContents();
+                    },
+                });
+            }
+
+            function revealScrollContents() {
+                anime({
+                    targets: '.marauderDenseSVG',
+                    opacity: [0, 0.12],
+                    duration: 1200,
+                    easing: 'easeOutQuad',
+                });
+
+                anime({
+                    targets: '.marauderMapPathsSVG',
+                    opacity: [0, 1],
+                    duration: 1000,
+                    delay: 300,
+                    easing: 'easeOutQuad',
+                });
+
+                document.querySelectorAll('.mapPathStroke').forEach((path, i) => {
+                    const length = path.getTotalLength();
+                    path.style.strokeDasharray = length;
+                    path.style.strokeDashoffset = length;
+                    anime({
+                        targets: path,
+                        strokeDashoffset: [length, 0],
+                        duration: 2000,
+                        delay: 500 + i * 400,
+                        easing: 'easeOutQuad',
+                        complete: () => {
+                            path.style.strokeDasharray = '6 5';
+                            path.style.strokeDashoffset = '0';
+                        },
+                    });
+                });
+
+                anime({
+                    targets: '.compassGroup',
+                    opacity: [0, 0.45],
+                    scale: [0, 1.3, 1],
+                    rotate: [-180, 0],
+                    duration: 1200,
+                    delay: 1400,
+                    easing: 'easeOutElastic(1, .6)',
+                });
+
+                anime({
+                    targets: '#revealTitle',
+                    opacity: [0, 1],
+                    translateY: [-20, 0],
+                    duration: 800,
+                    delay: 600,
+                    easing: 'easeOutExpo',
+                });
+
+                anime({
+                    targets: '#revealSub',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 800,
+                    delay: 800,
+                    easing: 'easeOutExpo',
+                });
+
+                anime({
+                    targets: '#revealDecree',
+                    opacity: [0, 1],
+                    scale: [0.95, 1],
+                    duration: 1000,
+                    delay: 1100,
+                    easing: 'easeOutExpo',
+                });
+
+                anime({
+                    targets: '.mapLandmarkCard',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    scale: [0.9, 1],
+                    delay: anime.stagger(150, { start: 1500 }),
+                    duration: 700,
+                    easing: 'easeOutElastic(1, .6)',
+                });
+
+                anime({
+                    targets: '#revealSeal',
+                    opacity: [0, 1],
+                    scale: [0.5, 1.2, 1],
+                    rotate: [-15, 0],
+                    duration: 800,
+                    delay: 2400,
+                    easing: 'easeOutElastic(1, .5)',
+                });
+
+                setTimeout(() => animateFootprints(), 2800);
+            }
+
+            function animateFootprints() {
+                const card = document.getElementById('marauderCard');
+                const cardRect = card.getBoundingClientRect();
+                const scaleX = cardRect.width / 820;
+                const scaleY = cardRect.height / 540;
+
+                const positions = [
+                    { x: 80, y: 105, side: 'left' },
+                    { x: 180, y: 75, side: 'right' },
+                    { x: 290, y: 80, side: 'left' },
+                    { x: 400, y: 110, side: 'right' },
+                    { x: 510, y: 105, side: 'left' },
+                    { x: 620, y: 90, side: 'right' },
+                    { x: 730, y: 92, side: 'left' },
+                    { x: 680, y: 150, side: 'right' },
+                    { x: 580, y: 200, side: 'left' },
+                    { x: 480, y: 240, side: 'right' },
+                    { x: 380, y: 265, side: 'left' },
+                    { x: 270, y: 280, side: 'right' },
+                    { x: 160, y: 310, side: 'left' },
+                    { x: 90, y: 340, side: 'right' },
+                    { x: 180, y: 400, side: 'left' },
+                    { x: 290, y: 440, side: 'right' },
+                    { x: 400, y: 445, side: 'left' },
+                    { x: 510, y: 445, side: 'right' },
+                    { x: 620, y: 455, side: 'left' },
+                    { x: 730, y: 460, side: 'right' },
+                ];
+
+                const templates = [
+                    document.getElementById('step1'),
+                    document.getElementById('step2'),
+                    document.getElementById('step3'),
+                ];
+
+                positions.forEach((pos, i) => {
+                    const fp = templates[i % 3].cloneNode(true);
+                    fp.removeAttribute('id');
+                    fp.style.opacity = '0';
+                    fp.style.left = pos.x * scaleX - 5 + 'px';
+                    fp.style.top = pos.y * scaleY - 8 + 'px';
+                    fp.style.transform =
+                        pos.side === 'left' ? 'rotate(-8deg)' : 'scaleX(-1) rotate(-8deg)';
+                    document.getElementById('footprintContainer').appendChild(fp);
+
+                    anime({
+                        targets: fp,
+                        opacity: [0, 0.7, 0.7, 0],
+                        scale: [0.5, 1, 1, 0.8],
+                        duration: 1500,
+                        delay: i * 200,
+                        easing: 'easeOutQuad',
+                    });
+                });
+            }
+
+            function initScrollClose() {
+                const closeBtn = document.getElementById('scrollCloseBtn');
+                const overlay = document.getElementById('assignmentScrollOverlay');
+                const card = document.getElementById('marauderCard');
+                const rollerTop = document.getElementById('scrollRollerTop');
+                const rollerBottom = document.getElementById('scrollRollerBottom');
+                const hint = document.getElementById('pullHint');
+
+                const closeAction = () => {
+                    anime({
+                        targets: rollerBottom,
+                        scaleY: [1, 0],
+                        duration: 300,
+                        easing: 'easeInQuad',
+                    });
+
+                    anime({
+                        targets: card,
+                        scaleY: [1, 0],
+                        duration: 500,
+                        delay: 200,
+                        easing: 'easeInQuad',
+                    });
+
+                    anime({
+                        targets: rollerTop,
+                        scaleY: [1, 0],
+                        duration: 300,
+                        delay: 600,
+                        easing: 'easeInQuad',
+                    });
+
+                    anime({
+                        targets: overlay,
+                        opacity: 0,
+                        duration: 400,
+                        delay: 800,
+                        easing: 'easeOutQuad',
+                        complete: () => {
+                            overlay.classList.remove('active');
+                            overlay.style.opacity = '';
+                            card.style.transform = '';
+                            rollerTop.style.transform = '';
+                            rollerBottom.style.transform = '';
+                            const container = document.getElementById('footprintContainer');
+                            container
+                                .querySelectorAll('.walkingFootprint:not([id])')
+                                .forEach((c) => c.remove());
+                            setTimeout(() => {
+                                anime({
+                                    targets: hint,
+                                    opacity: 0.85,
+                                    duration: 600,
+                                    easing: 'easeOutQuad',
+                                });
+                            }, 400);
+                        },
+                    });
+                };
+
+                closeBtn.addEventListener('click', closeAction);
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) closeAction();
+                });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && overlay.classList.contains('active')) closeAction();
+                });
+            }
+        </script>
+    </body>
 </html>
