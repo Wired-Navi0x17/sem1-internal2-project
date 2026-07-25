@@ -19,7 +19,7 @@
 
 <div align="center">
 
-### 🐻 2. Expecto Patronum Charm (Silvery Bear & Secret Runic 'B' Signature)
+### 🐻 2. Expecto Patronum Charm
 ![Expecto Patronum Bear Showcase](static/assets/patronus_showcase.png)
 *Visual Analysis: Captured mid-charge during the 5.5-second Patronus apparition. Shows the hand-crafted Grizzly Bear SVG silhouette with long slanted muzzle, nose star node, shoulder hump, trailing stardust mist, ground paw shockwave rings, and the secret Elder Futhark Runic 'B' (Berkana ᛒ) constellation signature glowing bright cyan in the center of the Bear's flank.*
 
@@ -38,7 +38,7 @@
     <td width="50%" align="center">
       <b>📜 4. Magical Delivery Process (Settled Animations)</b><br><br>
       <img src="static/assets/deliv_full.png" alt="Full Delivery Page Showcase" width="100%"><br><br>
-      <i>Visual Analysis: Full view of the 4-step delivery pipeline (Place Order, Processing, Delivery Method: Standard Owl Post / Floo Network Express / Apparition Direct, Receive Items) and customer testimonials from Oliver Wood & Hermione Granger.</i>
+      <i>Visual Analysis: Full view of the 4-step delivery pipeline (Place Order, Order Processing, Delivery Method: Standard Owl Post / Floo Network Express / Apparition Direct, Receive Items) and customer testimonials from Oliver Wood & Hermione Granger.</i>
     </td>
   </tr>
 </table>
@@ -51,7 +51,7 @@
 ### 🐻 1. Secret Incantation Easter Egg — Expecto Patronum (Bear Patronus)
 - **Global Keypress Listener**: Type `EXPECTO PATRONUM` or `PATRONUM` anywhere on the page (outside form input fields).
 - **Anatomical Grizzly Bear Vector Silhouette**: Hand-crafted SVG silhouette featuring a prominent Grizzly shoulder hump, long slanted muzzle, nose tip star node, rounded ears, heavy forelimbs, and muscle contour line-art.
-- **Secret Runic 'B' (Berkana ᛒ) Signature**: Weaved into the star chart on the Bear's flank. Illuminates brightly to $100\%$ cyan halo glow at the midpoint of the 5.5-second charge ($t \approx 2.2\text{s} \dots 3.6\text{s}$).
+- **Secret Runic 'B' (Berkana ᛒ) Signature**: Weaved into the star chart on the Bear's flank. Illuminates brightly to 100% cyan halo glow at the midpoint of the 5.5-second charge ($t \approx 2.2\text{s} \dots 3.6\text{s}$).
 - **Web Audio API Stereo-Panned Bass Swell**: Synthesizes a deep sub-bass rumble ($40\text{ Hz} \rightarrow 105\text{ Hz}$) and soaring A-Major chord swell panning from left ear ($-0.88$) to right ear ($+0.88$).
 
 ### 🪄 2. Cinematic Alohomora Spell Entrance (24-Hour Persistence)
@@ -104,60 +104,108 @@
 
 ---
 
-## 📁 Enterprise Frontend Directory Structure
+## Local Setup & Installation
 
-```
-Assignment2/
-├── static/
-│   ├── css/
-│   │   └── style.css                 # Master CSS stylesheet, design tokens & cart drawer GUI styles
-│   ├── js/                           # Modular JS architecture
-│   │   ├── alohomora.js              # 3D Alohomora spellbook entrance timeline
-│   │   ├── audio.js                  # Web Audio API synth sound engine
-│   │   ├── cart.js                   # Cauldron cart drawer GUI controller & state manager
-│   │   ├── contact-form.js           # Owl post & prophet animations
-│   │   ├── main.js                   # Entry point & HTMLLoader component orchestrator
-│   │   ├── patronus.js               # Expecto Patronum Bear Patronus & Runic B signature engine
-│   │   ├── scroll-map.js             # Marauder's Map pull-cord & footprint reveal engine
-│   │   └── ui.js                     # Ambient sparkles, particle canvas & mobile menu
-│   ├── images/                       # High-res item photography (space-free clean naming)
-│   │   ├── deluminator.jpg
-│   │   ├── golden-snitch.jpg
-│   │   ├── invisibility-cloak.jpg
-│   │   ├── marauders-map.jpg
-│   │   ├── nimbus-2001.jpg
-│   │   ├── pensieve.jpg
-│   │   ├── time-turner.jpg
-│   │   └── wand.jpg
-│   └── assets/                       # SVG vector textures, favicons & showcase screenshots
-│       ├── background.svg
-│       ├── favicon.svg
-│       ├── homepage_full.png         # Entire Homepage full-page capture
-│       ├── patronus_showcase.png     # Expecto Patronum Bear in-motion action capture
-│       ├── contact_full.png          # Entire Contact page full-page capture
-│       └── deliv_full.png            # Delivery page (settled animations) full-page capture
-├── templates/
-│   └── components/                   # Modular HTML templates & overlays
-│       ├── alohomora-entrance.html   # 3D Spellbook entrance overlay
-│       ├── assignment-scroll.html    # Marauder's Map & hanging pull-cord mechanism
-│       └── cauldron-cart.html        # Interactive Cauldron Cart Drawer GUI
-├── index.html                        # Storefront page entrypoint
-├── contact.html                      # Owl Post / Contact page entrypoint
-├── deliv.html                        # Delivery process page entrypoint
-├── LICENSE                           # MIT License
-└── README.md                         # Project documentation & visual showcase
+> **Important: Do not open `index.html` directly**
+>
+> This project loads modular HTML components (`templates/components/*.html`) using JavaScript `fetch()`.  
+> Modern browsers block these requests under the `file://` protocol due to CORS security restrictions.  
+> You **must** serve the project through a local HTTP server.
+
+---
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Wired-Navi0x17/sem1-internal2-project.git
+cd sem1-internal2-project
 ```
 
 ---
 
-## 🛠️ Local Setup
+### 2. Start a local server
 
-1. **Serve locally**:
-   - Open `index.html` directly in any web browser, or serve with python HTTP server:
-     ```bash
-     python3 -m http.server 8000
-     ```
-   - Open **`http://localhost:8000`** in your web browser.
+Choose **one** of the methods below:
+
+#### Option A — Python (Recommended)
+Works on macOS, Linux, and Windows (if Python is installed):
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open: [http://localhost:8000](http://localhost:8000)
+
+#### Option B — Node.js (`npx`)
+No global install required:
+
+```bash
+npx serve .
+```
+
+Open the URL shown in the terminal (usually `http://localhost:3000`).
+
+#### Option C — VS Code Live Server
+1. Open the project folder in VS Code.
+2. Install the **Live Server** extension (by Ritwick Dey).
+3. Right-click `index.html` → **Open with Live Server**.
+
+#### Option D — PHP
+```bash
+php -S localhost:8000
+```
+
+Then open: [http://localhost:8000](http://localhost:8000)
+
+---
+
+### 3. Explore the Emporium
+
+Once the site is running:
+
+- **Alohomora Entrance** — Experience the 3D spellbook opening sequence on first visit.
+- **Expecto Patronum** — Type `EXPECTO PATRONUM` (or just `PATRONUM`) anywhere on the page to summon the Silvery Bear Patronus.
+- **Marauder’s Map** — Click and drag the golden pull-cord in the top-right corner.
+
+---
+
+### Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| Blank page / components not loading | You are still using `file://`. Start a local server instead. |
+| Port already in use | Change the port (e.g. `python3 -m http.server 8080`) |
+| `python3` not found | Try `python -m http.server 8000` or install Python 3 |
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License:
+
+```text
+MIT License
+
+Copyright (c) 2026 Bhuvi Singhal & Navi...
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom it is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ---
 
