@@ -1,7 +1,7 @@
 # 🧹 The Wizarding Emporium - Diagon Alley Magical Supplies
 
 > **Diagon Alley's Premier Magical Supplier Since 1298**  
-> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Cinematic GSAP/Anime.js Alohomora Entrance Spell** (24-hour persistence), a **Signature Hanging Marauder's Map System** with exclusive pull-cord trigger, multi-layered Web Audio sound design, sequential footprint reveals, and an official Ministry Decree of Academic Distinction.
+> An immersive, responsive Harry Potter themed e-commerce web application featuring authentic magical supplies, an interactive **Cinematic GSAP/Anime.js Alohomora Entrance Spell** (24-hour persistence), a **Signature Hanging Marauder's Map System** with exclusive pull-cord trigger, an interactive **Cauldron Cart Drawer GUI** with currency converter, multi-layered Web Audio sound design, sequential footprint reveals, and an official Ministry Decree of Academic Distinction.
 
 ---
 
@@ -25,7 +25,14 @@
   5. **Phase 5 (Golden Burst & Pages Flutter)**: Warm golden light escapes, 3D leather cover opens, pages flutter open with paper sound.
   6. **Phase 6 (Camera Drift & Lingering Magic)**: Floating camera enters pages into storefront, leaving residual golden dust particles that fade after entry.
 
-### 📜 2. Signature Hanging Marauder's Map System (Exclusive Rope Trigger)
+### 🧪 2. Interactive Cauldron Cart Drawer GUI
+- **Slide-Over Dark Glassmorphic Drawer**: Triggered by clicking the top navigation Cauldron badge on any page.
+- **Dynamic Quantity & Item Management**: Add items, increase/decrease quantities (`-` / `+`), and remove items with instant subtotal updates.
+- **Magical Currency Converter**: Live calculation converting Galleons to Sickles and Knuts (1 Galleon = 17 Sickles = 493 Knuts).
+- **Owl Post Express Checkout**: Triggers an official Ministry Dispatch Receipt modal with randomized order reference numbers (`#WIZ-XXXXX`) and sound effects.
+- **`localStorage` Persistence**: Keeps cart state saved between page reloads and navigation.
+
+### 📜 3. Signature Hanging Marauder's Map System (Exclusive Rope Trigger)
 - **Exclusive Rope Trigger (`isMapAnimating`)**: Clicking `"Home"`, `"Contact"`, `"Delivery"`, product cards, or any other UI elements will **NEVER** trigger the map animation. The map ONLY activates when the upper-right hanging cord is physically pulled!
 - **Physical Pull Cord Mechanism**:
   - Engraved brass ceiling mount (`.ceilingMount`)
@@ -55,35 +62,54 @@
   6. ⌛ Semester: Semester I
   7. 🏆 Assessment: Internal Assessment II
   8. Official Ministry Approval Seal Stamp
-- **Manual Dismissal Only (Auto-Close Removed)**: Completely removed auto-close timers. The scroll remains open indefinitely until dismissed via the parchment close button (`#scrollCloseBtn`) or clicking outside the parchment overlay!
+- **Manual Dismissal Only**: Dismissed via parchment close button (`#scrollCloseBtn`) or clicking outside the parchment overlay!
 
 ---
 
-## 📁 Repository Structure
+## 📁 Scalable Directory Structure
 
 ```
 Assignment2/
-├── index.html        # Storefront page with Anime.js/GSAP 3D Alohomora spellbook overlay, pull cord & Marauder Map
-├── contact.html      # Diagon Alley location details, owl post form & pull cord
-├── deliv.html        # Delivery options & pull cord
-├── favicon.svg       # Magical wizard hat & golden runes SVG favicon
-├── style.css         # CSS 3D perspective rules, sepia parchment texture, & pull cord styles
-├── script.js        # GSAP/Anime.js entrance timeline, Web Audio synth, pull cord & cart logic
-├── background.svg    # Custom aged parchment & dark stone SVG texture
-└── images/           # Magical item photography and webp backgrounds
+├── static/
+│   ├── css/
+│   │   └── style.css                 # Master CSS stylesheet, design tokens & cart drawer GUI styles
+│   ├── js/                           # Modular JS architecture
+│   │   ├── alohomora.js              # 3D Alohomora spellbook entrance timeline
+│   │   ├── audio.js                  # Web Audio API synth sound engine
+│   │   ├── cart.js                   # Cauldron cart drawer GUI controller & state manager
+│   │   ├── contact-form.js           # Owl post & prophet animations
+│   │   ├── main.js                   # Entry point & HTMLLoader component orchestrator
+│   │   ├── scroll-map.js             # Marauder's Map pull-cord & footprint reveal engine
+│   │   └── ui.js                     # Ambient sparkles, particle canvas & mobile menu
+│   ├── images/                       # High-res item photography (clean naming)
+│   │   ├── deluminator.jpg
+│   │   ├── golden-snitch.jpg
+│   │   ├── invisibility-cloak.jpg
+│   │   ├── marauders-map.jpg
+│   │   ├── nimbus-2001.jpg
+│   │   ├── pensieve.jpg
+│   │   ├── time-turner.jpg
+│   │   └── wand.jpg
+│   └── assets/                       # SVG vector textures & favicons
+│       ├── background.svg
+│       └── favicon.svg
+├── templates/
+│   └── components/                   # Modular HTML templates & overlays
+│       ├── alohomora-entrance.html   # 3D Spellbook entrance overlay
+│       ├── assignment-scroll.html    # Marauder's Map & hanging pull-cord mechanism
+│       └── cauldron-cart.html        # Interactive Cauldron Cart Drawer GUI
+├── index.html                        # Storefront page entrypoint
+├── contact.html                      # Owl Post / Contact page entrypoint
+├── deliv.html                        # Delivery process page entrypoint
+├── LICENSE                           # MIT License
+└── README.md                         # Documentation
 ```
 
 ---
 
-## 🛠️ Getting Started & Local Setup
+## 🛠️ Local Setup
 
-1. **Clone the repository**:
-   ```bash
-   git clone git@github.com:Wired-Navi0x17/sem1-internal2-project.git
-   cd sem1-internal2-project
-   ```
-
-2. **Run locally**:
+1. **Serve locally**:
    - Open `index.html` directly in any web browser, or serve with python HTTP server:
      ```bash
      python3 -m http.server 8000

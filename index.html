@@ -1,31 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Wizarding Emporium — Diagon Alley Magical Supplies</title>
-    <meta name="description" content="Diagon Alley's premier magical supplier since 1298. Wands, potions, Quidditch gear, and rare artefacts. Ministry approved." />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="stylesheet" href="style.css" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>The Wizarding Emporium — Diagon Alley Magical Supplies</title>
+        <meta
+            name="description"
+            content="Diagon Alley's premier magical supplier since 1298. Wands, potions, Quidditch gear, and rare artefacts. Ministry approved."
+        />
+        <link rel="icon" type="image/svg+xml" href="static/assets/favicon.svg" />
+        <link rel="stylesheet" href="static/css/style.css" />
 
-    <!-- Animation libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <!-- Animation libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-    <!-- Icon library -->
-    <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
+        <!-- Icon library -->
+        <script src="https://unpkg.com/reicon/cdn/reicon.min.js"></script>
 
-    <!-- Modular JS — order matters (audio first, orchestrator last) -->
-    <script src="js/audio.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/alohomora.js"></script>
-    <script src="js/scroll-map.js"></script>
-    <script src="js/contact-form.js"></script>
-    <script src="js/main.js" defer></script>
-  </head>
-  <body>
-    <!--
+        <!-- Modular JS — order matters (audio first, orchestrator last) -->
+        <script src="static/js/audio.js"></script>
+        <script src="static/js/ui.js"></script>
+        <script src="static/js/cart.js"></script>
+        <script src="static/js/alohomora.js"></script>
+        <script src="static/js/scroll-map.js"></script>
+        <script src="static/js/contact-form.js"></script>
+        <script src="static/js/patronus.js"></script>
+        <script src="static/js/main.js" defer></script>
+    </head>
+    <body>
+        <!--
       NOTE: The spellbook entrance overlay (#spellbookOverlay)
       and the pull-cord + scroll overlay (#assignmentScrollOverlay)
       are NOT inline here.
@@ -41,318 +45,548 @@
       static file server so that fetch() can resolve the components.
     -->
 
-    <!-- Main Storefront Content -->
-    <div class="pageContainer" id="mainPageContainer">
-      <header class="mainHeader">
-        <div class="headerContent">
-          <h1 class="shopTitle">The Wizarding Emporium</h1>
-          <p class="shopTagline">Diagon Alley's Premier Magical Supplier Since 1298</p>
+        <!-- Main Storefront Content -->
+        <div class="pageContainer" id="mainPageContainer">
+            <header class="mainHeader">
+                <div class="headerContent">
+                    <h1 class="shopTitle">The Wizarding Emporium</h1>
+                    <p class="shopTagline">Diagon Alley's Premier Magical Supplier Since 1298</p>
+                </div>
+                <nav class="mainNav">
+                    <a href="index.html" class="navLink active">Home</a>
+                    <a href="contact.html" class="navLink">Contact</a>
+                    <a href="deliv.html" class="navLink">Delivery</a>
+                    <div class="cauldronBadge">
+                        <svg
+                            class="cauldronIcon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"
+                            />
+                            <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8" />
+                        </svg>
+                        <span class="cauldronCount">0</span>
+                    </div>
+                </nav>
+            </header>
+
+            <div class="heroBanner">
+                <div class="heroContent">
+                    <h2 class="heroTitle">Discover the Finest Magical Artifacts in Diagon Alley</h2>
+                    <p class="heroText">
+                        From first-year Hogwarts students to seasoned Ministry aurors — handcrafted
+                        by master artisans with ancient enchantments
+                    </p>
+                    <a href="#fetItems" class="ctaButton">Explore Our Collection</a>
+                </div>
+            </div>
+
+            <div class="magicalDivider"><span class="dividerGlyph">✧ ☽ ✧</span></div>
+
+            <main class="mainContent">
+                <!-- Featured Products -->
+                <section class="featuredSection">
+                    <h2 class="sectionTitle" id="fetItems">Featured Magical Items</h2>
+                    <p class="sectionIntro">
+                        Handcrafted by master artisans using ancient magical techniques
+                    </p>
+
+                    <div class="productGrid">
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img src="static/images/wand.jpg" alt="Phoenix Feather Wand" />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Phoenix Feather Wand</h3>
+                                <p class="productDesc">
+                                    English oak with phoenix feather core. Great versatility and
+                                    power.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">45 Galleons</span>
+                                    <span class="productStock">In Stock</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img
+                                    src="static/images/invisibility-cloak.jpg"
+                                    alt="Invisibility Cloak"
+                                />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Invisibility Cloak</h3>
+                                <p class="productDesc">
+                                    Premium demiguise hair woven with disillusionment charms.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">300 Galleons</span>
+                                    <span class="productStock">Limited</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img src="static/images/nimbus-2001.jpg" alt="Nimbus 2001 Broom" />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Nimbus 2001 Broom</h3>
+                                <p class="productDesc">
+                                    Professional racing broom with ash wood handle.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">750 Galleons</span>
+                                    <span class="productStock">In Stock</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img src="static/images/time-turner.jpg" alt="Time-Turner" />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Time-Turner</h3>
+                                <p class="productDesc">
+                                    Ministry-approved device for limited time travel.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">1,200 Galleons</span>
+                                    <span class="productStock">2 Left</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img src="static/images/pensieve.jpg" alt="Pensieve" />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Pensieve</h3>
+                                <p class="productDesc">
+                                    Stone basin for viewing and storing memories.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">850 Galleons</span>
+                                    <span class="productStock">In Stock</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img src="static/images/marauders-map.jpg" alt="Marauder's Map" />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Marauder's Map</h3>
+                                <p class="productDesc">
+                                    Shows every person at Hogwarts and their movements.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">200 Galleons</span>
+                                    <span class="productStock">Limited</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img src="static/images/golden-snitch.jpg" alt="Golden Snitch" />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Golden Snitch</h3>
+                                <p class="productDesc">
+                                    Official Quidditch snitch with flesh memory.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">150 Galleons</span>
+                                    <span class="productStock">In Stock</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+
+                        <div class="productCard">
+                            <div class="productImage">
+                                <img src="static/images/deluminator.jpg" alt="Deluminator" />
+                            </div>
+                            <div class="productInfo">
+                                <h3 class="productTitle">Deluminator</h3>
+                                <p class="productDesc">
+                                    Device that removes light sources from an area.
+                                </p>
+                                <div class="productDetails">
+                                    <span class="productPrice">95 Galleons</span>
+                                    <span class="productStock">In Stock</span>
+                                </div>
+                                <button class="buyButton">Add to Cauldron</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="magicalDivider"><span class="dividerGlyph">✦ ☽ ✦</span></div>
+
+                <!-- Categories Section from shopByCategory.html -->
+                <section class="categoriesSection">
+                    <div class="sectionHeader">
+                        <p class="sectionLabel" id="sectionLabel">Diagon Alley Collections</p>
+                        <h2 class="sectionTitle" id="sectionTitle">Shop by Category</h2>
+                        <p class="sectionIntro" id="sectionIntro">
+                            Browse our enchanted collections — each curated by master artisans from
+                            across the wizarding world
+                        </p>
+                    </div>
+
+                    <div class="categoriesGrid" id="categoriesGrid">
+                        <!-- 1. Wands & Magical Cores -->
+                        <div class="categoryCardOuter" id="catWands">
+                            <div class="categoryBadge">Wands &amp; Cores</div>
+                            <div class="categoryCardInner">
+                                <div class="categoryTraceArea">
+                                    <div
+                                        class="categoryTraceBg"
+                                        style="
+                                            background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 184 73.89%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M33,150s20-64,92-64,92,64,92,64%22 transform=%22translate(-33 -79)%22/%3E%3C/svg%3E');
+                                        "
+                                    ></div>
+                                    <svg class="categoryTraceSVG" viewBox="0 0 184 73.89">
+                                        <clipPath id="clipWandsHome">
+                                            <path
+                                                d="M125,89c43.91,0,80.83,27.11,91.58,63.89C210.25,111.13,171.66,79,125,79s-85.25,32.13-91.58,73.89C44.17,116.11,81.09,89,125,89Z"
+                                            />
+                                        </clipPath>
+                                        <path
+                                            clip-path="url(#clipWandsHome)"
+                                            class="traceMotionPath"
+                                            id="traceWands"
+                                            d="M33,150s20-64,92-64,92,64,92,64"
+                                            transform="translate(-33 -79)"
+                                        />
+                                    </svg>
+                                    <svg
+                                        class="categoryIconCenter"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M20 2 L25 16 L38 20 L25 24 L20 38 L15 24 L2 20 L15 16 Z"
+                                            fill="currentColor"
+                                            opacity="0.25"
+                                        />
+                                        <circle
+                                            cx="20"
+                                            cy="20"
+                                            r="4"
+                                            fill="currentColor"
+                                            opacity="0.8"
+                                        />
+                                    </svg>
+                                    <div class="orbitParticle op1"></div>
+                                    <div class="orbitParticle op2"></div>
+                                    <div class="orbitParticle op3"></div>
+                                    <div class="cornerSpark cs1"></div>
+                                    <div class="cornerSpark cs2"></div>
+                                </div>
+                                <div class="categoryContent">
+                                    <h3>Wands &amp; Magical Cores</h3>
+                                    <p>
+                                        Dragon heartstring, phoenix feather, and unicorn hair cores
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Potions Ingredients -->
+                        <div class="categoryCardOuter" id="catPotions">
+                            <div class="categoryBadge">Potions &amp; Herbs</div>
+                            <div class="categoryCardInner">
+                                <div class="categoryTraceArea">
+                                    <div
+                                        class="categoryTraceBg"
+                                        style="
+                                            background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 201 117.05%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M21.14,141.53S25,181,60,181c0,0,15,1,32-17s36-46,39-54c0,0,25-34,40-34,0,0,29-15,48,21%22 transform=%22translate(-21 -68.63)%22/%3E%3C/svg%3E');
+                                        "
+                                    ></div>
+                                    <svg class="categoryTraceSVG" viewBox="0 0 201 117.05">
+                                        <clipPath id="clipPotionsHome">
+                                            <path
+                                                d="M21,139s-1,24,30,32c28.83,7.44,58.34-38.49,61.63-45.22.29-.61,29.53-47,51.19-54.41.65-.22,43.46-16.21,58.18,31.63,0,0-.25-.69-.78-1.87-9.33-20.51-34.05-28.73-54.07-18.36A53.11,53.11,0,0,0,154,92c-11.69,11.69-48.35,63.55-48.76,64.14C101.44,161.61,83.84,185,60,185c0,0-19,5-31-12C29,173,21,164,21,139Z"
+                                            />
+                                        </clipPath>
+                                        <path
+                                            clip-path="url(#clipPotionsHome)"
+                                            class="traceMotionPath"
+                                            id="tracePotions"
+                                            d="M21.14,141.53S25,181,60,181c0,0,15,1,32-17s36-46,39-54c0,0,25-34,40-34,0,0,29-15,48,21"
+                                            transform="translate(-21 -68.63)"
+                                        />
+                                    </svg>
+                                    <svg
+                                        class="categoryIconCenter"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M20 4 L20 16 L10 20 L12 28 L20 34 L28 28 L30 20 L20 16"
+                                            fill="currentColor"
+                                            opacity="0.15"
+                                        />
+                                        <ellipse
+                                            cx="20"
+                                            cy="20"
+                                            rx="4"
+                                            ry="3"
+                                            fill="currentColor"
+                                            opacity="0.6"
+                                        />
+                                        <line x1="20" y1="18" x2="20" y2="24" stroke-width="2" />
+                                    </svg>
+                                    <div class="orbitParticle op1"></div>
+                                    <div class="orbitParticle op2"></div>
+                                    <div class="orbitParticle op3"></div>
+                                    <div class="cornerSpark cs1"></div>
+                                    <div class="cornerSpark cs2"></div>
+                                </div>
+                                <div class="categoryContent">
+                                    <h3>Potions Ingredients</h3>
+                                    <p>Rare herbs, magical creature parts, and crystal phials</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Magical Creatures -->
+                        <div class="categoryCardOuter" id="catCreatures">
+                            <div class="categoryBadge">Magical Creatures</div>
+                            <div class="categoryCardInner">
+                                <div class="categoryTraceArea">
+                                    <div
+                                        class="categoryTraceBg"
+                                        style="
+                                            background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 159.22 187.39%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M207.22,33.9,123,120,54,45l3,85s-4,50,21,68,65,19,75,13c0,0,37.94-17.47,44.47-42.23%22 transform=%22translate(-48 -32.61)%22/%3E%3C/svg%3E');
+                                        "
+                                    ></div>
+                                    <svg class="categoryTraceSVG" viewBox="0 0 159.22 187.39">
+                                        <clipPath id="clipCreaturesHome">
+                                            <path
+                                                d="M119.09,124l.91,1h.4a4.88,4.88,0,0,0,5.26,0H126l.53-.59a14.78,14.78,0,0,0,3-3.3L205,37s5-5,0-3l-82,79L52,34s-4-5-4,4,4,122,4,122-1,56,79,60c0,0,47.74,0,65.78-49.47-3,7.12-13,23.3-42.78,32.47,0,0-73,23-89-46L60,60l57.89,62.71A11.28,11.28,0,0,0,119.09,124Z"
+                                            />
+                                        </clipPath>
+                                        <path
+                                            clip-path="url(#clipCreaturesHome)"
+                                            class="traceMotionPath"
+                                            id="traceCreatures"
+                                            d="M207.22,33.9,123,120,54,45l3,85s-4,50,21,68,65,19,75,13c0,0,37.94-17.47,44.47-42.23"
+                                            transform="translate(-48 -32.61)"
+                                        />
+                                    </svg>
+                                    <svg
+                                        class="categoryIconCenter"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <ellipse
+                                            cx="20"
+                                            cy="22"
+                                            rx="12"
+                                            ry="10"
+                                            fill="currentColor"
+                                            opacity="0.1"
+                                        />
+                                        <circle
+                                            cx="15"
+                                            cy="17"
+                                            r="4"
+                                            fill="currentColor"
+                                            opacity="0.4"
+                                        />
+                                        <circle
+                                            cx="25"
+                                            cy="17"
+                                            r="4"
+                                            fill="currentColor"
+                                            opacity="0.4"
+                                        />
+                                        <circle cx="15" cy="17" r="1.5" fill="#0f051a" />
+                                        <circle cx="25" cy="17" r="1.5" fill="#0f051a" />
+                                        <path
+                                            d="M17 26 Q20 30 23 26"
+                                            fill="none"
+                                            stroke-width="2"
+                                        />
+                                    </svg>
+                                    <div class="orbitParticle op1"></div>
+                                    <div class="orbitParticle op2"></div>
+                                    <div class="orbitParticle op3"></div>
+                                    <div class="cornerSpark cs1"></div>
+                                    <div class="cornerSpark cs2"></div>
+                                </div>
+                                <div class="categoryContent">
+                                    <h3>Magical Creatures</h3>
+                                    <p>Owls, cats, toads and magical creature care supplies</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Quidditch Equipment -->
+                        <div class="categoryCardOuter" id="catQuidditch">
+                            <div class="categoryBadge">Quidditch Gear</div>
+                            <div class="categoryCardInner">
+                                <div class="categoryTraceArea">
+                                    <div
+                                        class="categoryTraceBg"
+                                        style="
+                                            background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 184 101.5%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M107.41,174.11S112,125,163,125s52,45.22,54,49.11c0,0,2-84.11-92-96.11,0,0-80,2.15-91.51,88.07%22 transform=%22translate(-33 -74.25)%22/%3E%3C/svg%3E');
+                                        "
+                                    ></div>
+                                    <svg class="categoryTraceSVG" viewBox="0 0 184 101.5">
+                                        <clipPath id="clipQuidditchHome">
+                                            <path
+                                                d="M216.62,164.26c.09,1,.17,2,.23,3,.1-1.66.15-3.32.15-5,0-48.6-41.19-88-92-88s-92,39.4-92,88c0,1.68,0,3.34.15,5,12.85-46,42.79-83,91.85-83,9.2,0,56,4,76,48a1.18,1.18,0,0,1-1.82,1.44A57.21,57.21,0,0,0,162,120.25c-30.38,0-55,22.83-55,51,0,1.52.09,3,.23,4.5,2.45-26.06,26-46.5,54.77-46.5s52.32,20.44,54.77,46.5c.14-1.48.23-3,.23-4.5a47.59,47.59,0,0,0-.5-6.9A.94.94,0,0,0,216.62,164.26Z"
+                                            />
+                                        </clipPath>
+                                        <path
+                                            clip-path="url(#clipQuidditchHome)"
+                                            class="traceMotionPath"
+                                            id="traceQuidditch"
+                                            d="M107.41,174.11S112,125,163,125s52,45.22,54,49.11c0,0,2-84.11-92-96.11,0,0-80,2.15-91.51,88.07"
+                                            transform="translate(-33 -74.25)"
+                                        />
+                                    </svg>
+                                    <svg
+                                        class="categoryIconCenter"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <circle
+                                            cx="20"
+                                            cy="20"
+                                            r="14"
+                                            fill="currentColor"
+                                            opacity="0.08"
+                                        />
+                                        <circle
+                                            cx="20"
+                                            cy="20"
+                                            r="5"
+                                            fill="currentColor"
+                                            opacity="0.5"
+                                        />
+                                        <ellipse
+                                            cx="20"
+                                            cy="20"
+                                            rx="12"
+                                            ry="5"
+                                            fill="none"
+                                            opacity="0.4"
+                                            transform="rotate(-30 20 20)"
+                                        />
+                                        <ellipse
+                                            cx="20"
+                                            cy="20"
+                                            rx="12"
+                                            ry="5"
+                                            fill="none"
+                                            opacity="0.4"
+                                            transform="rotate(30 20 20)"
+                                        />
+                                    </svg>
+                                    <div class="orbitParticle op1"></div>
+                                    <div class="orbitParticle op2"></div>
+                                    <div class="orbitParticle op3"></div>
+                                    <div class="cornerSpark cs1"></div>
+                                    <div class="cornerSpark cs2"></div>
+                                </div>
+                                <div class="categoryContent">
+                                    <h3>Quidditch Equipment</h3>
+                                    <p>Brooms, gloves, goggles and professional gear</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="mainFooter">
+                <div class="noticeBoardContainer">
+                    <div class="noticeBoardBadge">Ministry Approved Supplier Notice Board</div>
+                    <div class="footerContent">
+                        <div class="footerSection">
+                            <h3>The Wizarding Emporium</h3>
+                            <p>
+                                Diagon Alley, London<br />Opposite Gringotts Wizarding Bank<br />Floo
+                                Network: "Wizarding Emporium"
+                            </p>
+                        </div>
+                        <div class="footerSection">
+                            <h3>Diagon Alley Hours</h3>
+                            <p>
+                                Monday&ndash;Friday: 9AM&ndash;7PM<br />Saturday: 10AM&ndash;8PM<br />Sunday:
+                                11AM&ndash;5PM
+                            </p>
+                        </div>
+                        <div class="footerSection">
+                            <h3>Magical Services</h3>
+                            <p>
+                                Wand Matching &amp; Alignment<br />Hogwarts Owl Post Dispatch<br />Floo
+                                Network Express Delivery<br />International Apparition Shipping
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="footerBottomRow">
+                    <div class="footerCredit">Created by Bhuvi Singhal &amp; Navi...</div>
+                    <button id="replayAnimationBtn" class="replayAnimationBtn">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"
+                            />
+                        </svg>
+                        <span>View Landing Animation</span>
+                    </button>
+                </div>
+            </footer>
         </div>
-        <nav class="mainNav">
-          <a href="index.html"   class="navLink active">Home</a>
-          <a href="contact.html" class="navLink">Contact</a>
-          <a href="deliv.html"   class="navLink">Delivery</a>
-          <div class="cauldronBadge">
-            <svg class="cauldronIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"/>
-              <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8"/>
-            </svg>
-            <span class="cauldronCount">0</span>
-          </div>
-        </nav>
-      </header>
-
-      <div class="heroBanner">
-        <div class="heroContent">
-          <h2 class="heroTitle">Discover the Finest Magical Artifacts in Diagon Alley</h2>
-          <p class="heroText">
-            From first-year Hogwarts students to seasoned Ministry aurors — handcrafted by master artisans with ancient enchantments
-          </p>
-          <a href="#fetItems" class="ctaButton">Explore Our Collection</a>
-        </div>
-      </div>
-
-      <div class="magicalDivider"><span class="dividerGlyph">✧ ☽ ✧</span></div>
-
-      <main class="mainContent">
-
-        <!-- Featured Products -->
-        <section class="featuredSection">
-          <h2 class="sectionTitle" id="fetItems">Featured Magical Items</h2>
-          <p class="sectionIntro">Handcrafted by master artisans using ancient magical techniques</p>
-
-          <div class="productGrid">
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/fedcecbbdd4d9f1ac2d3cf648b97ff8e.jpg" alt="Phoenix Feather Wand" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Phoenix Feather Wand</h3>
-                <p class="productDesc">English oak with phoenix feather core. Great versatility and power.</p>
-                <div class="productDetails">
-                  <span class="productPrice">45 Galleons</span>
-                  <span class="productStock">In Stock</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/invisibleCloak.jpeg" alt="Invisibility Cloak" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Invisibility Cloak</h3>
-                <p class="productDesc">Premium demiguise hair woven with disillusionment charms.</p>
-                <div class="productDetails">
-                  <span class="productPrice">300 Galleons</span>
-                  <span class="productStock">Limited</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/nimbus 2001.jpeg" alt="Nimbus 2001 Broom" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Nimbus 2001 Broom</h3>
-                <p class="productDesc">Professional racing broom with ash wood handle.</p>
-                <div class="productDetails">
-                  <span class="productPrice">750 Galleons</span>
-                  <span class="productStock">In Stock</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/time locket.jpeg" alt="Time-Turner" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Time-Turner</h3>
-                <p class="productDesc">Ministry-approved device for limited time travel.</p>
-                <div class="productDetails">
-                  <span class="productPrice">1,200 Galleons</span>
-                  <span class="productStock">2 Left</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/dumbeldore tool.jpeg" alt="Pensieve" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Pensieve</h3>
-                <p class="productDesc">Stone basin for viewing and storing memories.</p>
-                <div class="productDetails">
-                  <span class="productPrice">850 Galleons</span>
-                  <span class="productStock">In Stock</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/map.jpeg" alt="Marauder's Map" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Marauder's Map</h3>
-                <p class="productDesc">Shows every person at Hogwarts and their movements.</p>
-                <div class="productDetails">
-                  <span class="productPrice">200 Galleons</span>
-                  <span class="productStock">Limited</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/gloden snitch.jpeg" alt="Golden Snitch" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Golden Snitch</h3>
-                <p class="productDesc">Official Quidditch snitch with flesh memory.</p>
-                <div class="productDetails">
-                  <span class="productPrice">150 Galleons</span>
-                  <span class="productStock">In Stock</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-            <div class="productCard">
-              <div class="productImage"><img src="images/D something.jpeg" alt="Deluminator" /></div>
-              <div class="productInfo">
-                <h3 class="productTitle">Deluminator</h3>
-                <p class="productDesc">Device that removes light sources from an area.</p>
-                <div class="productDetails">
-                  <span class="productPrice">95 Galleons</span>
-                  <span class="productStock">In Stock</span>
-                </div>
-                <button class="buyButton">Add to Cauldron</button>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <div class="magicalDivider"><span class="dividerGlyph">✦ ☽ ✦</span></div>
-
-        <!-- Categories Section from shopByCategory.html -->
-        <section class="categoriesSection">
-          <div class="sectionHeader">
-            <p class="sectionLabel" id="sectionLabel">Diagon Alley Collections</p>
-            <h2 class="sectionTitle" id="sectionTitle">Shop by Category</h2>
-            <p class="sectionIntro" id="sectionIntro">
-              Browse our enchanted collections — each curated by master artisans from across the wizarding world
-            </p>
-          </div>
-
-          <div class="categoriesGrid" id="categoriesGrid">
-            <!-- 1. Wands & Magical Cores -->
-            <div class="categoryCardOuter" id="catWands">
-              <div class="categoryBadge">Wands &amp; Cores</div>
-              <div class="categoryCardInner">
-                <div class="categoryTraceArea">
-                  <div class="categoryTraceBg" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 184 73.89%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M33,150s20-64,92-64,92,64,92,64%22 transform=%22translate(-33 -79)%22/%3E%3C/svg%3E');"></div>
-                  <svg class="categoryTraceSVG" viewBox="0 0 184 73.89">
-                    <clipPath id="clipWandsHome">
-                      <path d="M125,89c43.91,0,80.83,27.11,91.58,63.89C210.25,111.13,171.66,79,125,79s-85.25,32.13-91.58,73.89C44.17,116.11,81.09,89,125,89Z"/>
-                    </clipPath>
-                    <path clip-path="url(#clipWandsHome)" class="traceMotionPath" id="traceWands" d="M33,150s20-64,92-64,92,64,92,64" transform="translate(-33 -79)"/>
-                  </svg>
-                  <svg class="categoryIconCenter" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 2 L25 16 L38 20 L25 24 L20 38 L15 24 L2 20 L15 16 Z" fill="currentColor" opacity="0.25"/>
-                    <circle cx="20" cy="20" r="4" fill="currentColor" opacity="0.8"/>
-                  </svg>
-                  <div class="orbitParticle op1"></div>
-                  <div class="orbitParticle op2"></div>
-                  <div class="orbitParticle op3"></div>
-                  <div class="cornerSpark cs1"></div>
-                  <div class="cornerSpark cs2"></div>
-                </div>
-                <div class="categoryContent">
-                  <h3>Wands &amp; Magical Cores</h3>
-                  <p>Dragon heartstring, phoenix feather, and unicorn hair cores</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- 2. Potions Ingredients -->
-            <div class="categoryCardOuter" id="catPotions">
-              <div class="categoryBadge">Potions &amp; Herbs</div>
-              <div class="categoryCardInner">
-                <div class="categoryTraceArea">
-                  <div class="categoryTraceBg" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 201 117.05%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M21.14,141.53S25,181,60,181c0,0,15,1,32-17s36-46,39-54c0,0,25-34,40-34,0,0,29-15,48,21%22 transform=%22translate(-21 -68.63)%22/%3E%3C/svg%3E');"></div>
-                  <svg class="categoryTraceSVG" viewBox="0 0 201 117.05">
-                    <clipPath id="clipPotionsHome">
-                      <path d="M21,139s-1,24,30,32c28.83,7.44,58.34-38.49,61.63-45.22.29-.61,29.53-47,51.19-54.41.65-.22,43.46-16.21,58.18,31.63,0,0-.25-.69-.78-1.87-9.33-20.51-34.05-28.73-54.07-18.36A53.11,53.11,0,0,0,154,92c-11.69,11.69-48.35,63.55-48.76,64.14C101.44,161.61,83.84,185,60,185c0,0-19,5-31-12C29,173,21,164,21,139Z"/>
-                    </clipPath>
-                    <path clip-path="url(#clipPotionsHome)" class="traceMotionPath" id="tracePotions" d="M21.14,141.53S25,181,60,181c0,0,15,1,32-17s36-46,39-54c0,0,25-34,40-34,0,0,29-15,48,21" transform="translate(-21 -68.63)"/>
-                  </svg>
-                  <svg class="categoryIconCenter" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 4 L20 16 L10 20 L12 28 L20 34 L28 28 L30 20 L20 16" fill="currentColor" opacity="0.15"/>
-                    <ellipse cx="20" cy="20" rx="4" ry="3" fill="currentColor" opacity="0.6"/>
-                    <line x1="20" y1="18" x2="20" y2="24" stroke-width="2" />
-                  </svg>
-                  <div class="orbitParticle op1"></div>
-                  <div class="orbitParticle op2"></div>
-                  <div class="orbitParticle op3"></div>
-                  <div class="cornerSpark cs1"></div>
-                  <div class="cornerSpark cs2"></div>
-                </div>
-                <div class="categoryContent">
-                  <h3>Potions Ingredients</h3>
-                  <p>Rare herbs, magical creature parts, and crystal phials</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- 3. Magical Creatures -->
-            <div class="categoryCardOuter" id="catCreatures">
-              <div class="categoryBadge">Magical Creatures</div>
-              <div class="categoryCardInner">
-                <div class="categoryTraceArea">
-                  <div class="categoryTraceBg" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 159.22 187.39%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M207.22,33.9,123,120,54,45l3,85s-4,50,21,68,65,19,75,13c0,0,37.94-17.47,44.47-42.23%22 transform=%22translate(-48 -32.61)%22/%3E%3C/svg%3E');"></div>
-                  <svg class="categoryTraceSVG" viewBox="0 0 159.22 187.39">
-                    <clipPath id="clipCreaturesHome">
-                      <path d="M119.09,124l.91,1h.4a4.88,4.88,0,0,0,5.26,0H126l.53-.59a14.78,14.78,0,0,0,3-3.3L205,37s5-5,0-3l-82,79L52,34s-4-5-4,4,4,122,4,122-1,56,79,60c0,0,47.74,0,65.78-49.47-3,7.12-13,23.3-42.78,32.47,0,0-73,23-89-46L60,60l57.89,62.71A11.28,11.28,0,0,0,119.09,124Z"/>
-                    </clipPath>
-                    <path clip-path="url(#clipCreaturesHome)" class="traceMotionPath" id="traceCreatures" d="M207.22,33.9,123,120,54,45l3,85s-4,50,21,68,65,19,75,13c0,0,37.94-17.47,44.47-42.23" transform="translate(-48 -32.61)"/>
-                  </svg>
-                  <svg class="categoryIconCenter" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <ellipse cx="20" cy="22" rx="12" ry="10" fill="currentColor" opacity="0.1"/>
-                    <circle cx="15" cy="17" r="4" fill="currentColor" opacity="0.4"/>
-                    <circle cx="25" cy="17" r="4" fill="currentColor" opacity="0.4"/>
-                    <circle cx="15" cy="17" r="1.5" fill="#0f051a"/>
-                    <circle cx="25" cy="17" r="1.5" fill="#0f051a"/>
-                    <path d="M17 26 Q20 30 23 26" fill="none" stroke-width="2"/>
-                  </svg>
-                  <div class="orbitParticle op1"></div>
-                  <div class="orbitParticle op2"></div>
-                  <div class="orbitParticle op3"></div>
-                  <div class="cornerSpark cs1"></div>
-                  <div class="cornerSpark cs2"></div>
-                </div>
-                <div class="categoryContent">
-                  <h3>Magical Creatures</h3>
-                  <p>Owls, cats, toads and magical creature care supplies</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- 4. Quidditch Equipment -->
-            <div class="categoryCardOuter" id="catQuidditch">
-              <div class="categoryBadge">Quidditch Gear</div>
-              <div class="categoryCardInner">
-                <div class="categoryTraceArea">
-                  <div class="categoryTraceBg" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 184 101.5%22%3E%3Cpath fill=%22none%22 stroke=%22%23d4af37%22 stroke-width=%223%22 d=%22M107.41,174.11S112,125,163,125s52,45.22,54,49.11c0,0,2-84.11-92-96.11,0,0-80,2.15-91.51,88.07%22 transform=%22translate(-33 -74.25)%22/%3E%3C/svg%3E');"></div>
-                  <svg class="categoryTraceSVG" viewBox="0 0 184 101.5">
-                    <clipPath id="clipQuidditchHome">
-                      <path d="M216.62,164.26c.09,1,.17,2,.23,3,.1-1.66.15-3.32.15-5,0-48.6-41.19-88-92-88s-92,39.4-92,88c0,1.68,0,3.34.15,5,12.85-46,42.79-83,91.85-83,9.2,0,56,4,76,48a1.18,1.18,0,0,1-1.82,1.44A57.21,57.21,0,0,0,162,120.25c-30.38,0-55,22.83-55,51,0,1.52.09,3,.23,4.5,2.45-26.06,26-46.5,54.77-46.5s52.32,20.44,54.77,46.5c.14-1.48.23-3,.23-4.5a47.59,47.59,0,0,0-.5-6.9A.94.94,0,0,0,216.62,164.26Z"/>
-                    </clipPath>
-                    <path clip-path="url(#clipQuidditchHome)" class="traceMotionPath" id="traceQuidditch" d="M107.41,174.11S112,125,163,125s52,45.22,54,49.11c0,0,2-84.11-92-96.11,0,0-80,2.15-91.51,88.07" transform="translate(-33 -74.25)"/>
-                  </svg>
-                  <svg class="categoryIconCenter" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="20" cy="20" r="14" fill="currentColor" opacity="0.08"/>
-                    <circle cx="20" cy="20" r="5" fill="currentColor" opacity="0.5"/>
-                    <ellipse cx="20" cy="20" rx="12" ry="5" fill="none" opacity="0.4" transform="rotate(-30 20 20)"/>
-                    <ellipse cx="20" cy="20" rx="12" ry="5" fill="none" opacity="0.4" transform="rotate(30 20 20)"/>
-                  </svg>
-                  <div class="orbitParticle op1"></div>
-                  <div class="orbitParticle op2"></div>
-                  <div class="orbitParticle op3"></div>
-                  <div class="cornerSpark cs1"></div>
-                  <div class="cornerSpark cs2"></div>
-                </div>
-                <div class="categoryContent">
-                  <h3>Quidditch Equipment</h3>
-                  <p>Brooms, gloves, goggles and professional gear</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-      </main>
-
-      <footer class="mainFooter">
-        <div class="noticeBoardContainer">
-          <div class="noticeBoardBadge">Ministry Approved Supplier Notice Board</div>
-          <div class="footerContent">
-            <div class="footerSection">
-              <h3>The Wizarding Emporium</h3>
-              <p>Diagon Alley, London<br/>Opposite Gringotts Wizarding Bank<br/>Floo Network: "Wizarding Emporium"</p>
-            </div>
-            <div class="footerSection">
-              <h3>Diagon Alley Hours</h3>
-              <p>Monday&ndash;Friday: 9AM&ndash;7PM<br/>Saturday: 10AM&ndash;8PM<br/>Sunday: 11AM&ndash;5PM</p>
-            </div>
-            <div class="footerSection">
-              <h3>Magical Services</h3>
-              <p>Wand Matching &amp; Alignment<br/>Hogwarts Owl Post Dispatch<br/>Floo Network Express Delivery<br/>International Apparition Shipping</p>
-            </div>
-          </div>
-        </div>
-        <div style="text-align:center;color:#d4af37;font-size:0.95em;font-family:var(--font-serif);letter-spacing:1px;">
-          Created by Bhuvi Singhal &amp; Navi...
-        </div>
-      </footer>
-    </div><!-- /.pageContainer -->
-
-  </body>
+        <!-- /.pageContainer -->
+    </body>
 </html>

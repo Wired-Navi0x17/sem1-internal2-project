@@ -26,7 +26,7 @@ html {
 
 body {
   background-color: var(--bg-dark);
-  background-image: url("background.svg");
+  background-image: url("../assets/background.svg");
   background-repeat: repeat;
   background-position: top left;
   color: var(--text-main);
@@ -2781,6 +2781,631 @@ button.ctaButton:hover,
     font-size: 0.95rem;
   }
 }
+
+/* ── Cauldron Cart Drawer & Checkout Modal Styles ────────────────────────── */
+
+.cauldronCartOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 3, 18, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 9990;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.cauldronCartOverlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cauldronCartDrawer {
+  position: fixed;
+  top: 0;
+  right: -480px;
+  width: 100%;
+  max-width: 460px;
+  height: 100vh;
+  background: linear-gradient(160deg, #1b0a2c 0%, #120520 100%);
+  border-left: 2px solid rgba(212, 175, 55, 0.4);
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.15);
+  z-index: 9995;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cauldronCartOverlay.active .cauldronCartDrawer {
+  right: 0;
+}
+
+.cartDrawerHeader {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(15, 5, 26, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cartHeaderTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-gold, #d4af37);
+  letter-spacing: 0.5px;
+}
+
+.cartHeaderIcon {
+  width: 26px;
+  height: 26px;
+  stroke: var(--accent-gold, #d4af37);
+}
+
+.cartCloseBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted, #c4b0d8);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.cartCloseBtn:hover {
+  color: var(--accent-gold, #d4af37);
+  transform: scale(1.1);
+}
+
+.cartDrawerBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.cartEmptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--text-muted, #c4b0d8);
+  padding: 40px 20px;
+}
+
+.emptyCauldronIcon {
+  width: 64px;
+  height: 64px;
+  stroke: rgba(212, 175, 55, 0.3);
+  margin-bottom: 16px;
+}
+
+.cartEmptyState h3 {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  color: var(--text-serif, #f3e8cb);
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+}
+
+.cartEmptyState p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.cartItemList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cartItemRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(36, 10, 56, 0.4);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-md, 12px);
+  padding: 12px;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+.cartItemRow:hover {
+  border-color: var(--accent-gold, #d4af37);
+}
+
+.cartItemThumb {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-sm, 6px);
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  flex-shrink: 0;
+}
+
+.cartItemThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cartItemDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cartItemTitle {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-serif, #f3e8cb);
+  margin: 0;
+}
+
+.cartItemPrice {
+  font-size: 0.82rem;
+  color: var(--text-muted, #c4b0d8);
+}
+
+.cartItemControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.qtySelector {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 4px;
+  background: rgba(15, 5, 26, 0.8);
+  overflow: hidden;
+}
+
+.qtyBtn {
+  background: none;
+  border: none;
+  color: var(--accent-gold, #d4af37);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.qtyBtn:hover {
+  background: rgba(212, 175, 55, 0.2);
+}
+
+.qtyVal {
+  padding: 0 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main, #ebdcb9);
+}
+
+.cartItemSubtotal {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-gold, #d4af37);
+}
+
+.cartItemRemove {
+  background: none;
+  border: none;
+  color: rgba(212, 175, 55, 0.5);
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.cartItemRemove:hover {
+  color: #ff5555;
+}
+
+.cartDrawerFooter {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(15, 5, 26, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.currencyConverterCard {
+  background: rgba(25, 8, 43, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-md, 12px);
+  padding: 12px 16px;
+}
+
+.currencyTotalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.totalLabel {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1rem;
+  color: var(--text-serif, #f3e8cb);
+}
+
+.totalValue {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-gold, #d4af37);
+}
+
+.currencyBreakdown {
+  font-size: 0.8rem;
+  color: var(--text-muted, #c4b0d8);
+  text-align: right;
+}
+
+.currencyBreakdown strong {
+  color: var(--accent-gold-light, #f5eaaf);
+}
+
+.cartActionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.cartCheckoutBtn {
+  flex: 2;
+  background: linear-gradient(135deg, #d4af37 0%, #9e7a17 100%);
+  color: #0f051a;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  padding: 12px 16px;
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cartCheckoutBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+.cartClearBtn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--text-muted, #c4b0d8);
+  border-radius: var(--radius-sm, 6px);
+  padding: 12px;
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.cartClearBtn:hover {
+  border-color: var(--accent-gold, #d4af37);
+  color: var(--accent-gold, #d4af37);
+}
+
+/* ── Checkout Modal ───────────────────────────────────────────────────────── */
+
+.checkoutModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 3, 18, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.checkoutModalOverlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.checkoutModalCard {
+  background: #19082b url('../assets/background.svg') repeat;
+  border: 2px solid var(--accent-gold, #d4af37);
+  border-radius: var(--radius-lg, 18px);
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+  max-width: 480px;
+  width: 100%;
+  padding: 32px 28px;
+  position: relative;
+  text-align: center;
+}
+
+.receiptSealStamp {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed var(--accent-gold, #d4af37);
+  border-radius: 50%;
+  margin: 0 auto 16px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-8deg);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.sealText {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: var(--accent-gold, #d4af37);
+  letter-spacing: 1px;
+}
+
+.sealSubtext {
+  font-size: 0.58rem;
+  color: var(--accent-gold-light, #f5eaaf);
+  margin-top: 2px;
+}
+
+.receiptHeader h2 {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.4rem;
+  color: var(--text-serif, #f3e8cb);
+  margin-bottom: 4px;
+}
+
+.receiptSub {
+  font-size: 0.88rem;
+  color: var(--accent-gold, #d4af37);
+  margin-bottom: 16px;
+}
+
+.receiptMeta {
+  font-size: 0.85rem;
+  color: var(--text-muted, #c4b0d8);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 10px 0;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.receiptItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  max-height: 160px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.receiptRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--text-main, #ebdcb9);
+}
+
+.receiptTotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  padding-top: 12px;
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  margin-bottom: 20px;
+  color: var(--text-serif, #f3e8cb);
+}
+
+.receiptTotal strong {
+  color: var(--accent-gold, #d4af37);
+  font-family: var(--font-serif, 'Cinzel', serif);
+}
+
+.receiptFooter p {
+  font-size: 0.85rem;
+  color: var(--text-muted, #c4b0d8);
+  margin-bottom: 16px;
+}
+
+.finishCheckoutBtn {
+  width: 100%;
+  background: linear-gradient(135deg, #d4af37 0%, #9e7a17 100%);
+  color: #0f051a;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  padding: 12px;
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* ── Footer Replay Animation & Separate Line Credits ─────────────────────── */
+
+.footerBottomRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(212, 175, 55, 0.25);
+  text-align: center;
+}
+
+.footerCredit {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 0.95rem;
+  color: var(--accent-gold, #d4af37);
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+.replayAnimationBtn {
+  background: rgba(25, 8, 43, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: var(--accent-gold-light, #f5eaaf);
+  padding: 9px 20px;
+  border-radius: var(--radius-md, 12px);
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+.replayAnimationBtn:hover {
+  background: var(--accent-gold, #d4af37);
+  color: #0f051a;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+  transform: translateY(-2px);
+}
+
+/* ── Bear Patronus Incantation Styles ────────────────────────────────────── */
+
+.patronusOverlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(180, 235, 255, 0.25) 0%, rgba(10, 3, 18, 0.88) 100%);
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.patronusOverlay.active {
+  opacity: 1;
+}
+
+.patronusBearContainer {
+  position: fixed;
+  top: calc(50% - 150px);
+  left: -460px;
+  width: 440px;
+  height: 250px;
+  z-index: 100000;
+  pointer-events: none;
+  animation: bearChargeMove 5.5s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
+}
+
+.patronusBearSVG {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 35px rgba(224, 247, 250, 0.98)) drop-shadow(0 0 70px rgba(128, 222, 234, 0.85));
+  animation: bearGallopStride 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes bearChargeMove {
+  0%   { left: -480px; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: calc(100vw + 480px); opacity: 0; }
+}
+
+@keyframes bearGallopStride {
+  0%   { transform: translateY(-10px) rotate(-1.5deg); }
+  100% { transform: translateY(10px) rotate(2deg); }
+}
+  100% { transform: translateY(8px) rotate(2deg); }
+}
+
+.patronusMistParticle {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(180, 225, 255, 0.6) 40%, transparent 80%);
+  filter: blur(4px);
+  box-shadow: 0 0 15px rgba(180, 225, 255, 0.8);
+  pointer-events: none;
+  z-index: 99999;
+  animation: mistFadeOut 1.2s ease-out forwards;
+}
+
+@keyframes mistFadeOut {
+  0%   { opacity: 0.9; transform: scale(0.6) translateY(0); }
+  100% { opacity: 0;   transform: scale(2.2) translateY(-25px); }
+}
+
+.bearFootstepSpark {
+  position: fixed;
+  width: 32px;
+  height: 16px;
+  border: 1.5px solid rgba(224, 247, 250, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(180, 225, 255, 0.95);
+  pointer-events: none;
+  z-index: 99998;
+  animation: pawRingExpand 0.8s ease-out forwards;
+}
+
+@keyframes pawRingExpand {
+  0%   { transform: scale(0.3) rotate(-10deg); opacity: 1; }
+  100% { transform: scale(2.2) rotate(15deg);  opacity: 0; }
+}
+
+/* ── Secret Runic B (Berkana ᛒ) Constellation Pulse ─────────────────────── */
+
+.runicConstellationB {
+  opacity: 0.25;
+  filter: drop-shadow(0 0 4px rgba(180, 225, 255, 0.5));
+  animation: runicBPulse 5.5s ease-in-out infinite;
+}
+
+.runicStroke {
+  stroke: #ffffff;
+  transition: stroke 0.4s ease;
+}
+
+.runicNode {
+  fill: #ffffff;
+}
+
+.runicNode.glow {
+  fill: #e0f7fa;
+  filter: drop-shadow(0 0 10px #ffffff);
+}
+
+@keyframes runicBPulse {
+  0%   { opacity: 0.2; transform: scale(1); filter: drop-shadow(0 0 2px rgba(180, 225, 255, 0.3)); }
+  38%  { opacity: 0.25; }
+  48%  { opacity: 1;    filter: drop-shadow(0 0 15px rgba(224, 247, 250, 0.95)) drop-shadow(0 0 30px #80deea); }
+  62%  { opacity: 1;    filter: drop-shadow(0 0 15px rgba(224, 247, 250, 0.95)) drop-shadow(0 0 30px #80deea); }
+  72%  { opacity: 0.25; }
+  100% { opacity: 0.2; }
+}
+
+
+
 
 
 

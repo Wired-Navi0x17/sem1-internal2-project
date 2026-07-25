@@ -31,11 +31,14 @@
 function _componentsBase() {
   const scripts = document.querySelectorAll('script[src]');
   for (const s of scripts) {
+    if (s.src.includes('static/js/main.js')) {
+      return s.src.replace('static/js/main.js', 'templates/components/');
+    }
     if (s.src.includes('js/main.js')) {
-      return s.src.replace('js/main.js', 'components/');
+      return s.src.replace('js/main.js', 'templates/components/');
     }
   }
-  return 'components/';
+  return 'templates/components/';
 }
 
 /**
@@ -67,6 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await Promise.all([
     loadComponent('assignment-scroll.html'),
     loadComponent('alohomora-entrance.html'),
+    loadComponent('cauldron-cart.html'),
   ]);
 
   // 2. Shared UI (runs on every page)
@@ -76,6 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (typeof initTraceAnimations    === 'function') initTraceAnimations();
   if (typeof initCategoryHoverEffects === 'function') initCategoryHoverEffects();
   if (typeof initOrbitParticles     === 'function') initOrbitParticles();
+  if (typeof initPatronusListener   === 'function') initPatronusListener();
 
   // 3. Pull-cord + Marauder's Map (injected on every page)
   if (typeof initPullCordMechanism      === 'function') initPullCordMechanism();

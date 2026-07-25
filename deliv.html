@@ -4,11 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Delivery Process - The Wizarding Emporium</title>
-        <link
-            rel="icon"
-            type="image/svg+xml"
-            href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2319082b'/><text x='50' y='68' font-size='48' text-anchor='middle' fill='%23d4af37' font-family='serif' font-weight='bold'>W</text></svg>"
-        />
+        <link rel="icon" type="image/svg+xml" href="static/assets/favicon.svg" />
+        <link rel="stylesheet" href="static/css/style.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -16,6 +13,17 @@
             rel="stylesheet"
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+        <!-- Modular JS -->
+        <script src="static/js/audio.js"></script>
+        <script src="static/js/ui.js"></script>
+        <script src="static/js/cart.js"></script>
+        <script src="static/js/alohomora.js"></script>
+        <script src="static/js/scroll-map.js"></script>
+        <script src="static/js/contact-form.js"></script>
+        <script src="static/js/patronus.js"></script>
+        <script src="static/js/main.js" defer></script>
         <style>
             /* ============ Reset & Tokens ============ */
             * {
@@ -1270,7 +1278,6 @@
                 <div class="tasselSkirt"></div>
             </div>
         </div>
-        <div class="pullHint" id="pullHint">Pull to reveal scroll ✦</div>
 
         <!-- Marauder Scroll Overlay -->
         <div id="assignmentScrollOverlay" class="assignmentScrollOverlay">
@@ -1394,7 +1401,7 @@
                 <div class="mapLandmarksGrid">
                     <div class="mapLandmarkCard" id="landmark1">
                         <div class="mapLandmarkTitle">✦ Created By</div>
-                        <div class="mapLandmarkValue">Bhuvi Singhal & Navi...</div>
+                        <div class="mapLandmarkValue">Bhuvi Singhal &amp; Navi...</div>
                     </div>
                     <div class="mapLandmarkCard" id="landmark2">
                         <div class="mapLandmarkTitle">✦ Academy</div>
@@ -1614,7 +1621,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="creditLine">Created by Bhuvi Singhal & Navi...</div>
+                <div class="creditLine">Created by Bhuvi Singhal &amp; Navi...</div>
             </footer>
         </div>
 

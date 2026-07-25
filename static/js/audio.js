@@ -209,3 +209,73 @@ function playWindWhooshSound() {
     src.start(now); src.stop(now + dur + 0.05);
   } catch (_) {}
 }
+
+function playBearPatronusSwellSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  const dur = 5.5;
+
+  // Stereo Panner
+  let panner = null;
+  if (typeof ctx.createStereoPanner === 'function') {
+    try {
+      panner = ctx.createStereoPanner();
+      panner.pan.setValueAtTime(-0.88, now);
+      panner.pan.linearRampToValueAtTime(0.88, now + dur);
+      panner.connect(ctx.destination);
+    } catch (_) {}
+  }
+  const dest = panner || ctx.destination;
+
+  // 1. Deep Resonant Sub-Bass Rumble (Bear's immense power)
+  try {
+    const bassOsc = ctx.createOscillator();
+    const bassGain = ctx.createGain();
+    bassOsc.type = 'triangle';
+    bassOsc.frequency.setValueAtTime(40, now);
+    bassOsc.frequency.exponentialRampToValueAtTime(105, now + 2.5);
+    bassGain.gain.setValueAtTime(0.001, now);
+    bassGain.gain.exponentialRampToValueAtTime(0.40, now + 1.2);
+    bassGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+    bassOsc.connect(bassGain);
+    bassGain.connect(dest);
+    bassOsc.start(now);
+    bassOsc.stop(now + dur + 0.1);
+  } catch (_) {}
+
+  // 2. Harmonic Orchestral Swell Chord (A-Major: A3, A4, C#5, E5, A5)
+  const freqs = [110, 220, 440, 554.37, 659.25, 880];
+  freqs.forEach((f, idx) => {
+    try {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(f, now + idx * 0.08);
+      g.gain.setValueAtTime(0.001, now);
+      g.gain.exponentialRampToValueAtTime(0.18 / (idx + 1), now + 1.5 + idx * 0.1);
+      g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+      o.connect(g);
+      g.connect(dest);
+      o.start(now);
+      o.stop(now + dur + 0.1);
+    } catch (_) {}
+  });
+
+  // 3. High Crystal Chime / Shimmer Glissando
+  try {
+    const chimeOsc = ctx.createOscillator();
+    const chimeGain = ctx.createGain();
+    chimeOsc.type = 'sine';
+    chimeOsc.frequency.setValueAtTime(1200, now + 0.4);
+    chimeOsc.frequency.exponentialRampToValueAtTime(2800, now + 3.8);
+    chimeGain.gain.setValueAtTime(0.001, now + 0.4);
+    chimeGain.gain.exponentialRampToValueAtTime(0.09, now + 1.8);
+    chimeGain.gain.exponentialRampToValueAtTime(0.001, now + dur - 0.2);
+    chimeOsc.connect(chimeGain);
+    chimeGain.connect(dest);
+    chimeOsc.start(now + 0.4);
+    chimeOsc.stop(now + dur);
+  } catch (_) {}
+}
+

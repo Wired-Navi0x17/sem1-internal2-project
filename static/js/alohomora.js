@@ -23,6 +23,16 @@ function initAlohomoraEntrance() {
   const path = window.location.pathname;
   const isIndex = path.endsWith('index.html') || path.endsWith('/') || path === '';
 
+  // Replay entrance button binding
+  const replayBtn = document.getElementById('replayAnimationBtn');
+  if (replayBtn && !replayBtn.dataset.bound) {
+    replayBtn.dataset.bound = 'true';
+    replayBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      replayAlohomoraEntrance();
+    });
+  }
+
   // 24-hour gate
   const STORAGE_KEY    = 'alohomora_last_played_time';
   const TTL_MS         = 24 * 60 * 60 * 1000;
@@ -164,4 +174,34 @@ function _createWandCastTrail(e, overlay) {
   } else {
     setTimeout(() => spark.remove(), 600);
   }
+}
+
+function replayAlohomoraEntrance() {
+  localStorage.removeItem('alohomora_last_played_time');
+  const overlay       = document.getElementById('spellbookOverlay');
+  const mainContainer = document.getElementById('mainPageContainer');
+  if (!overlay) return;
+
+  // Reset overlay display
+  overlay.style.display = 'flex';
+  overlay.style.opacity = '1';
+  overlay.style.backgroundColor = 'rgba(10, 3, 18, 0.95)';
+
+  if (mainContainer) mainContainer.style.opacity = '0';
+
+  // Reset GSAP elements back to initial state
+  if (typeof gsap !== 'undefined') {
+    gsap.set('#spellbookOverlay', { opacity: 1, backgroundColor: 'rgba(10, 3, 18, 0.95)' });
+    gsap.set('#alohomoraBtn',     { scale: 1 });
+    gsap.set('#spellbook3D',     { scale: 1, opacity: 1, x: 0, y: 0 });
+    gsap.set('#spellbookLock',   { rotate: 0, y: 0, opacity: 1, boxShadow: '0 0 25px rgba(212,175,55,0.5)' });
+    gsap.set('#spellbookFrontCover', { rotateY: 0 });
+    gsap.set('.magicCircleSVG',  { opacity: 0 });
+  }
+
+  // Smooth scroll up to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Re-run entrance initialization logic
+  initAlohomoraEntrance();
 }

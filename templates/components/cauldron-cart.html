@@ -1,0 +1,82 @@
+<!--
+  templates/components/cauldron-cart.html
+  ==========================================
+  Self-contained markup for the Cauldron Cart Drawer GUI & Checkout Modal.
+  Injected into pages by static/js/main.js → HTMLLoader.
+  Controlled by static/js/cart.js.
+-->
+
+<!-- Cart Drawer Overlay & Drawer -->
+<div id="cauldronCartOverlay" class="cauldronCartOverlay">
+  <div id="cauldronCartDrawer" class="cauldronCartDrawer" role="dialog" aria-label="Magical Cauldron Shopping Cart">
+    <!-- Drawer Header -->
+    <div class="cartDrawerHeader">
+      <div class="cartHeaderTitle">
+        <svg class="cartHeaderIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"/>
+          <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8"/>
+        </svg>
+        <span>Your Magical Cauldron</span>
+      </div>
+      <button id="closeCartBtn" class="cartCloseBtn" aria-label="Close Cart">&times;</button>
+    </div>
+
+    <!-- Drawer Body (Item List or Empty State) -->
+    <div id="cartDrawerBody" class="cartDrawerBody">
+      <!-- Injected dynamically by static/js/cart.js -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="cartDrawerFooter">
+      <div class="currencyConverterCard">
+        <div class="currencyTotalRow">
+          <span class="totalLabel">Grand Total:</span>
+          <span id="cartGrandTotalGalleons" class="totalValue">0 Galleons</span>
+        </div>
+        <div class="currencyBreakdown">
+          <span>Equivalent to <strong id="cartTotalSickles">0</strong> Sickles &bull; <strong id="cartTotalKnuts">0</strong> Knuts</span>
+        </div>
+      </div>
+      <div class="cartActionButtons">
+        <button id="checkoutCartBtn" class="cartCheckoutBtn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2L11 13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          <span>Owl Post Checkout</span>
+        </button>
+        <button id="clearCartBtn" class="cartClearBtn">Clear Cauldron</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Checkout Receipt Modal Overlay -->
+<div id="checkoutModalOverlay" class="checkoutModalOverlay">
+  <div class="checkoutModalCard">
+    <button id="closeCheckoutModalBtn" class="modalClose">&times;</button>
+    <div class="receiptSealStamp">
+      <div class="sealText">MINISTRY OF MAGIC</div>
+      <div class="sealSubtext">APPROVED &bull; DIAGON ALLEY</div>
+    </div>
+    <div class="receiptHeader">
+      <h2>Owl Post Order Dispatch</h2>
+      <p class="receiptSub">Gringotts Vault Transfer Confirmed</p>
+    </div>
+    <div class="receiptMeta">
+      <p><strong>Dispatch Ref:</strong> <span id="receiptOrderRef">#WIZ-00000</span></p>
+      <p><strong>Delivery Method:</strong> Barn Owl Express</p>
+    </div>
+    <div id="receiptItemsList" class="receiptItemsList">
+      <!-- Injected dynamically -->
+    </div>
+    <div class="receiptTotal">
+      <span>Total Payment:</span>
+      <strong id="receiptTotalGalleons">0 Galleons</strong>
+    </div>
+    <div class="receiptFooter">
+      <p>Thank you for patronising <em>The Wizarding Emporium</em>!</p>
+      <button id="finishCheckoutBtn" class="finishCheckoutBtn">Accio Confirmation & Close</button>
+    </div>
+  </div>
+</div>

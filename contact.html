@@ -1,365 +1,478 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - The Wizarding Emporium</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <!-- Detailed Hanging Castle Pull Cord Mechanism in Upper Right Corner -->
-    <!-- Hanging Castle Pull Cord Mechanism & Scroll -->
-    <div class="pullCordContainer" id="pullCordContainer" title="Pull Cord to Reveal Assignment Scroll">
-      <div class="ceilingMount"></div>
-      <div class="ropeLine" id="ropeLine"></div>
-      <div class="brassRing" id="brassRing"></div>
-      <div class="ropeCord" id="ropeCord">
-        <div class="runeRingSmall">ᚠ ✦ ☽</div>
-        <div class="crystalGem" id="crystalGem"></div>
-        <div class="tasselHead"></div>
-        <div class="tasselSkirt"></div>
-      </div>
-    </div>
-    <div class="pullHint" id="pullHint">Pull to reveal scroll ✦</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Contact Us - The Wizarding Emporium</title>
+        <link rel="icon" type="image/svg+xml" href="static/assets/favicon.svg" />
+        <link rel="stylesheet" href="static/css/style.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
-    <!-- Authentic Marauder's Map Information Scroll Overlay -->
-    <div id="assignmentScrollOverlay" class="assignmentScrollOverlay">
-      <!-- Scroll Roller Container -->
-      <div class="scrollRollerTop" id="scrollRollerTop">
-        <div class="rollerCapLeft"></div>
-        <div class="rollerBody"></div>
-        <div class="rollerCapRight"></div>
-      </div>
-
-      <div class="marauderScrollCard" id="marauderCard">
-        <button class="scrollCloseBtn" id="scrollCloseBtn">&times;</button>
-
-        <!-- Faint Castle Floor Plans (Dense Marauder Layer) -->
-        <svg class="marauderDenseSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
-          <g stroke="#3b2007" stroke-width="1" fill="none" opacity="0.6">
-            <rect x="30" y="30" width="80" height="90" stroke-dasharray="2 2"/>
-            <circle cx="70" cy="75" r="25"/>
-            <rect x="680" y="380" width="100" height="110" stroke-dasharray="2 2"/>
-            <circle cx="730" cy="435" r="35"/>
-            <path d="M110 75 L300 75 L300 180 L520 180 L520 90 L680 90" stroke-dasharray="3 3"/>
-            <path d="M70 120 L70 340 L280 340 L280 480 L680 480" stroke-dasharray="1 3"/>
-            <text x="120" y="65" font-size="9" font-family="Cinzel">Secret Passage to Honeydukes</text>
-            <text x="540" y="170" font-size="9" font-family="Cinzel">Astronomy Tower Staircase</text>
-            <text x="320" y="470" font-size="9" font-family="Cinzel">Dungeon Corridor</text>
-          </g>
-        </svg>
-
-        <!-- Hand-Drawn SVG Map Pathways & Compass Rose -->
-        <svg class="marauderMapPathsSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
-          <path id="mapPath1" class="mapPathStroke" d="M 60 110 Q 220 50, 410 110 T 740 90" />
-          <path id="mapPath2" class="mapPathStroke" d="M 740 90 Q 580 260, 410 270 T 80 340" />
-          <path id="mapPath3" class="mapPathStroke" d="M 80 340 Q 280 460, 410 440 T 740 460" />
-          <g transform="translate(710, 130)" opacity="0.45" class="compassGroup">
-            <circle cx="0" cy="0" r="28" fill="none" stroke="#4a1c06" stroke-width="1.5" stroke-dasharray="3 2"/>
-            <polygon points="0,-32 7,-6 32,0 7,6 0,32 -7,6 -32,0 -7,-6" fill="#4a1c06"/>
-            <text x="0" y="-36" font-size="12" text-anchor="middle" fill="#4a1c06" font-family="Cinzel" font-weight="bold">N</text>
-          </g>
-        </svg>
-
-        <!-- Animated Alternating Footprints -->
-        <div id="footprintContainer">
-          <svg class="walkingFootprint leftFoot" id="step1" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-          <svg class="walkingFootprint rightFoot" id="step2" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-          <svg class="walkingFootprint leftFoot" id="step3" viewBox="0 0 10 16"><path d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"/></svg>
-        </div>
-
-        <div class="scrollHeader">
-          <h2 class="scrollHeaderTitle" id="revealTitle">THE WIZARDING ASSIGNMENT SCROLL</h2>
-          <p class="scrollHeaderSub" id="revealSub">Enchanted Decree of Academic Distinction &bull; Ministry Assessment</p>
-        </div>
-
-        <div class="decreeQuote" id="revealDecree">
-          "The Ministry of Magical Education hereby records that the apprentices named below have successfully completed the Second Internal Assignment of the First Semester.<br/><br/>
-          The challenge bestowed upon these young enchanters was the construction of a fully static magical storefront using only the ancient disciplines of HTML, CSS, and JavaScript, without invoking backend enchantments or external magical services. May this humble emporium stand as a testament to their craftsmanship, creativity, and dedication."
-        </div>
-
-        <div class="mapLandmarksGrid">
-          <div class="mapLandmarkCard" id="landmark1">
-            <div class="mapLandmarkTitle">✦ Created By</div>
-            <div class="mapLandmarkValue">Bhuvi Singhal &amp; Navi...</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark2">
-            <div class="mapLandmarkTitle">✦ Academy</div>
-            <div class="mapLandmarkValue">RV University</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark3">
-            <div class="mapLandmarkTitle">✦ Course</div>
-            <div class="mapLandmarkValue">B.Tech (Hons) CSE AIML</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark4">
-            <div class="mapLandmarkTitle">✦ Semester</div>
-            <div class="mapLandmarkValue">Semester I</div>
-          </div>
-          <div class="mapLandmarkCard" id="landmark5">
-            <div class="mapLandmarkTitle">✦ Assessment</div>
-            <div class="mapLandmarkValue">Internal Assessment II</div>
-          </div>
-        </div>
-
-        <div class="ministryApprovalSeal" id="revealSeal">
-          <span>APPROVED BY MINISTRY OF MAGICAL EDUCATION</span>
-        </div>
-      </div>
-
-      <div class="scrollRollerBottom" id="scrollRollerBottom">
-        <div class="rollerCapLeft"></div>
-        <div class="rollerBody"></div>
-        <div class="rollerCapRight"></div>
-      </div>
-    </div>
-
-    <div class="pageContainer">
-      <header class="mainHeader">
-        <div class="headerContent">
-          <h1 class="shopTitle">The Wizarding Emporium</h1>
-          <p class="shopTagline">
-            Diagon Alley's Premier Magical Supplier Since 1298
-          </p>
-        </div>
-        <nav class="mainNav">
-          <a href="index.html" class="navLink">Home</a>
-          <a href="contact.html" class="navLink active">Contact</a>
-          <a href="deliv.html" class="navLink">Delivery</a>
-          <div class="cauldronBadge">
-            <svg class="cauldronIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"/>
-              <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8"/>
-            </svg>
-            <span class="cauldronCount">0</span>
-          </div>
-        </nav>
-      </header>
-
-      <main class="mainContent">
-        <section class="welcomeSection">
-          <h2 class="sectionTitle">Contact The Wizarding Emporium</h2>
-          <p class="sectionIntro">
-            Have questions about our magical products? Send us an owl or visit
-            our Diagon Alley location!
-          </p>
-        </section>
-
-        <div class="contactInfo">
-          <h3>Our Location & Contact Details</h3>
-          <p>
-            <strong>Address:</strong> 12 Diagon Alley, London (between Flourish
-            and Blotts and Quality Quidditch Supplies)
-          </p>
-          <p>
-            <strong>Floo Network:</strong> "Wizarding Emporium, Diagon Alley"
-          </p>
-          <p>
-            <strong>Owl Post:</strong> Address your letter to: The Proprietor,
-            The Wizarding Emporium, Diagon Alley, London
-          </p>
-          <p>
-            <strong>Store Hours:</strong> Monday-Friday: 9AM-7PM, Saturday:
-            10AM-8PM, Sunday: 11AM-5PM
-          </p>
-          <p>
-            <strong>Emergency After-Hours:</strong> Use the Patronus Charm -
-            we'll receive your message instantly
-          </p>
-        </div>
-
-        <div class="magicalDivider">
-          <span class="dividerGlyph">✧ ☽ ✧</span>
-        </div>
-
-        <section class="featuredSection">
-          <div class="sectionHeader text-center">
-            <h2 class="sectionTitle">Send Us a Magical Message</h2>
-            <p class="sectionIntro">
-              Prefer to send a message? Fill out the form below and we'll respond
-              within 24 hours by return owl.
-            </p>
-          </div>
-
-          <div class="contactFormCard">
-            <form class="contactForm" id="contactForm">
-              <div class="formGrid">
-                <div class="formGroup">
-                  <label class="formLabel" for="name">✦ Your Full Name</label>
-                  <input
-                    class="formInput"
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="e.g., Harry Potter"
-                    required
-                  />
-                </div>
-
-                <div class="formGroup">
-                  <label class="formLabel" for="email">✦ Owl Post Address</label>
-                  <input
-                    class="formInput"
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="your.owl@hogwarts.edu"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div class="formGrid">
-                <div class="formGroup">
-                  <label class="formLabel" for="subject">✦ Message Subject</label>
-                  <input
-                    class="formInput"
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    placeholder="e.g., Wand Repair Inquiry"
-                    required
-                  />
-                </div>
-
-                <div class="formGroup">
-                  <label class="formLabel" for="category">✦ Message Category</label>
-                  <select class="formInput formSelect" id="category" name="category" required>
-                    <option value="">Select a category...</option>
-                    <option value="wand">Wand Questions &amp; Cores</option>
-                    <option value="potion">Potions Ingredients</option>
-                    <option value="delivery">Owl Post Delivery Inquiry</option>
-                    <option value="repair">Magical Item Repair</option>
-                    <option value="wholesale">Wholesale Orders</option>
-                    <option value="other">Other Inquiry</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="formGroup">
-                <label class="formLabel" for="message">✦ Your Magical Message</label>
-                <textarea
-                  class="formInput formTextarea"
-                  id="message"
-                  name="message"
-                  rows="5"
-                  placeholder="Describe your inquiry in detail..."
-                  required
-                ></textarea>
-              </div>
-
-              <div class="formGroup formCheckboxGroup">
-                <label class="formCheckboxLabel">
-                  <input type="checkbox" name="newsletter" class="formCheckbox" checked />
-                  <span class="checkboxText">Subscribe to our Monthly Owl Post Newsletter with exclusive Diagon Alley offers</span>
-                </label>
-              </div>
-
-              <div class="formSubmitWrap">
-                <button class="submitBtn" type="submit">
-                  <span>SEND BY OWL POST</span> ✦
-                </button>
-              </div>
-            </form>
-          </div>
-        </section>
-
-        <div class="magicalDivider">
-          <span class="dividerGlyph">✦ ☽ ✦</span>
-        </div>
-
-        <section class="testimonialsSection">
-          <div class="sectionHeader text-center">
-            <h2 class="sectionTitle">Why Wizards Choose Us</h2>
-            <p class="sectionIntro">Decrees of distinction from esteemed witches and wizards across the realm</p>
-          </div>
-
-          <div class="testimonialsGrid">
-            <div class="testimonialCard">
-              <div class="testimonialCrest">✦</div>
-              <div class="quoteIcon">“</div>
-              <p class="testimonialText">
-                "Their customer service is exceptional! When my son's wand needed emergency repair before his O.W.L.s, they stayed open late to help us."
-              </p>
-              <div class="testimonialAuthorWrap">
-                <p class="testimonialAuthor">Mrs. Molly Weasley</p>
-                <span class="authorTag">The Burrow</span>
-              </div>
-            </div>
-
-            <div class="testimonialCard">
-              <div class="testimonialCrest">✧</div>
-              <div class="quoteIcon">“</div>
-              <p class="testimonialText">
-                "As Head of Ravenclaw House, I trust The Wizarding Emporium for all our magical supplies. Their craftsmanship &amp; spellcraft are unmatched."
-              </p>
-              <div class="testimonialAuthorWrap">
-                <p class="testimonialAuthor">Prof. F. Flitwick</p>
-                <span class="authorTag">Hogwarts • Ravenclaw</span>
-              </div>
-            </div>
-
-            <div class="testimonialCard">
-              <div class="testimonialCrest">☽</div>
-              <div class="quoteIcon">“</div>
-              <p class="testimonialText">
-                "They found a rare Peruvian Instant Darkness Powder shipment for my research. Knowledgeable staff who understand complex magical needs."
-              </p>
-              <div class="testimonialAuthorWrap">
-                <p class="testimonialAuthor">Albus Dumbledore</p>
-                <span class="authorTag">Headmaster • Hogwarts</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer class="mainFooter">
-        <div class="noticeBoardContainer">
-          <div class="noticeBoardBadge">Ministry Approved Supplier Notice Board</div>
-          <div class="footerContent">
-            <div class="footerSection">
-              <h3>The Wizarding Emporium</h3>
-              <p>
-                Diagon Alley, London<br />
-                Opposite Gringotts Wizarding Bank<br />
-                Floo Network: "Wizarding Emporium"
-              </p>
-            </div>
-            <div class="footerSection">
-              <h3>Diagon Alley Hours</h3>
-              <p>
-                Monday-Friday: 9AM-7PM<br />
-                Saturday: 10AM-8PM<br />
-                Sunday: 11AM-5PM
-              </p>
-            </div>
-            <div class="footerSection">
-              <h3>Magical Services</h3>
-              <p>
-                Wand Matching & Alignment<br />
-                Hogwarts Owl Post Dispatch<br />
-                Floo Network Express Delivery<br />
-                International Apparition Shipping
-              </p>
-            </div>
-          </div>
-        </div>
+        <!-- Modular JS -->
+        <script src="static/js/audio.js"></script>
+        <script src="static/js/ui.js"></script>
+        <script src="static/js/cart.js"></script>
+        <script src="static/js/alohomora.js"></script>
+        <script src="static/js/scroll-map.js"></script>
+        <script src="static/js/contact-form.js"></script>
+        <script src="static/js/patronus.js"></script>
+        <script src="static/js/main.js" defer></script>
+    </head>
+    <body>
+        <!-- Detailed Hanging Castle Pull Cord Mechanism in Upper Right Corner -->
+        <!-- Hanging Castle Pull Cord Mechanism & Scroll -->
         <div
-          style="
-            text-align: center;
-            color: #d4af37;
-            font-size: 0.95em;
-            font-family: var(--font-serif);
-            letter-spacing: 1px;
-          "
+            class="pullCordContainer"
+            id="pullCordContainer"
+            title="Pull Cord to Reveal Assignment Scroll"
         >
-          Created by Bhuvi Singhal & Navi...
+            <div class="ceilingMount"></div>
+            <div class="ropeLine" id="ropeLine"></div>
+            <div class="brassRing" id="brassRing"></div>
+            <div class="ropeCord" id="ropeCord">
+                <div class="runeRingSmall">ᚠ ✦ ☽</div>
+                <div class="crystalGem" id="crystalGem"></div>
+                <div class="tasselHead"></div>
+                <div class="tasselSkirt"></div>
+            </div>
         </div>
-      </footer>
-    </div>
-  </body>
+
+        <!-- Authentic Marauder's Map Information Scroll Overlay -->
+        <div id="assignmentScrollOverlay" class="assignmentScrollOverlay">
+            <!-- Scroll Roller Container -->
+            <div class="scrollRollerTop" id="scrollRollerTop">
+                <div class="rollerCapLeft"></div>
+                <div class="rollerBody"></div>
+                <div class="rollerCapRight"></div>
+            </div>
+
+            <div class="marauderScrollCard" id="marauderCard">
+                <button class="scrollCloseBtn" id="scrollCloseBtn">&times;</button>
+
+                <!-- Faint Castle Floor Plans (Dense Marauder Layer) -->
+                <svg class="marauderDenseSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
+                    <g stroke="#3b2007" stroke-width="1" fill="none" opacity="0.6">
+                        <rect x="30" y="30" width="80" height="90" stroke-dasharray="2 2" />
+                        <circle cx="70" cy="75" r="25" />
+                        <rect x="680" y="380" width="100" height="110" stroke-dasharray="2 2" />
+                        <circle cx="730" cy="435" r="35" />
+                        <path
+                            d="M110 75 L300 75 L300 180 L520 180 L520 90 L680 90"
+                            stroke-dasharray="3 3"
+                        />
+                        <path
+                            d="M70 120 L70 340 L280 340 L280 480 L680 480"
+                            stroke-dasharray="1 3"
+                        />
+                        <text x="120" y="65" font-size="9" font-family="Cinzel">
+                            Secret Passage to Honeydukes
+                        </text>
+                        <text x="540" y="170" font-size="9" font-family="Cinzel">
+                            Astronomy Tower Staircase
+                        </text>
+                        <text x="320" y="470" font-size="9" font-family="Cinzel">
+                            Dungeon Corridor
+                        </text>
+                    </g>
+                </svg>
+
+                <!-- Hand-Drawn SVG Map Pathways & Compass Rose -->
+                <svg class="marauderMapPathsSVG" viewBox="0 0 820 540" preserveAspectRatio="none">
+                    <path
+                        id="mapPath1"
+                        class="mapPathStroke"
+                        d="M 60 110 Q 220 50, 410 110 T 740 90"
+                    />
+                    <path
+                        id="mapPath2"
+                        class="mapPathStroke"
+                        d="M 740 90 Q 580 260, 410 270 T 80 340"
+                    />
+                    <path
+                        id="mapPath3"
+                        class="mapPathStroke"
+                        d="M 80 340 Q 280 460, 410 440 T 740 460"
+                    />
+                    <g transform="translate(710, 130)" opacity="0.45" class="compassGroup">
+                        <circle
+                            cx="0"
+                            cy="0"
+                            r="28"
+                            fill="none"
+                            stroke="#4a1c06"
+                            stroke-width="1.5"
+                            stroke-dasharray="3 2"
+                        />
+                        <polygon
+                            points="0,-32 7,-6 32,0 7,6 0,32 -7,6 -32,0 -7,-6"
+                            fill="#4a1c06"
+                        />
+                        <text
+                            x="0"
+                            y="-36"
+                            font-size="12"
+                            text-anchor="middle"
+                            fill="#4a1c06"
+                            font-family="Cinzel"
+                            font-weight="bold"
+                        >
+                            N
+                        </text>
+                    </g>
+                </svg>
+
+                <!-- Animated Alternating Footprints -->
+                <div id="footprintContainer">
+                    <svg class="walkingFootprint leftFoot" id="step1" viewBox="0 0 10 16">
+                        <path
+                            d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"
+                        />
+                    </svg>
+                    <svg class="walkingFootprint rightFoot" id="step2" viewBox="0 0 10 16">
+                        <path
+                            d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"
+                        />
+                    </svg>
+                    <svg class="walkingFootprint leftFoot" id="step3" viewBox="0 0 10 16">
+                        <path
+                            d="M5 0 C2 0 0 3 0 6 C0 9 2 11 5 11 C8 11 10 9 10 6 C10 3 8 0 5 0 Z M5 12 C3 12 2 13 2 14 C2 15 3 16 5 16 C7 16 8 15 8 14 C8 13 7 12 5 12 Z"
+                        />
+                    </svg>
+                </div>
+
+                <div class="scrollHeader">
+                    <h2 class="scrollHeaderTitle" id="revealTitle">
+                        THE WIZARDING ASSIGNMENT SCROLL
+                    </h2>
+                    <p class="scrollHeaderSub" id="revealSub">
+                        Enchanted Decree of Academic Distinction &bull; Ministry Assessment
+                    </p>
+                </div>
+
+                <div class="decreeQuote" id="revealDecree">
+                    "The Ministry of Magical Education hereby records that the apprentices named
+                    below have successfully completed the Second Internal Assignment of the First
+                    Semester.<br /><br />
+                    The challenge bestowed upon these young enchanters was the construction of a
+                    fully static magical storefront using only the ancient disciplines of HTML, CSS,
+                    and JavaScript, without invoking backend enchantments or external magical
+                    services. May this humble emporium stand as a testament to their craftsmanship,
+                    creativity, and dedication."
+                </div>
+
+                <div class="mapLandmarksGrid">
+                    <div class="mapLandmarkCard" id="landmark1">
+                        <div class="mapLandmarkTitle">✦ Created By</div>
+                        <div class="mapLandmarkValue">
+                            Bhuvi Singhal<br />
+                            &amp; Navi...
+                        </div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark2">
+                        <div class="mapLandmarkTitle">✦ Academy</div>
+                        <div class="mapLandmarkValue">RV University</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark3">
+                        <div class="mapLandmarkTitle">✦ Course</div>
+                        <div class="mapLandmarkValue">B.Tech (Hons) CSE AIML</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark4">
+                        <div class="mapLandmarkTitle">✦ Semester</div>
+                        <div class="mapLandmarkValue">Semester I</div>
+                    </div>
+                    <div class="mapLandmarkCard" id="landmark5">
+                        <div class="mapLandmarkTitle">✦ Assessment</div>
+                        <div class="mapLandmarkValue">Internal Assessment II</div>
+                    </div>
+                </div>
+
+                <div class="ministryApprovalSeal" id="revealSeal">
+                    <span>APPROVED BY MINISTRY OF MAGICAL EDUCATION</span>
+                </div>
+            </div>
+
+            <div class="scrollRollerBottom" id="scrollRollerBottom">
+                <div class="rollerCapLeft"></div>
+                <div class="rollerBody"></div>
+                <div class="rollerCapRight"></div>
+            </div>
+        </div>
+
+        <div class="pageContainer">
+            <header class="mainHeader">
+                <div class="headerContent">
+                    <h1 class="shopTitle">The Wizarding Emporium</h1>
+                    <p class="shopTagline">Diagon Alley's Premier Magical Supplier Since 1298</p>
+                </div>
+                <nav class="mainNav">
+                    <a href="index.html" class="navLink">Home</a>
+                    <a href="contact.html" class="navLink active">Contact</a>
+                    <a href="deliv.html" class="navLink">Delivery</a>
+                    <div class="cauldronBadge">
+                        <svg
+                            class="cauldronIcon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path
+                                d="M8.4 6.5H15.6C19 6.5 19.34 8.09 19.57 10.03L20.47 17.53C20.76 19.99 20 22 16.5 22H7.51C4 22 3.24 19.99 3.54 17.53L4.44 10.03C4.66 8.09 5 6.5 8.4 6.5Z"
+                            />
+                            <path d="M8 8V4.5C8 3 9 2 10.5 2H13.5C15 2 16 3 16 4.5V8" />
+                        </svg>
+                        <span class="cauldronCount">0</span>
+                    </div>
+                </nav>
+            </header>
+
+            <main class="mainContent">
+                <section class="welcomeSection">
+                    <h2 class="sectionTitle">Contact The Wizarding Emporium</h2>
+                    <p class="sectionIntro">
+                        Have questions about our magical products? Send us an owl or visit our
+                        Diagon Alley location!
+                    </p>
+                </section>
+
+                <div class="contactInfo">
+                    <h3>Our Location & Contact Details</h3>
+                    <p>
+                        <strong>Address:</strong> 12 Diagon Alley, London (between Flourish and
+                        Blotts and Quality Quidditch Supplies)
+                    </p>
+                    <p><strong>Floo Network:</strong> "Wizarding Emporium, Diagon Alley"</p>
+                    <p>
+                        <strong>Owl Post:</strong> Address your letter to: The Proprietor, The
+                        Wizarding Emporium, Diagon Alley, London
+                    </p>
+                    <p>
+                        <strong>Store Hours:</strong> Monday-Friday: 9AM-7PM, Saturday: 10AM-8PM,
+                        Sunday: 11AM-5PM
+                    </p>
+                    <p>
+                        <strong>Emergency After-Hours:</strong> Use the Patronus Charm - we'll
+                        receive your message instantly
+                    </p>
+                </div>
+
+                <div class="magicalDivider">
+                    <span class="dividerGlyph">✧ ☽ ✧</span>
+                </div>
+
+                <section class="featuredSection">
+                    <div class="sectionHeader text-center">
+                        <h2 class="sectionTitle">Send Us a Magical Message</h2>
+                        <p class="sectionIntro">
+                            Prefer to send a message? Fill out the form below and we'll respond
+                            within 24 hours by return owl.
+                        </p>
+                    </div>
+
+                    <div class="contactFormCard">
+                        <form class="contactForm" id="contactForm">
+                            <div class="formGrid">
+                                <div class="formGroup">
+                                    <label class="formLabel" for="name">✦ Your Full Name</label>
+                                    <input
+                                        class="formInput"
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        placeholder="e.g., Harry Potter"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="formGroup">
+                                    <label class="formLabel" for="email">✦ Owl Post Address</label>
+                                    <input
+                                        class="formInput"
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="your.owl@hogwarts.edu"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="formGrid">
+                                <div class="formGroup">
+                                    <label class="formLabel" for="subject">✦ Message Subject</label>
+                                    <input
+                                        class="formInput"
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        placeholder="e.g., Wand Repair Inquiry"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="formGroup">
+                                    <label class="formLabel" for="category"
+                                        >✦ Message Category</label
+                                    >
+                                    <select
+                                        class="formInput formSelect"
+                                        id="category"
+                                        name="category"
+                                        required
+                                    >
+                                        <option value="">Select a category...</option>
+                                        <option value="wand">Wand Questions &amp; Cores</option>
+                                        <option value="potion">Potions Ingredients</option>
+                                        <option value="delivery">Owl Post Delivery Inquiry</option>
+                                        <option value="repair">Magical Item Repair</option>
+                                        <option value="wholesale">Wholesale Orders</option>
+                                        <option value="other">Other Inquiry</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="formGroup">
+                                <label class="formLabel" for="message"
+                                    >✦ Your Magical Message</label
+                                >
+                                <textarea
+                                    class="formInput formTextarea"
+                                    id="message"
+                                    name="message"
+                                    rows="5"
+                                    placeholder="Describe your inquiry in detail..."
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <div class="formGroup formCheckboxGroup">
+                                <label class="formCheckboxLabel">
+                                    <input
+                                        type="checkbox"
+                                        name="newsletter"
+                                        class="formCheckbox"
+                                        checked
+                                    />
+                                    <span class="checkboxText"
+                                        >Subscribe to our Monthly Owl Post Newsletter with exclusive
+                                        Diagon Alley offers</span
+                                    >
+                                </label>
+                            </div>
+
+                            <div class="formSubmitWrap">
+                                <button class="submitBtn" type="submit">
+                                    <span>SEND BY OWL POST</span> ✦
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <div class="magicalDivider">
+                    <span class="dividerGlyph">✦ ☽ ✦</span>
+                </div>
+
+                <section class="testimonialsSection">
+                    <div class="sectionHeader text-center">
+                        <h2 class="sectionTitle">Why Wizards Choose Us</h2>
+                        <p class="sectionIntro">
+                            Decrees of distinction from esteemed witches and wizards across the
+                            realm
+                        </p>
+                    </div>
+
+                    <div class="testimonialsGrid">
+                        <div class="testimonialCard">
+                            <div class="testimonialCrest">✦</div>
+                            <div class="quoteIcon">“</div>
+                            <p class="testimonialText">
+                                "Their customer service is exceptional! When my son's wand needed
+                                emergency repair before his O.W.L.s, they stayed open late to help
+                                us."
+                            </p>
+                            <div class="testimonialAuthorWrap">
+                                <p class="testimonialAuthor">Mrs. Molly Weasley</p>
+                                <span class="authorTag">The Burrow</span>
+                            </div>
+                        </div>
+
+                        <div class="testimonialCard">
+                            <div class="testimonialCrest">✧</div>
+                            <div class="quoteIcon">“</div>
+                            <p class="testimonialText">
+                                "As Head of Ravenclaw House, I trust The Wizarding Emporium for all
+                                our magical supplies. Their craftsmanship &amp; spellcraft are
+                                unmatched."
+                            </p>
+                            <div class="testimonialAuthorWrap">
+                                <p class="testimonialAuthor">Prof. F. Flitwick</p>
+                                <span class="authorTag">Hogwarts • Ravenclaw</span>
+                            </div>
+                        </div>
+
+                        <div class="testimonialCard">
+                            <div class="testimonialCrest">☽</div>
+                            <div class="quoteIcon">“</div>
+                            <p class="testimonialText">
+                                "They found a rare Peruvian Instant Darkness Powder shipment for my
+                                research. Knowledgeable staff who understand complex magical needs."
+                            </p>
+                            <div class="testimonialAuthorWrap">
+                                <p class="testimonialAuthor">Albus Dumbledore</p>
+                                <span class="authorTag">Headmaster • Hogwarts</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="mainFooter">
+                <div class="noticeBoardContainer">
+                    <div class="noticeBoardBadge">Ministry Approved Supplier Notice Board</div>
+                    <div class="footerContent">
+                        <div class="footerSection">
+                            <h3>The Wizarding Emporium</h3>
+                            <p>
+                                Diagon Alley, London<br />
+                                Opposite Gringotts Wizarding Bank<br />
+                                Floo Network: "Wizarding Emporium"
+                            </p>
+                        </div>
+                        <div class="footerSection">
+                            <h3>Diagon Alley Hours</h3>
+                            <p>
+                                Monday-Friday: 9AM-7PM<br />
+                                Saturday: 10AM-8PM<br />
+                                Sunday: 11AM-5PM
+                            </p>
+                        </div>
+                        <div class="footerSection">
+                            <h3>Magical Services</h3>
+                            <p>
+                                Wand Matching & Alignment<br />
+                                Hogwarts Owl Post Dispatch<br />
+                                Floo Network Express Delivery<br />
+                                International Apparition Shipping
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style="
+                        text-align: center;
+                        color: #d4af37;
+                        font-size: 0.95em;
+                        font-family: var(--font-serif);
+                        letter-spacing: 1px;
+                    "
+                >
+                    <div class="footerCreditLine">Created by Bhuvi Singhal &amp; Navi...</div>
+                </div>
+            </footer>
+        </div>
+    </body>
 </html>
