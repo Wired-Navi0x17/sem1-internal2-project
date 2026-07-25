@@ -181,30 +181,30 @@ Once the site is running:
 
 ## 📜 License
 
-This project is licensed under a **Non-Commercial Attribution License**:
+This project is licensed under a **Non-Commercial Website & Code License**:
 
 ```text
-The Wizarding Emporium — Non-Commercial Attribution License
+The Wizarding Emporium — Non-Commercial Website & Code License
 
 Copyright (c) 2026 Bhuvi Singhal & Harshul Kala
 
-Permission is hereby granted to any person obtaining a copy of this software and associated
-documentation files (the "Software"), to view, inspect, study, and run the Software for personal,
+Permission is hereby granted to any person obtaining a copy of this website, website template,
+source code, and associated files (the "Website"), to view, inspect, study, and run the Website for personal,
 educational, and non-commercial purposes, subject to the following conditions:
 
 1. ATTRIBUTION: Proper credit and attribution MUST be prominently given to the original authors
-   (Bhuvi Singhal & Navi...) in all copies, forks, or derivative works of the Software or website template.
+   (Bhuvi Singhal & Harshul Kala) in all copies, forks, or derivative works of the Website or template.
 
-2. NON-COMMERCIAL USE: The Software and website template may NOT be sold, resold, sublicensed,
-   monetized, or used for any commercial purposes, paid products, or commercial services without
-   prior written consent from the copyright holders.
+2. NON-COMMERCIAL USE: The Website, website template, source code, and visual assets may NOT be sold,
+   resold, sublicensed, monetized, or used for any commercial purposes, paid products, or commercial services
+   without prior written consent from the copyright holders.
 
-3. NO WARRANTY: THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+3. NO WARRANTY: THE WEBSITE AND CODE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
    PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
    BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
-   OR OTHER DEALINGS IN THE SOFTWARE.
+   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE WEBSITE OR THE USE
+   OR OTHER DEALINGS IN THE WEBSITE.
 ```
 
 ---
